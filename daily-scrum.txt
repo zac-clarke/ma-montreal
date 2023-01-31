@@ -1,0 +1,50 @@
+
+=============================================================================
+                                 Tuesday - 2023-01-31 
+=============================================================================
+
+
+1.User Story or Task:                        ######   JULIETA   #######
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+ V Make ERD 
+ V Make Use case Diagram 
+ V Create user Stories
+ - Update user Stories (Business Rules change)
+ - Research relationships
+ - Research MVC
+ - Research Azure Blobs
+2.Result:
+▔▔▔▔▔▔
+
+3.Help:
+▔▔▔▔▔
+
+1.User Story or Task:                        ########   AFTAB   ####### 
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+ V Make ERD 
+ V Make Use case Diagram  
+ V Write Proposal
+ - Make Wireframes
+ - Set up Git
+ - Set Up Azure DB
+ - Research Azure Blobs
+
+2.Result:
+▔▔▔▔▔▔
+
+3.Help:
+▔▔▔▔▔
+
+
+1.User Story or Task:                        #######    ZAK    #########
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+ V Make ERD 
+ V Write Proposal 
+ - Make Wireframes 
+
+2.Result:
+▔▔▔▔▔▔
+
+3.Help:
+▔▔▔▔▔
+
