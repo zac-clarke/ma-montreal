@@ -1,10 +1,15 @@
 using MaMontreal.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using MaMontreal.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<MamDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MamDbContext") ?? throw new InvalidOperationException("Connection string 'MamDbContext' not found.")));
+
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<MamDbContext>();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -29,5 +34,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapRazorPages();
 
 app.Run();
