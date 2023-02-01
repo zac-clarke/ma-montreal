@@ -1,4 +1,10 @@
+using MaMontreal.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<MamDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MamDbContext") ?? throw new InvalidOperationException("Connection string 'MamDbContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

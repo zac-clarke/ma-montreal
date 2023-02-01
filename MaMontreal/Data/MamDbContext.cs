@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MaMontreal.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace MaMontreal.Data
 {
-    public class MamDbContext //: IdentityDbContext
+    public class MamDbContext : IdentityDbContext<ApplicationUser>
     {
-        // public MamDbContext(DbContextOptions<MamDbContext> options) : base(options) { }
-
         // public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         // public DbSet<Meeting> Meetings { get; set; }
         // public DbSet<MeetingType> MeetingTypes { get; set; }
@@ -17,11 +17,14 @@ namespace MaMontreal.Data
         // public DbSet<Language> Languages { get; set; }
         // public DbSet<UserRequest> UserRequests { get; set; }
 
+        public MamDbContext(DbContextOptions<MamDbContext> options) : base(options)
+        {
+        }
 
-        // protected override void OnModelCreating(ModelBuilder modelBuilder)
-        // {
-        //     base.OnModelCreating(modelBuilder);
-        //     modelBuilder.ApplyConfiguration(new ArticleConfiguration());
-        // }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            // modelBuilder.ApplyConfiguration(new MeetingConfiguration());
+        }
     }
 }
