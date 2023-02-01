@@ -1,0 +1,12 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace MaMontreal.Models
+{
+    public class UserRequest
+    {
+        //requests made by users that the Admin must resolve
+    }
+}
