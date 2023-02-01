@@ -8,7 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<MamDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MamDbContext") ?? throw new InvalidOperationException("Connection string 'MamDbContext' not found.")));
 
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<MamDbContext>();
+builder.Services
+.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+.AddRoles<IdentityRole>()
+.AddEntityFrameworkStores<MamDbContext>();
 
 
 // Add services to the container.
@@ -35,5 +38,24 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<MamDbContext>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+    db.Database.EnsureCreated();
+    SeedData.SeedRoles(db, roleManager);
+    SeedData.AddRole("aftab@hotmail.com", "admin", userManager);
+    SeedData.AddRole("aftab@hotmail.com", "gsr", userManager);
+    SeedData.AddRole("aftab@hotmail.com", "member", userManager);
+    // SeedData.RemoveRole("aftab@hotmail.com", "admin", userManager);
+
+    
+    SeedData.AddRole("julieta.ja@gmail.com", "admin", userManager);
+    SeedData.AddRole("julieta.ja@gmail.com", "gsr", userManager);
+    SeedData.AddRole("julieta.ja@gmail.com", "member", userManager);
+    // SeedData.RemoveRole("aftab@hotmail.com", "admin", userManager);
+}
 
 app.Run();
