@@ -7,7 +7,7 @@ namespace MaMontreal.Models
     {
         public int Id { get; set; }
 
-        [Range(minimum:0, maximum:512, ErrorMessage = "District # must be between 0 and 512")]
+        [Range(minimum: 0, maximum: 512, ErrorMessage = "District # must be between 0 and 512")]
         public UInt16? District { get; set; }
 
         [Required]
@@ -25,21 +25,21 @@ namespace MaMontreal.Models
         [Required]
         [MaxLength(255, ErrorMessage = "Address cannot be longer than 255 characters")]
         public string Address { get; set; }
-        
+
         [Required]
         [MaxLength(64, ErrorMessage = "Citycannot be longer than 64 characters")]
         public string City { get; set; }
-        
+
         [Required]
         [MaxLength(2, ErrorMessage = "Province cannot be longer than 2 characters")]
         public string Province { get; set; }
-        
+
         [Required]
         [MaxLength(255, ErrorMessage = "Postal Code cannot be longer than 255 characters")]
         [Display(Name = "Postal Code")]
         public string PostalCode { get; set; }
 
-        [Range(minimum:0, maximum:6, ErrorMessage = "Day must be between 0 and 6")]
+        [Range(minimum: 0, maximum: 6, ErrorMessage = "Day must be between 0 and 6")]
         public UInt16? Day { get; set; }
 
         [DataType(DataType.Date)]
