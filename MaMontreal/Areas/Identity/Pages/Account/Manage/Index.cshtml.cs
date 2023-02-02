@@ -59,18 +59,35 @@ namespace MaMontreal.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            [Display(Name = "Sobriety Date")]
+            [DataType(DataType.Date)]
+            public DateTime? SobrietyDate { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            string firstName = user.FirstName;
+            string lastName = user.LastName;
+            DateTime? sobrietyDate = user.SobrietyDate;
 
             Username = userName;
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                FirstName = firstName,
+                LastName = lastName,
+                SobrietyDate = sobrietyDate
             };
         }
 
@@ -101,8 +118,12 @@ namespace MaMontreal.Areas.Identity.Pages.Account.Manage
             }
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
+            if (Input.PhoneNumber != phoneNumber || Input.FirstName != user.FirstName || Input.LastName != user.LastName || Input.SobrietyDate != user.SobrietyDate)
             {
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
+                user.SobrietyDate = Input.SobrietyDate;
+
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
                 if (!setPhoneResult.Succeeded)
                 {
