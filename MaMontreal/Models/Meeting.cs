@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MaMontreal.Models
 {
@@ -41,15 +42,18 @@ namespace MaMontreal.Models
         [Range(minimum:0, maximum:6, ErrorMessage = "Day must be between 0 and 6")]
         public UInt16? Day { get; set; }
 
-        public DateOnly? Date { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? Date { get; set; }
 
         [Required]
+        [DataType(DataType.Time)]
         [Display(Name = "Start Time")]
-        public TimeOnly StartTime { get; set; }
+        public DateTime StartTime { get; set; }
 
         [Required]
         [Display(Name = "End Time")]
-        public TimeOnly EndTime { get; set; }
+        [DataType(DataType.Time)]
+        public DateTime EndTime { get; set; }
 
         [Required]
         [Display(Name = "Meeting Type")]
@@ -59,10 +63,12 @@ namespace MaMontreal.Models
         public Language Language { get; set; }
 
         [Required]
+        [ForeignKey("GsrId")]
         public ApplicationUser Gsr { get; set; }
 
         [Required]
         [Display(Name = "Updated By")]
+        [ForeignKey("UpdatedById")]
         public ApplicationUser UpdatedBy { get; set; }
 
         [Required]

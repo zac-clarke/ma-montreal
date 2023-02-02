@@ -4,6 +4,7 @@ using MaMontreal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MaMontreal.Data.Migrations
 {
     [DbContext(typeof(MamDbContext))]
-    partial class MamDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230202054956_ModelsAdded")]
+    partial class ModelsAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,7 +114,7 @@ namespace MaMontreal.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Languages", (string)null);
+                    b.ToTable("Languages");
                 });
 
             modelBuilder.Entity("MaMontreal.Models.Meeting", b =>
@@ -206,7 +209,7 @@ namespace MaMontreal.Data.Migrations
 
                     b.HasIndex("UpdatedById");
 
-                    b.ToTable("Meetings", (string)null);
+                    b.ToTable("Meetings");
                 });
 
             modelBuilder.Entity("MaMontreal.Models.MeetingType", b =>
@@ -224,7 +227,7 @@ namespace MaMontreal.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MeetingTypes", (string)null);
+                    b.ToTable("MeetingTypes");
                 });
 
             modelBuilder.Entity("MaMontreal.Models.Tag", b =>
@@ -242,7 +245,7 @@ namespace MaMontreal.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags", (string)null);
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("MaMontreal.Models.UserRequest", b =>
@@ -281,7 +284,7 @@ namespace MaMontreal.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("UserRequests", (string)null);
+                    b.ToTable("UserRequests");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
