@@ -6,7 +6,7 @@ using MaMontreal.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace MaMontreal.Controllers
+namespace MaMontreal.Controllers.Manage
 {
 
     [Route("/Manage")]
@@ -18,19 +18,12 @@ namespace MaMontreal.Controllers
         {
             _context = context;
         }
+
+
         [Route("")]
         public async Task<IActionResult> Index()
         {
             return View();
         }
-
-        // [Route("/Manage/Users")]
-        // public async Task<IActionResult> Index()
-        // {
-        //     return _context.Users != null ?
-        //                 View(await _context.Users.ToListAsync()) :
-        //                 Problem("Entity set 'TestDbContext.Users'  is null.");
-        // }
-
     }
 }

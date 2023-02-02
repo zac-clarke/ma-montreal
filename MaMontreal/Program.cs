@@ -37,6 +37,29 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+// app.MapControllerRoute(
+// name: "default",
+// pattern: "{controller=Home}/{action=Index}/{id?}"
+// );
+
+// app.MapControllerRoute(name: "manage",
+//                 pattern: "/manage",
+//                 defaults: new { controller = "Manage", action = "Index" });
+
+// app.MapControllerRoute(
+//    name: "manage_requests",
+//    pattern: "manage/requests/{action=Index}/{id?}",
+//    defaults: new { controller = "ManageRequests" }
+//    );
+
+// app.MapControllerRoute(
+// name: "manage_users",
+// pattern: "manage/users/{action=Index}/{id?}",
+// defaults: new { controller = "ManageUsers" }
+// );
+
+
 app.MapRazorPages();
 
 using (var scope = app.Services.CreateScope())
@@ -51,7 +74,7 @@ using (var scope = app.Services.CreateScope())
     SeedData.AddRole("aftab@hotmail.com", "member", userManager);
     // SeedData.RemoveRole("aftab@hotmail.com", "admin", userManager);
 
-    
+
     SeedData.AddRole("julieta.ja@gmail.com", "admin", userManager);
     SeedData.AddRole("julieta.ja@gmail.com", "gsr", userManager);
     SeedData.AddRole("julieta.ja@gmail.com", "member", userManager);

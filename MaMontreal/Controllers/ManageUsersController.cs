@@ -7,21 +7,21 @@ using MaMontreal.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace MaMontreal.Controllers
+namespace MaMontreal.Controllers.Manage
 {
 
-
-    public class UsersController : Controller
+    [Route("Manage/Users/")]
+    public class ManageUsersController : Controller
     {
         private readonly MamDbContext _context;
 
-        public UsersController(MamDbContext context)
+        public ManageUsersController(MamDbContext context)
         {
             _context = context;
         }
 
         // GET: All Users
-
+        [Route("")]
         public async Task<IActionResult> Index()
         {
             return _context.Users != null ?
@@ -31,6 +31,7 @@ namespace MaMontreal.Controllers
 
 
         // GET: User/Details/ID
+        [Route("Details")]
         public async Task<IActionResult> Details(string id)
         {
             if (id == null || _context.Users == null)
@@ -50,6 +51,7 @@ namespace MaMontreal.Controllers
 
 
         // GET: User/Create
+        [Route("Create")]
         public IActionResult Create()
         {
             return View();
@@ -58,6 +60,7 @@ namespace MaMontreal.Controllers
         // POST: User/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Route("Create")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("FirstName,LastName,SobrietyDate,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] ApplicationUser applicationUser)
@@ -72,6 +75,7 @@ namespace MaMontreal.Controllers
         }
 
         // GET: User/Edit/5
+        [Route("Edit")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null || _context.Users == null)
@@ -90,6 +94,7 @@ namespace MaMontreal.Controllers
         // POST: User/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Route("Edit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("FirstName,LastName,SobrietyDate,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] ApplicationUser applicationUser)
@@ -123,6 +128,7 @@ namespace MaMontreal.Controllers
         }
 
         // GET: User/Delete/5
+        [Route("Delete")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null || _context.Users == null)
@@ -141,6 +147,7 @@ namespace MaMontreal.Controllers
         }
 
         // POST: User/Delete/5
+        [Route("Delete")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
