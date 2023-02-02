@@ -49,30 +49,30 @@ namespace MaMontreal.Controllers.Manage
             return View(applicationUser);
         }
 
+        // TODO:Delete Create actions and pages
+        // // GET: User/Create
+        // [Route("Create")]
+        // public IActionResult Create()
+        // {
+        //     return View();
+        // }
 
-        // GET: User/Create
-        [Route("Create")]
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: User/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Route("Create")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FirstName,LastName,SobrietyDate,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] ApplicationUser applicationUser)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(applicationUser);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(applicationUser);
-        }
+        // // POST: User/Create
+        // // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // [Route("Create")]
+        // [HttpPost]
+        // [ValidateAntiForgeryToken]
+        // public async Task<IActionResult> Create([Bind("FirstName,LastName,SobrietyDate,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] ApplicationUser applicationUser)
+        // {
+        //     if (ModelState.IsValid)
+        //     {
+        //         _context.Add(applicationUser);
+        //         await _context.SaveChangesAsync();
+        //         return RedirectToAction(nameof(Index));
+        //     }
+        //     return View(applicationUser);
+        // }
 
         // GET: User/Edit/5
         [Route("Edit")]

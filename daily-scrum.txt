@@ -1,5 +1,78 @@
 
 =============================================================================
+                                 Thursday - 2023-02-02
+=============================================================================
+
+
+1.User Story or Task:                        ######   JULIETA   #######
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+- Update links on admin dashboard to access manage/...
+- Admin can see user lists and user details with relevant information only (name, sobriety date, e-mail, phone number, user roles)
+- Admin can manage user roles in manage/users
+- Admin can Delete Members only in manage/users
+- Cleanup leftover scaffoldin code
+- Add links to admin dashboard for easy access to what they can manage
+
+2.Result:
+▔▔▔▔▔▔
+V set up base project structure (MVC, Services, Repo, Custom user class)
+V Make Scaffolding of ApplucationUser work
+V Debug Scaffolding of a Model extending identityUser in a test project
+V Integrate parts from test project to build Manage/user dashboard with Working actions and views
+V Remove display of some fields (password hash and other things taht shold not be touched)
+X Debugging Add Routing to access manage/user (current structure incompatible, cannot acess sub folders with MVC)
+V Restructure All Project to Flat structure 
+V Test solutions to have urls like manage/users/edit with the new flat structure
+ 
+
+3.Help:
+▔▔▔▔▔
+
+1.User Story or Task:                        ########   AFTAB   ####### 
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+ - GSR/Admin can create a meeting
+ - new Meeting gets created with Pending Status
+ - new UserRequest gets created with Pending Status
+ - Admin can Crud Meetings
+
+
+2.Result:
+▔▔▔▔▔▔
+ V Set Up Azure DB
+ v Researched MVC Pattern with Services and Repos
+ V Created a test project for MVC Pattern + Custom Identity + Services + Repos
+ V Researched Localization
+ V Implemented ApplicationUser identity and scaffolded
+ V Created Meetings Model
+ V Debugged migrations errors caused by the custom Identity
+ V Researched MVC Controller and routes, didn't learn much
+
+
+3.Help:
+▔▔▔▔▔
+
+
+1.User Story or Task:                        #######    ZAK    #########
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+ - Members can update their profile (name, phone number and sobriety date)
+ - Work on Index page
+ - Work on Solutions Pages
+ - Work on Literature Page
+
+2.Result:
+▔▔▔▔▔▔
+ V Research Blobs
+ V researched azure blobs
+ V added various models
+ V added links to navbar
+ V Researched Localization
+
+3.Help:
+▔▔▔▔▔
+
+
+
+=============================================================================
                                  Wednesday- 2023-02-01 
 =============================================================================
 
@@ -7,6 +80,7 @@
 1.User Story or Task:                        ######   JULIETA   #######
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 - set up base project structure (MVC, Services, Repo, Custom user class)
+
 
 2.Result:
 ▔▔▔▔▔▔
