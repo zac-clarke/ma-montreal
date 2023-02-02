@@ -25,6 +25,43 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li>
+                            <div class="dropdown">
+                                <a class="nav-link text-dark dropdown-toggle"  asp-controller="#" id="meetingDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                 Meetings</a>
+                                <div class="dropdown-menu" aria-labelledby="meetingDropdown">
+                                    <a class="dropdown-item" href="#">List</a>
+                                    <a class="dropdown-item" href="#">Calander</a>
+                                </div>
+                            </div>
+                        </li>
+                          <li>
+                            <div class="dropdown">
+                                <a class="nav-link text-dark dropdown-toggle"  asp-controller="#" id="solutionDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                 A Solution</a>
+                                <div class="dropdown-menu" aria-labelledby="solutionDropdown">
+                                    <a class="dropdown-item" href="#">How it works</a>
+                                    <a class="dropdown-item" href="#">12 Steps</a>
+                                    <a class="dropdown-item" href="#">12 Traditions</a>
+                                    <a class="dropdown-item" href="#">The Promises</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Literature</a>
+                        </li>
+                           <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Seek Help</a>
+                        </li>
+                         <li class="nav-item">
+                            <div class="dropdown">
+                            <Button class="btn btn-success dropdown-toggle"   id="appDropdown"data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Download MA App</Button>
+                            <div class="dropdown-menu" aria-labelledby="appDropdown">
+                                    <a class="dropdown-item" href="https://apps.apple.com/us/app/marijuana-anonymous-mobile/id874705440">Apple</a>
+                                    <a class="dropdown-item" href="https://play.google.com/store/apps/details?id=org.marijuana_anonymous.MA_Mobile&hl=en_US">Android</a>     
+                                </div>
+                            </div>
+                        </li>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
