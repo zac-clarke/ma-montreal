@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MaMontreal.Data.Migrations
 {
     [DbContext(typeof(MamDbContext))]
-    [Migration("20230201214917_InitialDb")]
-    partial class InitialDb
+    [Migration("20230203204009_InitialDatabase")]
+    partial class InitialDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,10 +45,12 @@ namespace MaMontreal.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -97,6 +99,203 @@ namespace MaMontreal.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("MaMontreal.Models.Language", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Languages");
+                });
+
+            modelBuilder.Entity("MaMontreal.Models.Meeting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DayOfWeek")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(3000)
+                        .HasColumnType("nvarchar(3000)");
+
+                    b.Property<int>("District")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EventName")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<string>("GsrId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("LanguageId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MeetingTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("nvarchar(7)");
+
+                    b.Property<string>("ProvinceCode")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GsrId");
+
+                    b.HasIndex("LanguageId");
+
+                    b.HasIndex("MeetingTypeId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.ToTable("Meetings");
+                });
+
+            modelBuilder.Entity("MaMontreal.Models.MeetingType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MeetingTypes");
+                });
+
+            modelBuilder.Entity("MaMontreal.Models.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tags");
+                });
+
+            modelBuilder.Entity("MaMontreal.Models.UserRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ProcessedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("RequestDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RequestHandlerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RequesteeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleRequestedId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RequestHandlerId");
+
+                    b.HasIndex("RequesteeId");
+
+                    b.HasIndex("RoleRequestedId");
+
+                    b.ToTable("UserRequests");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -179,10 +378,12 @@ namespace MaMontreal.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -219,10 +420,12 @@ namespace MaMontreal.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -230,6 +433,56 @@ namespace MaMontreal.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("MaMontreal.Models.Meeting", b =>
+                {
+                    b.HasOne("MaMontreal.Models.ApplicationUser", "Gsr")
+                        .WithMany("MeetingsLead")
+                        .HasForeignKey("GsrId");
+
+                    b.HasOne("MaMontreal.Models.Language", "Language")
+                        .WithMany("Meetings")
+                        .HasForeignKey("LanguageId");
+
+                    b.HasOne("MaMontreal.Models.MeetingType", "MeetingType")
+                        .WithMany("Meetings")
+                        .HasForeignKey("MeetingTypeId");
+
+                    b.HasOne("MaMontreal.Models.ApplicationUser", "UpdatedBy")
+                        .WithMany("MeetingsUpdated")
+                        .HasForeignKey("UpdatedById");
+
+                    b.Navigation("Gsr");
+
+                    b.Navigation("Language");
+
+                    b.Navigation("MeetingType");
+
+                    b.Navigation("UpdatedBy");
+                });
+
+            modelBuilder.Entity("MaMontreal.Models.UserRequest", b =>
+                {
+                    b.HasOne("MaMontreal.Models.ApplicationUser", "RequestHandler")
+                        .WithMany("UserRequestsHandled")
+                        .HasForeignKey("RequestHandlerId");
+
+                    b.HasOne("MaMontreal.Models.ApplicationUser", "Requestee")
+                        .WithMany("UserRequestsSubmitted")
+                        .HasForeignKey("RequesteeId");
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", "RoleRequested")
+                        .WithMany()
+                        .HasForeignKey("RoleRequestedId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RequestHandler");
+
+                    b.Navigation("Requestee");
+
+                    b.Navigation("RoleRequested");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -281,6 +534,27 @@ namespace MaMontreal.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MaMontreal.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("MeetingsLead");
+
+                    b.Navigation("MeetingsUpdated");
+
+                    b.Navigation("UserRequestsHandled");
+
+                    b.Navigation("UserRequestsSubmitted");
+                });
+
+            modelBuilder.Entity("MaMontreal.Models.Language", b =>
+                {
+                    b.Navigation("Meetings");
+                });
+
+            modelBuilder.Entity("MaMontreal.Models.MeetingType", b =>
+                {
+                    b.Navigation("Meetings");
                 });
 #pragma warning restore 612, 618
         }
