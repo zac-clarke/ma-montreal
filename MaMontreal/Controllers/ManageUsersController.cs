@@ -28,6 +28,21 @@ namespace MaMontreal.Controllers.Manage
         [Route("")]
         public async Task<IActionResult> Index()
         {
+            //Test
+
+            Meeting meeting = new Meeting();
+            if (_context.Entry(meeting).State == EntityState.Added)
+            {
+                meeting.UpdatedAt = DateTime.Now;
+                Console.WriteLine("/////////////////////////////////Already Added");
+            }
+            else
+            {
+                Console.WriteLine("/////////////////////////////////Not already Added");
+            }
+
+
+
             return _context.Users != null ?
                         View(await _context.Users.ToListAsync()) :
                         Problem("Entity set 'TestDbContext.Users'  is null.");
