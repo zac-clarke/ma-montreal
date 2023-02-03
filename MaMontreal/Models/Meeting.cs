@@ -3,12 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MaMontreal.Models
 {
-    public class Meeting
+    public class Meeting : BaseEntity
     {
         public int Id { get; set; }
 
-        [Range(minimum:0, maximum:512, ErrorMessage = "District # must be between 0 and 512")]
-        public UInt16? District { get; set; }
+        [Range(minimum: 1, maximum: 512, ErrorMessage = "District # must be between 1 and 512")]
+        public int District { get; set; }
 
         [Required]
         [MaxLength(60, ErrorMessage = "Event Name cannot be longer than 60 characters")]
@@ -25,22 +25,27 @@ namespace MaMontreal.Models
         [Required]
         [MaxLength(255, ErrorMessage = "Address cannot be longer than 255 characters")]
         public string Address { get; set; }
-        
+
         [Required]
-        [MaxLength(64, ErrorMessage = "Citycannot be longer than 64 characters")]
+        [MaxLength(64, ErrorMessage = "City cannot be longer than 64 characters")]
         public string City { get; set; }
-        
+
         [Required]
-        [MaxLength(2, ErrorMessage = "Province cannot be longer than 2 characters")]
-        public string Province { get; set; }
-        
+        [Display(Name = "Province Code")]
+        [MinLength(2, ErrorMessage = "Province Code must be 2-3 characters")]
+        [MaxLength(3, ErrorMessage = "Province Code must be 2-3 characters")]
+        public string ProvinceCode { get; set; }
+
         [Required]
-        [MaxLength(255, ErrorMessage = "Postal Code cannot be longer than 255 characters")]
+        [MinLength(6, ErrorMessage = "Postal Code cannot be shorter than 6 characters")]
+        [MaxLength(7, ErrorMessage = "Postal Code cannot be longer than 7 characters")]
+        [DataType(DataType.PostalCode)]
         [Display(Name = "Postal Code")]
         public string PostalCode { get; set; }
 
-        [Range(minimum:0, maximum:6, ErrorMessage = "Day must be between 0 and 6")]
-        public UInt16? Day { get; set; }
+        [Display(Name = "Day of Week")]
+        [Range(minimum: 0, maximum: 6, ErrorMessage = "Day of Week must be between 0 and 6")]
+        public int? DayOfWeek { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime? Date { get; set; }
@@ -56,31 +61,33 @@ namespace MaMontreal.Models
         public DateTime EndTime { get; set; }
 
         [Required]
-        [Display(Name = "Meeting Type")]
-        public MeetingType MeetingType { get; set; }
-
-        [Required]
-        public Language Language { get; set; }
-
-        [Required]
-        [ForeignKey("GsrId")]
-        public ApplicationUser Gsr { get; set; }
-
-        [Required]
-        [Display(Name = "Updated By")]
-        [ForeignKey("UpdatedById")]
-        public ApplicationUser UpdatedBy { get; set; }
-
-        [Required]
         public Status Status { get; set; }
 
-        [Display(Name = "Created At")]
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        // [Required]
+        public Language? Language { get; set; }
 
-        [Display(Name = "Updated At")]
-        public DateTime UpdatedAt { get; set; } = DateTime.Now;
+        // [Required]
+        [Display(Name = "Meeting Type")]
+        public MeetingType? MeetingType { get; set; }
 
-        [Display(Name = "Deleted At")]
-        public DateTime DeletedAt { get; set; }
+        // [Required]
+        [ForeignKey("GsrId")]
+        public ApplicationUser? Gsr { get; set; }
+
+        // [Required]
+        [Display(Name = "Updated By")]
+        [ForeignKey("UpdatedById")]
+        public ApplicationUser? UpdatedBy { get; set; }
+
+        // [Required]
+        // [Display(Name = "Created At")]
+        // public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        // [Required]
+        // [Display(Name = "Updated At")]
+        // public DateTime UpdatedAt { get; set; } = DateTime.Now;
+
+        // [Display(Name = "Deleted At")]
+        // public DateTime? DeletedAt { get; set; }
     }
 }

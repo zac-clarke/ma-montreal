@@ -10,8 +10,8 @@ namespace MaMontreal.Models
     public class MeetingType
     {
         public int Id { get; set; }
-        [Required, MaxLength(100,
-        ErrorMessage = "You must choose a title no more than 100 characters long")]
+
+        [Required, MaxLength(100, ErrorMessage = "You must choose a title no more than 100 characters long")]
         public string Title { get; set; }
 
         [NotMapped]
