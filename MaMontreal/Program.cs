@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<MamDbContext>(options =>
@@ -17,6 +19,10 @@ builder.Services
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
+
+
 
 var app = builder.Build();
 
