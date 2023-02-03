@@ -88,6 +88,7 @@ namespace MaMontreal.Controllers.Manage
                 else
                     await _userManager.RemoveFromRoleAsync(user, role._roleName);
             }
+            TempData["rolesSaved"] = "Changed roles saved";
             return View(refreshUserWithRoles);
         }
 
@@ -110,6 +111,7 @@ namespace MaMontreal.Controllers.Manage
                 _userId = user.Id,
                 _selectedRoles = currentUserRoles
             };
+
             return userWithRoles;
         }
 

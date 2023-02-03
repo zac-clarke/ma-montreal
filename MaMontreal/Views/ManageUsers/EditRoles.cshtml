@@ -9,6 +9,14 @@
 
 <h4>Edit User Roles</h4>
 <hr />
+
+@if (TempData["rolesSaved"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["rolesSaved"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
 <div class="row">
     <div class="col-md-4">
         <form asp-action="EditRoles" asp-route-id="@Model._userId">
