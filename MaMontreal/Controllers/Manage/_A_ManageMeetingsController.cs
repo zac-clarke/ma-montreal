@@ -5,18 +5,18 @@ using MaMontreal.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MaMontreal.Controllers
+namespace MaMontreal.Controllers.Manage
 {
-    [Route("Manage/Meetings/")]
-    public class ManageMeetingsController : Controller
+    [Route("_A_Manage/Meetings/")]
+    public class _A_ManageMeetingsController : Controller
     {
         private readonly MamDbContext _context;
-        private readonly ILogger<ManageMeetingsController> _logger;
+        private readonly ILogger<_A_ManageMeetingsController> _logger;
 
         [BindProperty]
         public Meeting Meeting { get; set; } = new Meeting();
 
-        public ManageMeetingsController(MamDbContext context, ILogger<ManageMeetingsController> logger)
+        public _A_ManageMeetingsController(MamDbContext context, ILogger<_A_ManageMeetingsController> logger)
         {
             _context = context;
             _logger = logger;

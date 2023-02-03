@@ -9,19 +9,19 @@ using MaMontreal.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace MaMontreal.Controllers
+namespace MaMontreal.Controllers.Manage
 {
-    [Route("Manage/MeetingTypes/")]
-    public class ManageMeetingTypesController : Controller
+    [Route("_A_Manage/MeetingTypes/")]
+    public class _A_ManageMeetingTypesController : Controller
     {
         private readonly MamDbContext _context;
-        private readonly ILogger<ManageMeetingTypesController> _logger;
+        private readonly ILogger<_A_ManageMeetingTypesController> _logger;
         private MeetingTypesService _meetingTypesService;
 
         [BindProperty]
         public MeetingType MeetingType { get; set; } = new MeetingType();
 
-        public ManageMeetingTypesController(MamDbContext context, ILogger<ManageMeetingTypesController> logger)
+        public _A_ManageMeetingTypesController(MamDbContext context, ILogger<_A_ManageMeetingTypesController> logger)
         {
             _context = context;
             _logger = logger;

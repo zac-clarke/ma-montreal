@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using MaMontreal.Data;
 using MaMontreal.Models;
+using MaMontreal.Models.Enums;
 using MaMontreal.Repositories;
 using Microsoft.AspNetCore.Identity;
 namespace MaMontreal.Services
@@ -34,7 +35,7 @@ namespace MaMontreal.Services
             meeting.UpdatedBy = user;
             meeting.CreatedAt = DateTime.Now;
             meeting.UpdatedAt = DateTime.Now;
-            meeting.Status = Status.Pending;
+            meeting.Status = Statuses.Pending;
             _context.Meetings.Add(meeting);
             await _context.SaveChangesAsync();
             return meeting;

@@ -27,13 +27,15 @@
             @if (admin)
             {
                 <a asp-controller="ManageUsers" asp-action="Index" class="btn btn-outline-primary btn-sm">Users</a>
-                <a asp-page="/UserRoles" class="btn btn-outline-primary btn-sm">UserRoles</a>
-                <a asp-page="/Tags" class="btn btn-outline-primary btn-sm">Tags</a>
-                <a asp-page="/Languages" class="btn btn-outline-primary btn-sm">Languages</a>
+                @* <a asp-controller="ManageUsers" asp-action="Index" class="btn btn-outline-primary btn-sm">UserRoles</a> *@
+
+                <a asp-controller="ManageTags" asp-action="Index" class="btn btn-outline-primary btn-sm">Tags</a>
+                <a asp-controller="ManageLanguages" asp-action="Index" class="btn btn-outline-primary btn-sm">Languages</a>
+                <a asp-controller="ManageMeetingTypes" asp-action="Index" class="btn btn-outline-primary btn-sm">Meeting Types</a>
                 @if (admin || gsr)
                 {
-                    <a asp-page="/Meetings" class="btn btn-outline-primary btn-sm">Meetings</a>
-                    <a asp-page="/Users" class="btn btn-outline-primary btn-sm">Requests</a>
+                    <a asp-controller="ManageMeetings" asp-action="Index" class="btn btn-outline-primary btn-sm">Meetings</a>
+                    <a asp-controller="ManageUserRequests" asp-action="Index" class="btn btn-outline-primary btn-sm">Requests</a>
                 }
             }
         </div>

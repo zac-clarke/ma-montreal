@@ -15,6 +15,6 @@ namespace MaMontreal.Models
         public string Title { get; set; }
 
         [NotMapped]
-        public IEnumerable<Meeting> Meetings { get; set; }
+        public IEnumerable<Meeting> Meetings { get; set; } = new List<Meeting>();
     }
 }

@@ -1,6 +1,6 @@
-namespace MaMontreal.Models
+namespace MaMontreal.Models.Enums
 {
-    public enum Status
+    public enum Statuses
     {
         Pending,
         Approved,

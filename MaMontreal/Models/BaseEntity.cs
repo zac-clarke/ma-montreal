@@ -8,11 +8,9 @@ namespace MaMontreal.Models
 {
     public class BaseEntity
     {
-        // [Required]
         [Display(Name = "Created At")]
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime? CreatedAt { get; set; } = DateTime.Now;
 
-        // [Required]
         [Display(Name = "Updated At")]
         public DateTime? UpdatedAt { get; set; }
 

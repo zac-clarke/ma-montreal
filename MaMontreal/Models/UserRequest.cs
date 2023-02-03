@@ -12,8 +12,8 @@ namespace MaMontreal.Models
     {
         public int Id { get; set; }
 
-        [Required]
-        public IdentityRole RoleRequested { get; set; }
+        //TODO: Removed Required (interferes with form submission that does not have that filled in)
+        public IdentityRole? RoleRequested { get; set; }
 
         // [Required]
         [ForeignKey("RequesteeId")]
@@ -24,8 +24,9 @@ namespace MaMontreal.Models
 
         public bool IsApproved { get; set; } = false;
 
-        [Required, DataType(DataType.DateTime)]
-        public DateTime RequestDate { get; set; } = DateTime.Now;
+        // // Using base entity instead
+        // [DataType(DataType.DateTime)]
+        // public DateTime? RequestDate { get; set; } = DateTime.Now;
 
         [DataType(DataType.DateTime)]
         public DateTime? ProcessedDate { get; set; }

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using MaMontreal.Models.Enums;
 
 namespace MaMontreal.Models
 {
@@ -60,8 +61,8 @@ namespace MaMontreal.Models
         [DataType(DataType.Time)]
         public DateTime EndTime { get; set; }
 
-        [Required]
-        public Status Status { get; set; }
+        // [Required]
+        public Statuses? Status { get; set; } = Statuses.Pending;
 
         // [Required]
         public Language? Language { get; set; }

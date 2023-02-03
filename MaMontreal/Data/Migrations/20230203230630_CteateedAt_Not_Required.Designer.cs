@@ -4,6 +4,7 @@ using MaMontreal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MaMontreal.Data.Migrations
 {
     [DbContext(typeof(MamDbContext))]
-    partial class MamDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230203230630_CteateedAt_Not_Required")]
+    partial class CteateedAtNotRequired
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -268,6 +271,9 @@ namespace MaMontreal.Data.Migrations
                     b.Property<DateTime?>("ProcessedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("RequestDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("RequestHandlerId")
                         .HasColumnType("nvarchar(450)");
 
@@ -275,6 +281,7 @@ namespace MaMontreal.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("RoleRequestedId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -467,7 +474,9 @@ namespace MaMontreal.Data.Migrations
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", "RoleRequested")
                         .WithMany()
-                        .HasForeignKey("RoleRequestedId");
+                        .HasForeignKey("RoleRequestedId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("RequestHandler");
 
