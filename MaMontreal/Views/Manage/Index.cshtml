@@ -1,16 +1,44 @@
 ﻿@{
-    ViewData["Title"] = "Admin Dashboard";
+    ViewData["Title"] = "Manage Dashboard";
+    var user = UserManager.GetUserAsync(User).Result;
+    bool admin = false;
+    bool gsr = false;
+    if (UserManager.IsInRoleAsync(user, "gsr").Result == true)
+    {
+        ViewData["Title"] = "GSR Dashboard";
+        gsr = true;
+    }
+    if (UserManager.IsInRoleAsync(user, "admin").Result == true)
+    {
+        ViewData["Title"] = "Admin Dashboard";
+        admin = true;
+    }
+
 }
 
 <div class="text-center">
-    <h1 class="display-4">Admin Dashboard</h1>
-    <p>A place where the admin can see the most recent and relevant info and access shortcuts</p>
-    <ul>
-        <li><a asp-page="/Requests"></a>Manage Requests</li>
-        <li><a asp-page="/Meetings"></a>Manage Meetings</li>
-        <li><a asp-page="/Users"></a>Manage Users</li>
-        <li><a asp-page="/UserRoles"></a>Manage UserRoles</li>
-        <li><a asp-page="/Tags"></a>Manage Tags</li>
-        <li><a asp-page="/Languages"></a>Manage Languages</li>
-    </ul>
+    <h1 class="display-4">
+        @ViewData["Title"]
+    </h1>
+    <p>Let's see what's new today</p>
+
+    <div class="row py-5">
+        <div class="d-flex gap-1 col-12 col-md-3 flex-column">
+            @if (admin)
+            {
+                <a asp-controller="ManageUsers" asp-action="Index" class="btn btn-outline-primary btn-sm">Users</a>
+                <a asp-page="/UserRoles" class="btn btn-outline-primary btn-sm">UserRoles</a>
+                <a asp-page="/Tags" class="btn btn-outline-primary btn-sm">Tags</a>
+                <a asp-page="/Languages" class="btn btn-outline-primary btn-sm">Languages</a>
+                @if (admin || gsr)
+                {
+                    <a asp-page="/Meetings" class="btn btn-outline-primary btn-sm">Meetings</a>
+                    <a asp-page="/Users" class="btn btn-outline-primary btn-sm">Requests</a>
+                }
+            }
+        </div>
+        <div class="col-12 col-md-9">
+            latest things here
+        </div>
+    </div>
 </div>
