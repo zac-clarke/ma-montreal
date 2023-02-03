@@ -1,43 +1,69 @@
 ﻿@model IEnumerable<MaMontreal.Models.ApplicationUser>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Manage Users";
+
 }
 
-<h1>Index</h1>
+<h1> @ViewData["Title"]</h1>
 
-@* <p>
-<a asp-action="Create">Create New</a>
-</p> *@
-<table class="table">
+<table class="table table-hover">
+
     <thead>
         <tr>
-            <th></th>
-            <th>@Html.DisplayNameFor(model => model.FirstName)</th>
-            <th>@Html.DisplayNameFor(model => model.LastName)</th>
-            <th>@Html.DisplayNameFor(model => model.SobrietyDate)</th>
-            @* <th>@Html.DisplayNameFor(model => model.UserName)</th> *@
-            <th>@Html.DisplayNameFor(model => model.Email)</th>
-            <th>@Html.DisplayNameFor(model => model.PhoneNumber)</th>
-            <th>Role</th>
+            <th scope="col">Actions</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.FirstName)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.LastName)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.SobrietyDate)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Email)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.PhoneNumber)</th>
+            <th scope="col">Role</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <td class="d-flex gap-2">
+                    @* <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-user-pen"></i></a> *@
+                    <a asp-action="EditRoles" asp-route-id="@item.Id"><i class="fa-solid fa-user-pen"></i></a>
+                    <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-eye"></i></a>
+                    <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash text-danger"></i></a>
                 </td>
                 <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
                 <td>@Html.DisplayFor(modelItem => item.LastName)</td>
-                <td>@Html.DisplayFor(modelItem => item.SobrietyDate)</td>
+                <td>@item.SobrietyDate?.ToString().Substring(0,10)</td>
                 @* <td>@Html.DisplayFor(modelItem => item.UserName)</td> *@
                 <td>@Html.DisplayFor(modelItem => item.Email)</td>
                 <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
-                <td>role, role, role</td>
+                <td>
+                    @{
+                        var roles = UserManager.GetRolesAsync(item).Result.ToArray();
+                        @if (roles != null)
+                        {
+                            if (roles.Contains("admin"))
+                            {
+                                <span class="badge bg-success">Admin</span>
+                            }
+                            else if (roles.Contains("gsr"))
+                            {
+                                <span class="badge bg-primary">GSR</span>
+                            }
+                            else if (roles.Contains("member"))
+                            {
+                                <span class="badge bg-secondary">Member</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-primary">other</span>
+                            }
+                        }
+                        else
+                        {
+                            <span> unassigned </span>
+                        }
+                    }
+                </td>
             </tr>
         }
     </tbody>

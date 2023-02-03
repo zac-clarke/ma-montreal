@@ -1,0 +1,55 @@
+@model MaMontreal.Controllers.Manage.ManageUsersController.UserWithRoles
+
+@{
+    ViewData["Title"] = "Edit Roles";
+    var user = UserManager.FindByIdAsync(Model._userId).Result;
+}
+
+<h1>@user.Email</h1>
+
+<h4>Edit User Roles</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditRoles" asp-route-id="@Model._userId">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="@Model._userId" />
+            @{
+
+                @for (int i = 0; i < Model._selectedRoles.Count; i++)
+                {
+                    @Html.CheckBoxFor(m => m._selectedRoles[i]._roleSelected)
+                    @Html.HiddenFor(m => m._selectedRoles[i]._roleName)
+                    @Html.LabelFor(m => m._selectedRoles[i]._roleSelected,
+            Model._selectedRoles[i]._roleName)
+                    <br />
+                }
+
+                @* @foreach (var hasRole in Model._hasRoleList)
+            {
+            <div class="form-check">
+            @Html.CheckBox("hasRole._hasRole", hasRole._hasRole)
+
+            <input type="hidden" asp-for="@hasRole._roleName" />
+            <input class="form-check-input" type="checkbox" asp-="@hasRole._hasRole" asp-for="@hasRole._hasRole" onclick="$(this).val(this.checked ? true : false)" />
+            <label class="form-check-label" asp-for="@hasRole._roleName">@hasRole._roleName</label>
+            </div>
+            } *@
+            }
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
