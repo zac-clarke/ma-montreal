@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using MaMontreal.Models;
 
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<MamDbContext>(options =>
@@ -16,6 +18,10 @@ builder.Services
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
+
+
 
 var app = builder.Build();
 
