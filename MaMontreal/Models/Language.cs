@@ -11,8 +11,7 @@ namespace MaMontreal.Models
     {
         public int Id { get; set; }
 
-        [Required, MaxLength(30,
-        ErrorMessage = "You must enter a Language with less than 30 characters")]
+        [Required, MaxLength(30, ErrorMessage = "You must enter a Language with less than 30 characters")]
         public string Title { get; set; }
 
         [NotMapped]

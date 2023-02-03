@@ -38,9 +38,9 @@ namespace MaMontreal.Controllers
                 Meeting.Description = "test";
                 Meeting.Address = "test";
                 Meeting.City = "test";
-                Meeting.Province = "QC";
+                Meeting.ProvinceCode = "QC";
                 Meeting.PostalCode = "test";
-                Meeting.Day = 0;
+                Meeting.DayOfWeek = 0;
                 Meeting.Date = DateTime.Now;
                 Meeting.StartTime = DateTime.Now;
                 Meeting.EndTime = DateTime.Now;
