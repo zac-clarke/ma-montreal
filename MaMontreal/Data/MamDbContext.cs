@@ -25,15 +25,25 @@ namespace MaMontreal.Data
             base.OnModelCreating(builder);
             // modelBuilder.ApplyConfiguration(new MeetingConfiguration());
 
-            // builder.Entity<Meeting>()
-            // .HasOne(m => m.Gsr)
-            // .WithMany(u => u.MeetingsLead)
-            // .HasForeignKey(m => m.Gsr);
+            builder.Entity<Meeting>()
+            .HasOne(m => m.Gsr)
+            .WithMany(au => au.MeetingsLead)
+            .HasForeignKey("GsrId");
 
-            // builder.Entity<Meeting>()
-            // .HasOne(m => m.Gsr)
-            // .WithMany(navigationExpression: u => u.MeetingsUpdated)
-            // .HasForeignKey(m => m.Gsr);
+            builder.Entity<Meeting>()
+            .HasOne(m => m.UpdatedBy)
+            .WithMany(au => au.MeetingsUpdated)
+            .HasForeignKey("UpdatedById");
+
+            builder.Entity<UserRequest>()
+            .HasOne(ur => ur.Requestee)
+            .WithMany(au => au.UserRequestsSubmitted)
+            .HasForeignKey("RequesteeId");
+
+            builder.Entity<UserRequest>()
+            .HasOne(ur => ur.RequestHandler)
+            .WithMany(au => au.UserRequestsHandled)
+            .HasForeignKey("RequestHandlerId");
         }
     }
 }

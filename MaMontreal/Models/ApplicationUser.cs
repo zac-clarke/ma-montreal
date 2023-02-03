@@ -20,10 +20,11 @@ namespace MaMontreal.Models
         public string? LastName { get; set; }
         public DateTime? SobrietyDate { get; set; }
 
-        // [NotMapped]
-        // public IEnumerable<Meeting> MeetingsLead { get; set; }
+        public IEnumerable<Meeting> MeetingsLead { get; set; }
 
-        // [NotMapped]
-        // public IEnumerable<Meeting> MeetingsUpdated { get; set; }
+        public IEnumerable<Meeting> MeetingsUpdated { get; set; }
+
+        public IEnumerable<UserRequest> UserRequestsSubmitted { get; set; }
+        public IEnumerable<UserRequest> UserRequestsHandled { get; set; }
     }
 }

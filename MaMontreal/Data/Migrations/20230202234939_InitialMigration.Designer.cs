@@ -4,6 +4,7 @@ using MaMontreal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MaMontreal.Data.Migrations
 {
     [DbContext(typeof(MamDbContext))]
-    partial class MamDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230202234939_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -426,7 +429,7 @@ namespace MaMontreal.Data.Migrations
             modelBuilder.Entity("MaMontreal.Models.Meeting", b =>
                 {
                     b.HasOne("MaMontreal.Models.ApplicationUser", "Gsr")
-                        .WithMany("MeetingsLead")
+                        .WithMany()
                         .HasForeignKey("GsrId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -444,7 +447,7 @@ namespace MaMontreal.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("MaMontreal.Models.ApplicationUser", "UpdatedBy")
-                        .WithMany("MeetingsUpdated")
+                        .WithMany()
                         .HasForeignKey("UpdatedById")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -461,11 +464,11 @@ namespace MaMontreal.Data.Migrations
             modelBuilder.Entity("MaMontreal.Models.UserRequest", b =>
                 {
                     b.HasOne("MaMontreal.Models.ApplicationUser", "RequestHandler")
-                        .WithMany("UserRequestsHandled")
+                        .WithMany()
                         .HasForeignKey("RequestHandlerId");
 
                     b.HasOne("MaMontreal.Models.ApplicationUser", "Requestee")
-                        .WithMany("UserRequestsSubmitted")
+                        .WithMany()
                         .HasForeignKey("RequesteeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -532,17 +535,6 @@ namespace MaMontreal.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("MaMontreal.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("MeetingsLead");
-
-                    b.Navigation("MeetingsUpdated");
-
-                    b.Navigation("UserRequestsHandled");
-
-                    b.Navigation("UserRequestsSubmitted");
                 });
 #pragma warning restore 612, 618
         }

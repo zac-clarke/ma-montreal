@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MaMontreal.Data;
 using MaMontreal.Models;
 using MaMontreal.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace MaMontreal.Services
 {
@@ -17,14 +18,15 @@ namespace MaMontreal.Services
             _context = context;
         }
 
-        public IEnumerable<MeetingType> GetAllMeetingTypes()
+        public async Task<IEnumerable<MeetingType>> GetAllMeetingTypes()
         {
-            return _context.MeetingTypes.AsEnumerable<MeetingType>();
+            return await _context.MeetingTypes.ToListAsync<MeetingType>();
         }
 
-        public MeetingType? GetMeetingTypeById(int id)
+        public async Task<MeetingType?> GetMeetingTypeById(int id)
         {
-            return _context.MeetingTypes.Where(mt => mt.Id == id).FirstOrDefault();
+            return await _context.MeetingTypes.Where(mt => mt.Id == id).FirstOrDefaultAsync();
+            // return _context.MeetingTypes.Where(mt => mt.Id == id).FirstOrDefault();
         }
 
         public async Task<MeetingType> CreateMeetingType(MeetingType meetingType)
@@ -34,16 +36,16 @@ namespace MaMontreal.Services
             return meetingType;
         }
 
-        public async Task<MeetingType> EditMeetingType(int id, MeetingType meetingType)
+        public async Task<MeetingType> UpdateMeetingType(int id, MeetingType meetingType)
         {
             MeetingType? oldMeetingType = _context.MeetingTypes.Where(mt => mt.Id == id).FirstOrDefault();
             if (oldMeetingType == null)
                 throw new KeyNotFoundException("No meeting type found with the id provided");
             meetingType.Id = oldMeetingType.Id;
-            return await EditMeetingType(meetingType);
+            return await UpdateMeetingType(meetingType);
         }
 
-        public async Task<MeetingType> EditMeetingType(MeetingType meetingType)
+        public async Task<MeetingType> UpdateMeetingType(MeetingType meetingType)
         {
             _context.MeetingTypes.Update(meetingType);
             await _context.SaveChangesAsync();

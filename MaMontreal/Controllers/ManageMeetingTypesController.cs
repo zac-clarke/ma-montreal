@@ -16,6 +16,7 @@ namespace MaMontreal.Controllers
     {
         private readonly MamDbContext _context;
         private readonly ILogger<ManageMeetingTypesController> _logger;
+        private MeetingTypesService _meetingTypesService;
 
         [BindProperty]
         public MeetingType MeetingType { get; set; } = new MeetingType();
@@ -24,6 +25,7 @@ namespace MaMontreal.Controllers
         {
             _context = context;
             _logger = logger;
+            _meetingTypesService = new MeetingTypesService(_context);
         }
 
         [Route("Create")]
@@ -52,8 +54,7 @@ namespace MaMontreal.Controllers
                 ModelState.Remove("Meetings");
                 if (ModelState.IsValid)
                 {
-                    MeetingTypesService MeetingTypesService = new MeetingTypesService(_context);
-                    MeetingType = MeetingTypesService.CreateMeetingType(MeetingType).Result;
+                    MeetingType = _meetingTypesService.CreateMeetingType(MeetingType).Result;
 
                     Console.WriteLine("PostCreate MeetingType Done");
                     return RedirectToPage("Manage/MeetingTypes");
@@ -72,8 +73,7 @@ namespace MaMontreal.Controllers
 
         public IActionResult Index()
         {
-            MeetingTypesService meetingTypesService = new MeetingTypesService(_context);
-            return View(meetingTypesService.GetAllMeetingTypes());
+            return View(_meetingTypesService.GetAllMeetingTypes());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
