@@ -6,12 +6,73 @@
 
 1.User Story or Task:                        ######   JULIETA   #######
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-- Update links on admin dashboard to access manage/...
-- Admin can see user lists and user details with relevant information only (name, sobriety date, e-mail, phone number, user roles)
-- Admin can manage user roles in manage/users
+- Admin can create Languages
+- Create Language Service and Repo
 - Admin can Delete Members only in manage/users
 - Cleanup leftover scaffoldin code
-- Add links to admin dashboard for easy access to what they can manage
+
+
+2.Result:
+▔▔▔▔▔▔
+V Update links on admin dashboard to access manage/...
+V Make a better Admin dashboard
+V Admin can see user lists and user details with relevant information only (name, sobriety date, e-mail, phone number, user roles)
+V Admin can manage user roles in manage/users
+ 
+
+3.Help:
+▔▔▔▔▔
+
+1.User Story or Task:                        ########   AFTAB   ####### 
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+ - Explain services and repos to Team
+ - Admin can create MeetingTypes
+ - Create UserRequest Service and Repo
+ - Admin can create a meeting (mind status as new Meeting gets created with Pending Status for other user)			
+
+2.Result:
+▔▔▔▔▔▔
+ V Created Services and Repos for MeetingTypes and Meetings
+ V Created Controller and scaffolded views for MeetingTypes and Meetings
+ V Tried Debugging database - Only Identity related tables are being created
+
+3.Help:
+▔▔▔▔▔
+
+
+1.User Story or Task:                        #######    ZAK    #########
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+ - Complete first draft of Solutions Pages
+ - Add downloadable Pdfs for Literature page (Blob Sorage)
+
+2.Result:
+▔▔▔▔▔▔
+ V Members can update their profile (name, phone number and sobriety date)
+ V Work on first draft of Index page
+ V Work on first draft of Solutions Pages
+ V Work on first draft of Literature Page
+
+3.Help:
+▔▔▔▔▔
+
+
+
+
+
+
+=============================================================================
+                                 Thursday - 2023-02-02
+=============================================================================
+
+
+1.User Story or Task:                        ######   JULIETA   #######
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+V Update links on admin dashboard to access manage/...
+V Make a better Admin dashboard
+V Admin can see user lists and user details with relevant information only (name, sobriety date, e-mail, phone number, user roles)
+V Admin can manage user roles in manage/users
+- Admin can Delete Members only in manage/users
+- Cleanup leftover scaffoldin code
 
 2.Result:
 ▔▔▔▔▔▔

@@ -18,12 +18,23 @@ namespace MaMontreal.Models
         [Display(Name = "Last Name")]
         [MaxLength(60, ErrorMessage = "Name cannot be longer than 60 characters")]
         public string? LastName { get; set; }
+
+        [DataType(DataType.DateTime)]
         public DateTime? SobrietyDate { get; set; }
 
-        // [NotMapped]
-        // public IEnumerable<Meeting> MeetingsLead { get; set; }
+        [NotMapped]
+        public string? FullName => $"{FirstName} {LastName}";
 
-        // [NotMapped]
-        // public IEnumerable<Meeting> MeetingsUpdated { get; set; }
+        [NotMapped]
+        public IEnumerable<Meeting> MeetingsLead { get; set; } = new List<Meeting>();
+
+        [NotMapped]
+        public IEnumerable<Meeting> MeetingsUpdated { get; set; } = new List<Meeting>();
+
+        [NotMapped]
+        public IEnumerable<UserRequest> UserRequestsSubmitted { get; set; } = new List<UserRequest>();
+
+        [NotMapped]
+        public IEnumerable<UserRequest> UserRequestsHandled { get; set; } = new List<UserRequest>();
     }
 }
