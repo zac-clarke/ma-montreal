@@ -19,8 +19,11 @@ namespace MaMontreal.Models
         [MaxLength(60, ErrorMessage = "Name cannot be longer than 60 characters")]
         public string? LastName { get; set; }
 
-        [Required, DataType(DataType.DateTime)]
+        [DataType(DataType.DateTime)]
         public DateTime? SobrietyDate { get; set; }
+
+        [NotMapped]
+        public string? FullName => $"{FirstName} {LastName}";
 
         [NotMapped]
         public IEnumerable<Meeting> MeetingsLead { get; set; } = new List<Meeting>();

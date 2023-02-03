@@ -76,7 +76,6 @@ namespace MaMontreal.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("SobrietyDate")
-                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -191,7 +190,7 @@ namespace MaMontreal.Data.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UpdatedById")
@@ -282,7 +281,7 @@ namespace MaMontreal.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");

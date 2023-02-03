@@ -14,7 +14,7 @@ namespace MaMontreal.Models
 
         // [Required]
         [Display(Name = "Updated At")]
-        public DateTime UpdatedAt { get; set; } = DateTime.Now;
+        public DateTime? UpdatedAt { get; set; }
 
         [Display(Name = "Deleted At")]
         public DateTime? DeletedAt { get; set; }
