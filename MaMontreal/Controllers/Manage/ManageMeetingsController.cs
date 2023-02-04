@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MaMontreal.Data;
 using MaMontreal.Models;
 using MaMontreal.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,12 +15,14 @@ namespace MaMontreal.Controllers_Manage
     public class ManageMeetingsController : Controller
     {
         private readonly MeetingsService _service;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ManageMeetingsController(MamDbContext context)
+        public ManageMeetingsController(MamDbContext context, UserManager<ApplicationUser> userManager)
         {
             try
             {
                 _service = new MeetingsService(context);
+                _userManager = userManager;
             }
             catch (SystemException ex)
             {
@@ -59,12 +62,14 @@ namespace MaMontreal.Controllers_Manage
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("District,EventName,Description,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
         {
+
+
             if (!ModelState.IsValid)
                 return View(meeting);
 
             try
             {
-                await _service.CreateMeeting(meeting, User);
+                await _service.CreateMeeting(meeting, _userManager, User);
                 return RedirectToAction(nameof(Index));
             }
             catch (ArgumentException ex)
@@ -103,7 +108,7 @@ namespace MaMontreal.Controllers_Manage
 
             try
             {
-                await _service.EditMeeting(id, meeting, User);
+                await _service.EditMeeting(id, meeting, _userManager, User);
                 return RedirectToAction(nameof(Index));
             }
             catch (NullReferenceException)
@@ -140,7 +145,7 @@ namespace MaMontreal.Controllers_Manage
         {
             try
             {
-                await _service.DeleteMeeting(id, User);
+                await _service.DeleteMeeting(id, _userManager, User);
                 return RedirectToAction(nameof(Index));
             }
             catch (NullReferenceException)
@@ -154,7 +159,7 @@ namespace MaMontreal.Controllers_Manage
         {
             try
             {
-                await _service.UnDeleteMeeting(id, User);
+                await _service.UnDeleteMeeting(id, _userManager, User);
                 return RedirectToAction(nameof(Index));
             }
             catch (NullReferenceException)

@@ -22,16 +22,10 @@
                 @Html.DisplayNameFor(model => model.EventName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address)
+                @Html.DisplayNameFor(model => model.Gsr)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.City)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProvinceCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PostalCode)
+                @Html.DisplayNameFor(model => model.MeetingType)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DayOfWeek)
@@ -69,16 +63,13 @@
                     @Html.DisplayFor(modelItem => item.EventName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Address)
+                    @Html.DisplayFor(modelItem => item.Gsr.UserName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.City)
+                    @Html.DisplayFor(modelItem => item.MeetingType)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ProvinceCode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PostalCode)
+                    @Html.DisplayFor(modelItem => item.Language)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DayOfWeek)

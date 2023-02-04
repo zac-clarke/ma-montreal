@@ -66,7 +66,7 @@ namespace MaMontreal.Controllers.Manage
                 if (ModelState.IsValid)
                 {
                     MeetingsService MeetingsService = new MeetingsService(_context);
-                    Meeting = MeetingsService.CreateMeeting(Meeting, User).Result;
+                    // Meeting = MeetingsService.CreateMeeting(Meeting, User).Result;
 
 
                     Console.WriteLine("PostCreate Meeting Done");

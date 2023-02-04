@@ -3,6 +3,7 @@ using MaMontreal.Data;
 using MaMontreal.Models;
 using MaMontreal.Models.Enums;
 using MaMontreal.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace MaMontreal.Services
@@ -29,7 +30,12 @@ namespace MaMontreal.Services
 
         public async Task<IEnumerable<Meeting>> GetAllMeetings()
         {
-            return await _context.Meetings.ToListAsync<Meeting>();
+            return await _context.Meetings
+                .Include(m => m.Gsr)
+                .Include(m => m.UpdatedBy)
+                .Include(m => m.Language)
+                .Include(m => m.MeetingType)
+                .ToListAsync<Meeting>();
         }
 
         ///<exception cref="NullReferenceException"/>
@@ -44,14 +50,17 @@ namespace MaMontreal.Services
         }
 
         ///<exception cref="ArgumentException"/>
-        public async Task<Meeting> CreateMeeting(Meeting meeting, ClaimsPrincipal User)
+        public async Task<Meeting> CreateMeeting(Meeting meeting, UserManager<ApplicationUser> userManager, ClaimsPrincipal User)
         {
             if (meeting.DayOfWeek == null && meeting.Date == null)
                 throw new ArgumentException("DayOfWeek,Day of Week and Date cannot both be empty!");
 
+            ApplicationUser curUser = userManager.GetUserAsync(User).Result;
+
             meeting.UpdatedAt = DateTime.Now;
-            meeting.UpdatedBy = User.Identity as ApplicationUser;
-            meeting.Gsr = User.Identity as ApplicationUser;
+            meeting.UpdatedBy = curUser;
+            meeting.Gsr = curUser;
+
             if (User.IsInRole("admin"))
                 meeting.Status = Statuses.Approved;
 
@@ -62,7 +71,7 @@ namespace MaMontreal.Services
 
         ///<exception cref="NullReferenceException"/>
         ///<exception cref="ArgumentException"/>
-        public async Task<Meeting> EditMeeting(int? id, Meeting meeting, ClaimsPrincipal User)
+        public async Task<Meeting> EditMeeting(int? id, Meeting meeting, UserManager<ApplicationUser> userManager, ClaimsPrincipal User)
         {
             if (id == null)
                 throw new NullReferenceException("Id cannot be null");
@@ -74,17 +83,18 @@ namespace MaMontreal.Services
             meeting.Id = id.Value;
 
             _context.Meetings.Add(meeting);
-            return await EditMeeting(meeting, User);
+            return await EditMeeting(meeting, userManager, User);
         }
 
         ///<exception cref="ArgumentException"/>
-        public async Task<Meeting> EditMeeting(Meeting meeting, ClaimsPrincipal User)
+        public async Task<Meeting> EditMeeting(Meeting meeting, UserManager<ApplicationUser> userManager, ClaimsPrincipal User)
         {
             if (meeting.DayOfWeek == null && meeting.Date == null)
                 throw new ArgumentException("DayOfWeek,Day of Week and Date cannot both be empty!");
 
+            ApplicationUser curUser = userManager.GetUserAsync(User).Result;
             meeting.UpdatedAt = DateTime.Now;
-            meeting.UpdatedBy = User.Identity as ApplicationUser;
+            meeting.UpdatedBy = curUser;
 
             _context.Meetings.Update(meeting);
             await _context.SaveChangesAsync();
@@ -92,7 +102,7 @@ namespace MaMontreal.Services
         }
 
         ///<exception cref="NullReferenceException"/>
-        public async Task<Meeting> DeleteMeeting(int? id, ClaimsPrincipal User)
+        public async Task<Meeting> DeleteMeeting(int? id, UserManager<ApplicationUser> userManager, ClaimsPrincipal User)
         {
             if (id == null)
                 throw new NullReferenceException("Id cannot be null");
@@ -101,13 +111,14 @@ namespace MaMontreal.Services
             if (meeting == null)
                 throw new NullReferenceException("No meeting type found with the id provided");
 
-            return await DeleteMeeting(meeting, User);
+            return await DeleteMeeting(meeting, userManager, User);
         }
 
-        public async Task<Meeting> DeleteMeeting(Meeting meeting, ClaimsPrincipal User)
+        public async Task<Meeting> DeleteMeeting(Meeting meeting, UserManager<ApplicationUser> userManager, ClaimsPrincipal User)
         {
+            ApplicationUser curUser = userManager.GetUserAsync(User).Result;
             meeting.UpdatedAt = DateTime.Now;
-            meeting.UpdatedBy = User.Identity as ApplicationUser;
+            meeting.UpdatedBy = curUser;
             meeting.DeletedAt = DateTime.Now;
 
             _context.Meetings.Update(meeting);
@@ -116,7 +127,7 @@ namespace MaMontreal.Services
         }
 
         ///<exception cref="NullReferenceException"/>
-        public async Task<Meeting> UnDeleteMeeting(int? id, ClaimsPrincipal User)
+        public async Task<Meeting> UnDeleteMeeting(int? id, UserManager<ApplicationUser> userManager, ClaimsPrincipal User)
         {
             if (id == null)
                 throw new NullReferenceException("Id cannot be null");
@@ -125,13 +136,14 @@ namespace MaMontreal.Services
             if (meeting == null)
                 throw new NullReferenceException("No meeting type found with the id provided");
 
-            return await UnDeleteMeeting(meeting, User);
+            return await UnDeleteMeeting(meeting, userManager, User);
         }
 
-        public async Task<Meeting> UnDeleteMeeting(Meeting meeting, ClaimsPrincipal User)
+        public async Task<Meeting> UnDeleteMeeting(Meeting meeting, UserManager<ApplicationUser> userManager, ClaimsPrincipal User)
         {
+            ApplicationUser curUser = userManager.GetUserAsync(User).Result;
             meeting.UpdatedAt = DateTime.Now;
-            meeting.UpdatedBy = User.Identity as ApplicationUser;
+            meeting.UpdatedBy = curUser;
             meeting.DeletedAt = null;
 
             _context.Meetings.Update(meeting);
