@@ -109,6 +109,7 @@ namespace MaMontreal.Controllers.Manage
 
         private async Task<UserWithRoles> PrepareView(string id)
         {
+            var sth = await _userManager.FindByIdAsync(id);
             var user = await _context.Users.FindAsync(id);
             var userRoles = await _userManager.GetRolesAsync(user);
             var appRoles = _context.Roles.Select(x => x.Name).ToListAsync().Result;
