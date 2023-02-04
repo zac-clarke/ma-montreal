@@ -9,6 +9,7 @@ using MaMontreal.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
+//TODO: DELETE THIS FILE
 namespace MaMontreal.Controllers.Manage
 {
     [Route("_A_Manage/MeetingTypes/")]

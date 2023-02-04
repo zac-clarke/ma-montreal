@@ -4,7 +4,7 @@ using MaMontreal.Models;
 using MaMontreal.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
+//TODO: DELETE THIS FILE
 namespace MaMontreal.Controllers.Manage
 {
     [Route("_A_Manage/Meetings/")]
