@@ -65,11 +65,8 @@ namespace MaMontreal.Controllers.Manage
                 ModelState.Remove("Meeting.UpdatedBy");
                 if (ModelState.IsValid)
                 {
-                    UsersService usersService = new UsersService(_context);
-                    ApplicationUser user = usersService.GetCurrentUser(User);
-
                     MeetingsService MeetingsService = new MeetingsService(_context);
-                    Meeting = MeetingsService.CreateMeeting(Meeting, user).Result;
+                    Meeting = MeetingsService.CreateMeeting(Meeting, User).Result;
 
 
                     Console.WriteLine("PostCreate Meeting Done");

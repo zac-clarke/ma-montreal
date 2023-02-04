@@ -13,16 +13,13 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.District)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EventName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageUrl)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Address)
@@ -52,13 +49,7 @@
                 @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeletedAt)
+                Disabled
             </th>
             <th></th>
         </tr>
@@ -68,17 +59,14 @@
         {
             <tr>
                 <td>
+                    <img src="@item.ImageUrl" alt="Image" style="width: 100px; height: 100px;" />
+                    @* @Html.DisplayFor(modelItem => item.ImageUrl) *@
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.District)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.EventName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    <img src="@item.ImageUrl" alt="Image" style="width: 100px; height: 100px;" />
-                    @* @Html.DisplayFor(modelItem => item.ImageUrl) *@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Address)
@@ -107,19 +95,23 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Status)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreatedAt)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UpdatedAt)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DeletedAt)
+                <td class="text-center">
+                    @if(item.DeletedAt != null) 
+                    {
+                        <i class="fa-sharp fa-solid fa-xmark text-danger"></i>
+                    }
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    @if(item.DeletedAt == null)
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    }
+                    else
+                    {
+                        <a asp-action="UnDelete" asp-route-id="@item.Id">Undelete</a>
+                    }
                 </td>
             </tr>
         }
