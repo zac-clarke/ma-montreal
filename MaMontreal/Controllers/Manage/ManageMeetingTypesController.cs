@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MaMontreal.Controllers;
 using MaMontreal.Data;
 using MaMontreal.Models;
 using MaMontreal.Services;
@@ -86,7 +87,7 @@ namespace MaMontreal.Controllers_Manage
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Title")] MeetingType meetingType)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title")] MeetingType meetingType)
         {
             if (!ModelState.IsValid)
                 return View(meetingType);
@@ -98,7 +99,12 @@ namespace MaMontreal.Controllers_Manage
             }
             catch (NullReferenceException)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                ModelState.AddModelError("Id", "Looks like someone else edited/delete this Meeting Type!");
+                return View(meetingType);
             }
         }
 
@@ -111,7 +117,7 @@ namespace MaMontreal.Controllers_Manage
             }
             catch (NullReferenceException)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -127,7 +133,7 @@ namespace MaMontreal.Controllers_Manage
             }
             catch (NullReferenceException)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
         }
 

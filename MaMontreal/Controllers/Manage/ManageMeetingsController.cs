@@ -62,8 +62,6 @@ namespace MaMontreal.Controllers_Manage
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("District,EventName,Description,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
         {
-
-
             if (!ModelState.IsValid)
                 return View(meeting);
 
@@ -101,7 +99,7 @@ namespace MaMontreal.Controllers_Manage
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("District,EventName,Description,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,District,EventName,Description,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
         {
             if (!ModelState.IsValid)
                 return View(meeting);
@@ -114,6 +112,11 @@ namespace MaMontreal.Controllers_Manage
             catch (NullReferenceException)
             {
                 return NotFound();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                ModelState.AddModelError("Id", "Looks like someone else edited/delete this Meeting!");
+                return View(meeting);
             }
             catch (ArgumentException ex)
             {
