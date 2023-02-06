@@ -65,6 +65,10 @@ namespace MaMontreal.Models
         // [Required]
         public Language? Language { get; set; }
 
+        [NotMapped]
+        [Display(Name = "Meeting Type")]
+        public int? _MeetingTypeId { get; set; }
+
         // [Required]
         [Display(Name = "Meeting Type")]
         public MeetingType? MeetingType { get; set; }

@@ -103,7 +103,7 @@ namespace MaMontreal.Controllers_Manage
             }
             catch (DbUpdateConcurrencyException)
             {
-                ModelState.AddModelError("Id", "Looks like someone else edited/delete this Meeting Type!");
+                ModelState.AddModelError("Id", "Looks like someone else edited/deleted this Meeting Type!");
                 return View(meetingType);
             }
         }

@@ -16,6 +16,7 @@ namespace MaMontreal.Controllers_Manage
     {
         private readonly MeetingsService _service;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly List<MeetingType> _meetingTypes;
 
         public ManageMeetingsController(MamDbContext context, UserManager<ApplicationUser> userManager)
         {
@@ -23,6 +24,8 @@ namespace MaMontreal.Controllers_Manage
             {
                 _service = new MeetingsService(context);
                 _userManager = userManager;
+
+                _meetingTypes = context.MeetingTypes.ToList<MeetingType>();
             }
             catch (SystemException ex)
             {
@@ -52,6 +55,7 @@ namespace MaMontreal.Controllers_Manage
         // GET: ManageMeetings/Create
         public IActionResult Create()
         {
+            ViewBag.MeetingTypes = _meetingTypes;
             return View();
         }
 
@@ -60,8 +64,10 @@ namespace MaMontreal.Controllers_Manage
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("District,EventName,Description,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
+        public async Task<IActionResult> Create([Bind("District,EventName,Description,_MeetingTypeId,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
         {
+            ViewBag.MeetingTypes = _meetingTypes;
+
             if (!ModelState.IsValid)
                 return View(meeting);
 
@@ -85,7 +91,9 @@ namespace MaMontreal.Controllers_Manage
         {
             try
             {
+                ViewBag.MeetingTypes = _meetingTypes;
                 var meeting = await _service.GetMeetingById(id);
+                meeting._MeetingTypeId = meeting.MeetingType.Id;
                 return View(meeting);
             }
             catch (NullReferenceException ex)
@@ -99,8 +107,9 @@ namespace MaMontreal.Controllers_Manage
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,District,EventName,Description,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,District,EventName,Description,_MeetingTypeId,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
         {
+            ViewBag.MeetingTypes = _meetingTypes;
             if (!ModelState.IsValid)
                 return View(meeting);
 
