@@ -58,11 +58,17 @@ namespace MaMontreal.Services
         ///<exception cref="ArgumentException"/>
         public async Task<Meeting> CreateMeeting(Meeting meeting, UserManager<ApplicationUser> userManager, ClaimsPrincipal User)
         {
+            ApplicationUser curUser = userManager.GetUserAsync(User).Result;
+            MeetingType meetingType = _context.MeetingTypes.Where(mt => mt.Id == meeting._MeetingTypeId).FirstOrDefault();
+
             if (meeting.DayOfWeek == null && meeting.Date == null)
                 throw new ArgumentException("DayOfWeek,Day of Week and Date cannot both be empty!");
+            else if (curUser == null)
+                throw new ArgumentException("Current User is invalid!");
+            else if (meetingType == null)
+                throw new ArgumentException("Meeting Type is invalid!");
 
-            ApplicationUser curUser = userManager.GetUserAsync(User).Result;
-
+            meeting.MeetingType = meetingType;
             meeting.UpdatedAt = DateTime.Now;
             meeting.UpdatedBy = curUser;
             meeting.Gsr = curUser;
@@ -83,22 +89,27 @@ namespace MaMontreal.Services
                 throw new NullReferenceException("Id cannot be null");
             // if (_context.Meetings.Find(id.Value) == null)
             //     throw new NullReferenceException("No Meeting Type found with id " + id.Value);
-            if (meeting.DayOfWeek == null && meeting.Date == null)
-                throw new ArgumentException("DayOfWeek,Day of Week and Date cannot both be empty!");
 
             meeting.Id = id.Value;
 
-            _context.Meetings.Add(meeting);
+            // _context.Meetings.Add(meeting);
             return await EditMeeting(meeting, userManager, User);
         }
 
         ///<exception cref="ArgumentException"/>
         public async Task<Meeting> EditMeeting(Meeting meeting, UserManager<ApplicationUser> userManager, ClaimsPrincipal User)
         {
+            ApplicationUser curUser = userManager.GetUserAsync(User).Result;
+            MeetingType meetingType = _context.MeetingTypes.Where(mt => mt.Id == meeting._MeetingTypeId).FirstOrDefault();
+
             if (meeting.DayOfWeek == null && meeting.Date == null)
                 throw new ArgumentException("DayOfWeek,Day of Week and Date cannot both be empty!");
+            else if (curUser == null)
+                throw new ArgumentException("Current User is invalid!");
+            else if (meetingType == null)
+                throw new ArgumentException("Meeting Type is invalid!");
 
-            ApplicationUser curUser = userManager.GetUserAsync(User).Result;
+            meeting.MeetingType = meetingType;
             meeting.UpdatedAt = DateTime.Now;
             meeting.UpdatedBy = curUser;
 
