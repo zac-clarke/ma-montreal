@@ -1,6 +1,72 @@
 
+
 =============================================================================
-                                 Thursday - 2023-02-02
+                                 Monday - 2023-02-06
+=============================================================================
+
+
+1.User Story or Task:                        ######   JULIETA   #######
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+
+- Create User Service and Repo
+- Create Language Service and Repo
+- Admin can Delete Members only in manage/users
+- Cleanup leftover scaffoldin code
+
+
+2.Result:
+▔▔▔▔▔▔
+- Scaffolding All Entities
+- Admin can create Languages
+ 
+
+3.Help:
+▔▔▔▔▔
+
+1.User Story or Task:                        ########   AFTAB   ####### 
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+- Applicant can select meeting Language
+- Applicant can select meeting MeetingType
+- Test meeting validation
+		
+
+2.Result:
+▔▔▔▔▔▔
+V Explain services and repos to Team
+v Debugged Database - dropped, fixed, remigrated, and recreated
+v Admin can CRUD MeetingTypes
+V ReCreated Services and Repos for MeetingTypes and Meetings
+V ReCreated Controller and scaffolded views for MeetingTypes and Meetings
+V Admin can CRUD meetings
+V DayOfWeek and Date cannot both be null
+V New meetings by the admin get the Approved status
+V Admin can now delete and undelete meetings - still needs work
+V Creator of meeting is assigned as Gsr
+V Added DbConcurrencyException handling for Meetings and MeetingTypes
+V Make statuses, province codes, and DayOfWeek Enums and get them to appear in the <Select>
+
+3.Help:
+▔▔▔▔▔
+
+
+1.User Story or Task:                        #######    ZAK    #########
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+- Implement Meeting Calendar
+
+
+2.Result:
+▔▔▔▔▔▔
+ V Complete first draft of Solutions Pages
+ V Add downloadable Pdfs for Literature page (Blob Sorage)
+
+3.Help:
+▔▔▔▔▔
+
+
+
+
+=============================================================================
+                                 Friday - 2023-02-03
 =============================================================================
 
 
