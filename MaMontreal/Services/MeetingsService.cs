@@ -31,11 +31,11 @@ namespace MaMontreal.Services
         public async Task<IEnumerable<Meeting>> GetAllMeetings()
         {
             return await _context.Meetings
-                .Include(m => m.Gsr)
-                .Include(m => m.UpdatedBy)
-                .Include(m => m.Language)
-                .Include(m => m.MeetingType)
-                .ToListAsync<Meeting>();
+                                .Include(m => m.Gsr)
+                                .Include(m => m.UpdatedBy)
+                                .Include(m => m.Language)
+                                .Include(m => m.MeetingType)
+                                .ToListAsync<Meeting>();
         }
 
         ///<exception cref="NullReferenceException"/>
@@ -43,7 +43,13 @@ namespace MaMontreal.Services
         {
             if (id == null)
                 throw new NullReferenceException("Id cannot be null");
-            Meeting? meeting = await _context.Meetings.Where(mt => mt.Id == id).FirstOrDefaultAsync();
+            Meeting? meeting = await _context.Meetings
+                                            .Where(mt => mt.Id == id)
+                                            .Include(m => m.Gsr)
+                                            .Include(m => m.UpdatedBy)
+                                            .Include(m => m.Language)
+                                            .Include(m => m.MeetingType)
+                                            .FirstOrDefaultAsync();
             if (meeting == null)
                 throw new NullReferenceException("No Meeting found with the id " + id);
             return meeting;
