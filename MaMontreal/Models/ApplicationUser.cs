@@ -21,7 +21,7 @@ namespace MaMontreal.Models
 
         [DataType(DataType.DateTime)]
         public DateTime? SobrietyDate { get; set; }
-
+        [Display(Name = "Full Name")]
         [NotMapped]
         public string? FullName => $"{FirstName} {LastName}";
 

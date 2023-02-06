@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using MaMontreal.Data;
 using MaMontreal.Models;
+using MaMontreal.Models.NotMapped;
+using MaMontreal.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,9 +18,21 @@ namespace MaMontreal.Controllers.Manage
     {
         private readonly MamDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UsersService _usersService;
 
-        public ManageUsersController(MamDbContext context, UserManager<ApplicationUser> userManager)
+        public ManageUsersController(
+            MamDbContext context,
+            UserManager<ApplicationUser> userManager)
         {
+            try
+            {
+                _usersService = new UsersService(context, userManager);
+            }
+            catch (SystemException ex)
+            {
+                Problem(ex.Message);
+            }
+            //tjhese might go
             _context = context;
             _userManager = userManager;
         }
@@ -28,154 +42,94 @@ namespace MaMontreal.Controllers.Manage
         [Route("")]
         public async Task<IActionResult> Index()
         {
-            //Test
-
-            Meeting meeting = new Meeting();
-            if (_context.Entry(meeting).State == EntityState.Added)
+            try
             {
-                meeting.UpdatedAt = DateTime.Now;
-                Console.WriteLine("/////////////////////////////////Already Added");
+                return View(_usersService.GetAllAsync().Result);
             }
-            else
+            catch (SystemException ex)
             {
-                Console.WriteLine("/////////////////////////////////Not already Added");
+                return NotFound(ex.Message);
             }
-
-
-
-            return _context.Users != null ?
-                        View(await _context.Users.ToListAsync()) :
-                        Problem("Entity set 'TestDbContext.Users'  is null.");
         }
 
-
-        // GET: User/Details/ID
+        // GET: Manage/Users/Details?id
         [Route("Details")]
         public async Task<IActionResult> Details(string id)
         {
-            if (id == null || _context.Users == null)
+            try
             {
-                return NotFound();
+                return View(await _usersService.GetAsync(id));
             }
-
-            var applicationUser = await _context.Users
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (applicationUser == null)
+            catch (NullReferenceException ex)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
-
-            return View(applicationUser);
-        }
-        ///////////////////////////////////////////////////////////////////////////////////// Edit Roles ///////////////////////////////////////////////////////////////////////////////
-        //Custom class to bind to
-        public class UserWithRoles
-        {
-            public string _userId { get; set; }
-            public List<ManagedRole> _selectedRoles { get; set; }
-        }
-        public class ManagedRole
-        {
-            public string _roleName { get; set; }
-            public bool _roleSelected { get; set; } = false;
         }
 
-
+        // GET: Manage/Users/EditRoles/?id
         [Route("EditRoles")]
         public async Task<IActionResult> EditRoles(string id)
         {
-
-            UserWithRoles userWithRoles = PrepareView(id).Result;
-            return View(userWithRoles);
+            try
+            {
+                UserWithRoles userWithRoles = await _usersService.GetUserWithRolesAsync(id);
+                return View(userWithRoles);
+            }
+            catch (NullReferenceException ex)
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
 
+        // POST: Manage/Users/EditRoles/?id
         [Route("EditRoles")]
         [HttpPost]
         public async Task<IActionResult> EditRoles(string id, UserWithRoles userWithRoles)
         {
-            UserWithRoles refreshUserWithRoles = PrepareView(id).Result;
-            userWithRoles._selectedRoles.ForEach(x => Console.WriteLine(x._roleName + " " + x._roleSelected));
-            var user = await _context.Users.FindAsync(id);
-            foreach (var role in userWithRoles._selectedRoles)
+            try
             {
-                if (role._roleSelected)
-                    await _userManager.AddToRoleAsync(user, role._roleName);
-                else
-                    await _userManager.RemoveFromRoleAsync(user, role._roleName);
+                UserWithRoles refreshUserWithRoles = await _usersService.GetUserWithRolesAsync(id);
+                await _usersService.UpdateRolesForUserAsync(id, userWithRoles);
+                TempData["rolesSaved"] = "Changes are saved";
+                return View(refreshUserWithRoles);
             }
-            TempData["rolesSaved"] = "Changed roles saved";
-            return View(refreshUserWithRoles);
+            catch (NullReferenceException ex)
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
 
-        private async Task<UserWithRoles> PrepareView(string id)
-        {
-            var sth = await _userManager.FindByIdAsync(id);
-            var user = await _context.Users.FindAsync(id);
-            var userRoles = await _userManager.GetRolesAsync(user);
-            var appRoles = _context.Roles.Select(x => x.Name).ToListAsync().Result;
-            List<ManagedRole> currentUserRoles = new List<ManagedRole>();
-            foreach (var role in appRoles)
-            {
-                ManagedRole newRole = new ManagedRole() { _roleName = role, _roleSelected = false };
-                if (userRoles.Contains(role))
-                    newRole._roleSelected = true;
-
-                currentUserRoles.Add(newRole);
-            }
-            UserWithRoles userWithRoles = new UserWithRoles()
-            {
-                _userId = user.Id,
-                _selectedRoles = currentUserRoles
-            };
-
-            return userWithRoles;
-        }
-
-        ///////////////////////////////////////////////////////////////////////////////////// End Edit Roles ///////////////////////////////////////////////////////////////////////////////
-
-        // GET: User/Delete/5
+        // GET: Manage/Users/Delete/?id
         [Route("Delete")]
         public async Task<IActionResult> Delete(string id)
         {
-            if (id == null || _context.Users == null)
+            try
             {
-                return NotFound();
+                var applicationUser = await _usersService.GetAsync(id);
+                return View(applicationUser);
             }
-
-            var applicationUser = await _context.Users
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (applicationUser == null)
+            catch (NullReferenceException ex)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
-
-            return View(applicationUser);
         }
 
-        // POST: User/Delete/5
+
+        // POST: Manage/Users/Delete/?id
         [Route("Delete")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            if (_context.Users == null)
+            try
             {
-                return Problem("Entity set 'TestDbContext.Users'  is null.");
+                await _usersService.DeleteAsync(id);
+                return RedirectToAction(nameof(Index));
             }
-            var applicationUser = await _context.Users.FindAsync(id);
-            if (applicationUser != null)
+            catch (NullReferenceException ex)
             {
-                _context.Users.Remove(applicationUser);
+                return RedirectToAction(nameof(Index));
             }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
-
-        private bool ApplicationUserExists(string id)
-        {
-            return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
-
     }
 }
