@@ -35,7 +35,6 @@ if (!app.Environment.IsDevelopment())
 }
 else
 {
-    Console.WriteLine("HERE");
     app.UseDeveloperExceptionPage();
 }
 

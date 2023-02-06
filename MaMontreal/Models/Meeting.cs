@@ -33,9 +33,7 @@ namespace MaMontreal.Models
 
         [Required]
         [Display(Name = "Province Code")]
-        [MinLength(2, ErrorMessage = "Province Code must be 2-3 characters")]
-        [MaxLength(3, ErrorMessage = "Province Code must be 2-3 characters")]
-        public string ProvinceCode { get; set; }
+        public ProvinceCodes ProvinceCode { get; set; }
 
         [Required]
         [MinLength(6, ErrorMessage = "Postal Code cannot be shorter than 6 characters")]
@@ -46,7 +44,7 @@ namespace MaMontreal.Models
 
         [Display(Name = "Day of Week")]
         [Range(minimum: 0, maximum: 6, ErrorMessage = "Day of Week must be between 0 and 6")]
-        public int? DayOfWeek { get; set; }
+        public DaysOfWeek? DayOfWeek { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime? Date { get; set; }

@@ -2,47 +2,51 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MaMontreal.Data;
+using MaMontreal.Models;
+using MaMontreal.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using MaMontreal.Data;
-using MaMontreal.Models;
 
 namespace MaMontreal.Controllers_Manage
 {
     public class ManageMeetingsController : Controller
     {
-        private readonly MamDbContext _context;
+        private readonly MeetingsService _service;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ManageMeetingsController(MamDbContext context)
+        public ManageMeetingsController(MamDbContext context, UserManager<ApplicationUser> userManager)
         {
-            _context = context;
+            try
+            {
+                _service = new MeetingsService(context);
+                _userManager = userManager;
+            }
+            catch (SystemException ex)
+            {
+                Problem(ex.Message);
+            }
         }
 
         // GET: ManageMeetings
         public async Task<IActionResult> Index()
         {
-              return _context.Meetings != null ? 
-                          View(await _context.Meetings.ToListAsync()) :
-                          Problem("Entity set 'MamDbContext.Meetings'  is null.");
+            return View(await _service.GetAllMeetings());
         }
 
         // GET: ManageMeetings/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Meetings == null)
+            try
             {
-                return NotFound();
+                return View(await _service.GetMeetingById(id));
             }
-
-            var meeting = await _context.Meetings
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (meeting == null)
+            catch (NullReferenceException ex)
             {
-                return NotFound();
+                return NotFound(ex.Message);
             }
-
-            return View(meeting);
         }
 
         // GET: ManageMeetings/Create
@@ -56,31 +60,38 @@ namespace MaMontreal.Controllers_Manage
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,District,EventName,Description,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status,CreatedAt,UpdatedAt,DeletedAt")] Meeting meeting)
+        public async Task<IActionResult> Create([Bind("District,EventName,Description,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return View(meeting);
+
+            try
             {
-                _context.Add(meeting);
-                await _context.SaveChangesAsync();
+                await _service.CreateMeeting(meeting, _userManager, User);
                 return RedirectToAction(nameof(Index));
             }
-            return View(meeting);
+            catch (ArgumentException ex)
+            {
+                string[] exception = ex.Message.Split(",");
+                string key = exception[0];
+                string message = exception[1];
+                ModelState.AddModelError(key, message);
+                return View(meeting);
+            }
         }
 
         // GET: ManageMeetings/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Meetings == null)
+            try
             {
-                return NotFound();
+                var meeting = await _service.GetMeetingById(id);
+                return View(meeting);
             }
-
-            var meeting = await _context.Meetings.FindAsync(id);
-            if (meeting == null)
+            catch (NullReferenceException ex)
             {
-                return NotFound();
+                return NotFound(ex.Message);
             }
-            return View(meeting);
         }
 
         // POST: ManageMeetings/Edit/5
@@ -88,52 +99,46 @@ namespace MaMontreal.Controllers_Manage
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,District,EventName,Description,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status,CreatedAt,UpdatedAt,DeletedAt")] Meeting meeting)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,District,EventName,Description,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
         {
-            if (id != meeting.Id)
+            if (!ModelState.IsValid)
+                return View(meeting);
+
+            try
+            {
+                await _service.EditMeeting(id, meeting, _userManager, User);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (NullReferenceException)
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            catch (DbUpdateConcurrencyException)
             {
-                try
-                {
-                    _context.Update(meeting);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MeetingExists(meeting.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                ModelState.AddModelError("Id", "Looks like someone else edited/delete this Meeting!");
+                return View(meeting);
             }
-            return View(meeting);
+            catch (ArgumentException ex)
+            {
+                string[] exception = ex.Message.Split(",");
+                string key = exception[0];
+                string message = exception[1];
+                ModelState.AddModelError(key, message);
+                return View(meeting);
+            }
         }
 
         // GET: ManageMeetings/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Meetings == null)
+            try
+            {
+                return View(await _service.GetMeetingById(id));
+            }
+            catch (NullReferenceException)
             {
                 return NotFound();
             }
-
-            var meeting = await _context.Meetings
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (meeting == null)
-            {
-                return NotFound();
-            }
-
-            return View(meeting);
         }
 
         // POST: ManageMeetings/Delete/5
@@ -141,23 +146,34 @@ namespace MaMontreal.Controllers_Manage
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Meetings == null)
+            try
             {
-                return Problem("Entity set 'MamDbContext.Meetings'  is null.");
+                await _service.DeleteMeeting(id, _userManager, User);
+                return RedirectToAction(nameof(Index));
             }
-            var meeting = await _context.Meetings.FindAsync(id);
-            if (meeting != null)
+            catch (NullReferenceException)
             {
-                _context.Meetings.Remove(meeting);
+                return NotFound();
             }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+        }
+
+        // GET: ManageMeetings/UnDelete/5
+        public async Task<IActionResult> UnDelete(int? id)
+        {
+            try
+            {
+                await _service.UnDeleteMeeting(id, _userManager, User);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (NullReferenceException)
+            {
+                return NotFound();
+            }
         }
 
         private bool MeetingExists(int id)
         {
-          return (_context.Meetings?.Any(e => e.Id == id)).GetValueOrDefault();
+            return _service.MeetingExists(id);
         }
     }
 }

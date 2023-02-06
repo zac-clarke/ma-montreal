@@ -2,47 +2,49 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MaMontreal.Controllers;
+using MaMontreal.Data;
+using MaMontreal.Models;
+using MaMontreal.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using MaMontreal.Data;
-using MaMontreal.Models;
 
 namespace MaMontreal.Controllers_Manage
 {
     public class ManageMeetingTypesController : Controller
     {
-        private readonly MamDbContext _context;
+        private readonly MeetingTypesService _service;
 
         public ManageMeetingTypesController(MamDbContext context)
         {
-            _context = context;
+            try
+            {
+                _service = new MeetingTypesService(context);
+            }
+            catch (SystemException ex)
+            {
+                Problem(ex.Message);
+            }
         }
 
         // GET: ManageMeetingTypes
         public async Task<IActionResult> Index()
         {
-              return _context.MeetingTypes != null ? 
-                          View(await _context.MeetingTypes.ToListAsync()) :
-                          Problem("Entity set 'MamDbContext.MeetingTypes'  is null.");
+            return View(await _service.GetAllMeetingTypes());
         }
 
         // GET: ManageMeetingTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.MeetingTypes == null)
+            try
             {
-                return NotFound();
+                return View(await _service.GetMeetingTypeById(id));
             }
-
-            var meetingType = await _context.MeetingTypes
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (meetingType == null)
+            catch (NullReferenceException ex)
             {
-                return NotFound();
+                return NotFound(ex.Message);
             }
-
-            return View(meetingType);
         }
 
         // GET: ManageMeetingTypes/Create
@@ -56,12 +58,11 @@ namespace MaMontreal.Controllers_Manage
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title")] MeetingType meetingType)
+        public async Task<IActionResult> Create([Bind("Title")] MeetingType meetingType)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(meetingType);
-                await _context.SaveChangesAsync();
+                await _service.CreateMeetingType(meetingType);
                 return RedirectToAction(nameof(Index));
             }
             return View(meetingType);
@@ -70,17 +71,15 @@ namespace MaMontreal.Controllers_Manage
         // GET: ManageMeetingTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.MeetingTypes == null)
+            try
             {
-                return NotFound();
+                var meetingType = await _service.GetMeetingTypeById(id);
+                return View(meetingType);
             }
-
-            var meetingType = await _context.MeetingTypes.FindAsync(id);
-            if (meetingType == null)
+            catch (NullReferenceException ex)
             {
-                return NotFound();
+                return NotFound(ex.Message);
             }
-            return View(meetingType);
         }
 
         // POST: ManageMeetingTypes/Edit/5
@@ -90,50 +89,36 @@ namespace MaMontreal.Controllers_Manage
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title")] MeetingType meetingType)
         {
-            if (id != meetingType.Id)
-            {
-                return NotFound();
-            }
+            if (!ModelState.IsValid)
+                return View(meetingType);
 
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    _context.Update(meetingType);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MeetingTypeExists(meetingType.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                await _service.EditMeetingType(id, meetingType);
                 return RedirectToAction(nameof(Index));
             }
-            return View(meetingType);
+            catch (NullReferenceException)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                ModelState.AddModelError("Id", "Looks like someone else edited/delete this Meeting Type!");
+                return View(meetingType);
+            }
         }
 
         // GET: ManageMeetingTypes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.MeetingTypes == null)
+            try
             {
-                return NotFound();
+                return View(await _service.GetMeetingTypeById(id));
             }
-
-            var meetingType = await _context.MeetingTypes
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (meetingType == null)
+            catch (NullReferenceException)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
-
-            return View(meetingType);
         }
 
         // POST: ManageMeetingTypes/Delete/5
@@ -141,23 +126,20 @@ namespace MaMontreal.Controllers_Manage
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.MeetingTypes == null)
+            try
             {
-                return Problem("Entity set 'MamDbContext.MeetingTypes'  is null.");
+                await _service.DeleteMeetingType(id);
+                return RedirectToAction(nameof(Index));
             }
-            var meetingType = await _context.MeetingTypes.FindAsync(id);
-            if (meetingType != null)
+            catch (NullReferenceException)
             {
-                _context.MeetingTypes.Remove(meetingType);
+                return RedirectToAction(nameof(Index));
             }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool MeetingTypeExists(int id)
         {
-          return (_context.MeetingTypes?.Any(e => e.Id == id)).GetValueOrDefault();
+            return _service.MeetingTypeExists(id);
         }
     }
 }

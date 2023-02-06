@@ -13,9 +13,20 @@ namespace MaMontreal.Services
     {
         private readonly MamDbContext _context;
 
+        ///<exception cref="NullReferenceException"/>
+        ///<exception cref="ArgumentException"/>
         public MeetingTypesService(MamDbContext context)
         {
+            if (context == null)
+                throw new NullReferenceException("Database context is null!");
+            if (context.MeetingTypes == null)
+                throw new ArgumentException("MeetingTypes Entity is null!");
             _context = context;
+        }
+
+        public bool MeetingTypeExists(int id)
+        {
+            return (_context.MeetingTypes?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
         public async Task<IEnumerable<MeetingType>> GetAllMeetingTypes()
@@ -23,10 +34,15 @@ namespace MaMontreal.Services
             return await _context.MeetingTypes.ToListAsync<MeetingType>();
         }
 
-        public async Task<MeetingType?> GetMeetingTypeById(int id)
+        ///<exception cref="NullReferenceException"/>
+        public async Task<MeetingType> GetMeetingTypeById(int? id)
         {
-            return await _context.MeetingTypes.Where(mt => mt.Id == id).FirstOrDefaultAsync();
-            // return _context.MeetingTypes.Where(mt => mt.Id == id).FirstOrDefault();
+            if (id == null)
+                throw new NullReferenceException("Id cannot be null");
+            MeetingType? meetingType = await _context.MeetingTypes.Where(mt => mt.Id == id).FirstOrDefaultAsync();
+            if (meetingType == null)
+                throw new NullReferenceException("No MeetingType found with the id " + id);
+            return meetingType;
         }
 
         public async Task<MeetingType> CreateMeetingType(MeetingType meetingType)
@@ -36,27 +52,35 @@ namespace MaMontreal.Services
             return meetingType;
         }
 
-        public async Task<MeetingType> UpdateMeetingType(int id, MeetingType meetingType)
+        ///<exception cref="NullReferenceException"/>
+        public async Task<MeetingType> EditMeetingType(int? id, MeetingType meetingType)
         {
-            MeetingType? oldMeetingType = _context.MeetingTypes.Where(mt => mt.Id == id).FirstOrDefault();
-            if (oldMeetingType == null)
-                throw new KeyNotFoundException("No meeting type found with the id provided");
-            meetingType.Id = oldMeetingType.Id;
-            return await UpdateMeetingType(meetingType);
+            if (id == null)
+                throw new NullReferenceException("Id cannot be null");
+            // if (_context.MeetingTypes.Find(id.Value) == null)
+            //     throw new NullReferenceException("No Meeting Type found with id " + id.Value);
+
+            meetingType.Id = id.Value;
+            return await EditMeetingType(meetingType);
         }
 
-        public async Task<MeetingType> UpdateMeetingType(MeetingType meetingType)
+        public async Task<MeetingType> EditMeetingType(MeetingType meetingType)
         {
             _context.MeetingTypes.Update(meetingType);
             await _context.SaveChangesAsync();
             return meetingType;
         }
 
-        public async Task<MeetingType> DeleteMeetingType(int id)
+        ///<exception cref="NullReferenceException"/>
+        public async Task<MeetingType> DeleteMeetingType(int? id)
         {
+            if (id == null)
+                throw new NullReferenceException("Id cannot be null");
+
             MeetingType? meetingType = _context.MeetingTypes.Where(mt => mt.Id == id).FirstOrDefault();
             if (meetingType == null)
-                throw new KeyNotFoundException("No meeting type found with the id provided");
+                throw new NullReferenceException("No meeting type found with the id provided");
+
             return await DeleteMeetingType(meetingType);
         }
 
