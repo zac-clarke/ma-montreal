@@ -84,8 +84,13 @@ namespace MaMontreal.Services
             return await DeleteMeetingType(meetingType);
         }
 
+        ///<exception cref="DbUpdateException"/>
         public async Task<MeetingType> DeleteMeetingType(MeetingType meetingType)
         {
+            int numMeetingsWithThisType = _context.Meetings.Where(m => m.MeetingType.Id == meetingType.Id).Count();
+            if (numMeetingsWithThisType > 0)
+                throw new DbUpdateException("Cannot delete this Meeting Type. There are meetings of this Type!");
+
             _context.MeetingTypes.Remove(meetingType);
             await _context.SaveChangesAsync();
             return meetingType;

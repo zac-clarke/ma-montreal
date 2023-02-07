@@ -18,6 +18,11 @@
             @Html.DisplayFor(model => model.Title)
         </dd>
     </dl>
+
+    @if(ViewBag.error != null)
+    {
+        <p class="alert alert-danger">@ViewBag.error</p>
+    }
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />

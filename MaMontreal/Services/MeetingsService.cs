@@ -60,6 +60,7 @@ namespace MaMontreal.Services
         {
             ApplicationUser curUser = userManager.GetUserAsync(User).Result;
             MeetingType meetingType = _context.MeetingTypes.Where(mt => mt.Id == meeting._MeetingTypeId).FirstOrDefault();
+            Language language = _context.Languages.Where(l => l.Id == meeting._LanguageId).FirstOrDefault();
 
             if (meeting.DayOfWeek == null && meeting.Date == null)
                 throw new ArgumentException("DayOfWeek,Day of Week and Date cannot both be empty!");
@@ -67,7 +68,10 @@ namespace MaMontreal.Services
                 throw new ArgumentException("Current User is invalid!");
             else if (meetingType == null)
                 throw new ArgumentException("Meeting Type is invalid!");
+            else if (language == null)
+                throw new ArgumentException("Language is invalid!");
 
+            meeting.Language = language;
             meeting.MeetingType = meetingType;
             meeting.UpdatedAt = DateTime.Now;
             meeting.UpdatedBy = curUser;
@@ -101,6 +105,7 @@ namespace MaMontreal.Services
         {
             ApplicationUser curUser = userManager.GetUserAsync(User).Result;
             MeetingType meetingType = _context.MeetingTypes.Where(mt => mt.Id == meeting._MeetingTypeId).FirstOrDefault();
+            Language language = _context.Languages.Where(l => l.Id == meeting._LanguageId).FirstOrDefault();
 
             if (meeting.DayOfWeek == null && meeting.Date == null)
                 throw new ArgumentException("DayOfWeek,Day of Week and Date cannot both be empty!");
@@ -108,8 +113,11 @@ namespace MaMontreal.Services
                 throw new ArgumentException("Current User is invalid!");
             else if (meetingType == null)
                 throw new ArgumentException("Meeting Type is invalid!");
+            else if (language == null)
+                throw new ArgumentException("Language is invalid!");
 
             meeting.MeetingType = meetingType;
+            meeting.Language = language;
             meeting.UpdatedAt = DateTime.Now;
             meeting.UpdatedBy = curUser;
 

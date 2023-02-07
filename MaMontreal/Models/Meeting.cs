@@ -62,6 +62,9 @@ namespace MaMontreal.Models
         // [Required]
         public Statuses? Status { get; set; } = Statuses.Pending;
 
+        [NotMapped]
+        [Display(Name = "Language")]
+        public int? _LanguageId { get; set; }
         // [Required]
         public Language? Language { get; set; }
 
