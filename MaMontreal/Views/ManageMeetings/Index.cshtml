@@ -1,10 +1,11 @@
 @model IEnumerable<MaMontreal.Models.Meeting>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Meetings";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Meetings</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -104,7 +105,7 @@
                     }
                     else
                     {
-                        <a asp-action="UnDelete" asp-route-id="@item.Id">Undelete</a>
+                        <a asp-action="UnDelete" asp-route-id="@item.Id">Restore</a>
                     }
                 </td>
             </tr>

@@ -93,8 +93,8 @@ public class MeetingsController : Controller
         {
             Id = id;
             Title = title;
-            Start = (startDate.Date + startTime.TimeOfDay).ToString();
-            End = (endDate.Date + endTime.TimeOfDay).ToString();
+            Start = String.Format("{0:yyyy-MM-ddTHH:mm:ss}", (startDate.Date + startTime.TimeOfDay));
+            End = String.Format("{0:yyyy-MM-ddTHH:mm:ss}", (endDate.Date + endTime.TimeOfDay));
         }
 
         public static String ToJson(CalendarEvent e)
