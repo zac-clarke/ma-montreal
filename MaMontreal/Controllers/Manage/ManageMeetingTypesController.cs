@@ -135,6 +135,11 @@ namespace MaMontreal.Controllers_Manage
             {
                 return RedirectToAction(nameof(Index));
             }
+            catch (DbUpdateException ex)
+            {
+                ViewBag.error = ex.Message;
+                return View(await _service.GetMeetingTypeById(id));
+            }
         }
 
         private bool MeetingTypeExists(int id)
