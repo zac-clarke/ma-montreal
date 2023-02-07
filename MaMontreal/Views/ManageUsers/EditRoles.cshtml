@@ -1,59 +1,45 @@
 @model MaMontreal.Models.NotMapped.UserWithRoles
-
 @{
     ViewData["Title"] = "Edit Roles";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
     var user = UserManager.FindByIdAsync(Model._userId).Result;
 }
 
-<h1>@user.Email</h1>
+<h4>Update Roles</h4>
 
-<h4>Edit User Roles</h4>
+
 <hr />
+<p>@user.Email</p>
 
 @if (TempData["rolesSaved"] != null)
 {
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
         @TempData["rolesSaved"]
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
 }
 <div class="row">
     <div class="col-md-4">
         <form asp-action="EditRoles" asp-route-id="@Model._userId">
             <div asp-validation-summary="All" class="text-danger"></div>
             <input type="hidden" asp-for="@Model._userId" />
-            @{
 
+            <div class="form-group mt-2 d-flex gap-3 my-5">
                 @for (int i = 0; i < Model._selectedRoles.Count; i++)
                 {
-                    @Html.CheckBoxFor(m => m._selectedRoles[i]._roleSelected)
-                    @Html.HiddenFor(m => m._selectedRoles[i]._roleName)
-                    @Html.LabelFor(m => m._selectedRoles[i]._roleSelected,
-            Model._selectedRoles[i]._roleName)
-                    <br />
+                            <div>
+                        @Html.CheckBoxFor(m => m._selectedRoles[i]._roleSelected)
+                        @Html.HiddenFor(m => m._selectedRoles[i]._roleName)
+                        @Html.LabelFor(m => m._selectedRoles[i]._roleSelected,  Model._selectedRoles[i]._roleName)
+                            </div>
                 }
-
-                @* @foreach (var hasRole in Model._hasRoleList)
-            {
-            <div class="form-check">
-            @Html.CheckBox("hasRole._hasRole", hasRole._hasRole)
-
-            <input type="hidden" asp-for="@hasRole._roleName" />
-            <input class="form-check-input" type="checkbox" asp-="@hasRole._hasRole" asp-for="@hasRole._hasRole" onclick="$(this).val(this.checked ? true : false)" />
-            <label class="form-check-label" asp-for="@hasRole._roleName">@hasRole._roleName</label>
             </div>
-            } *@
-            }
-
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
+            <div class="form-group mt-2">
+                <a asp-action="Index" class="btn btn-dark"><i class="fa-solid fa-arrow-left me-1"></i>Back</a>
+                <button class="btn btn-primary"><i class="fa-solid fa-save me-1"></i>Save</button>
+            </div> 
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

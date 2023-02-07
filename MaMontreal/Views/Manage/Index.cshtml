@@ -1,46 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Manage Dashboard";
-    var user = UserManager.GetUserAsync(User).Result;
-    bool admin = false;
-    bool gsr = false;
-    if (UserManager.IsInRoleAsync(user, "gsr").Result == true)
-    {
-        ViewData["Title"] = "GSR Dashboard";
-        gsr = true;
-    }
-    if (UserManager.IsInRoleAsync(user, "admin").Result == true)
-    {
-        ViewData["Title"] = "Admin Dashboard";
-        admin = true;
-    }
-
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">
-        @ViewData["Title"]
-    </h1>
-    <p>Let's see what's new today</p>
-
-    <div class="row py-5">
-        <div class="d-flex gap-1 col-12 col-md-3 flex-column">
-            @if (admin)
-            {
-                <a asp-controller="ManageUsers" asp-action="Index" class="btn btn-outline-primary btn-sm">Users</a>
-                @* <a asp-controller="ManageUsers" asp-action="Index" class="btn btn-outline-primary btn-sm">UserRoles</a> *@
-
-                <a asp-controller="ManageTags" asp-action="Index" class="btn btn-outline-primary btn-sm">Tags</a>
-                <a asp-controller="ManageLanguages" asp-action="Index" class="btn btn-outline-primary btn-sm">Languages</a>
-                <a asp-controller="ManageMeetingTypes" asp-action="Index" class="btn btn-outline-primary btn-sm">Meeting Types</a>
-                @if (admin || gsr)
-                {
-                    <a asp-controller="ManageMeetings" asp-action="Index" class="btn btn-outline-primary btn-sm">Meetings</a>
-                    <a asp-controller="ManageUserRequests" asp-action="Index" class="btn btn-outline-primary btn-sm">Requests</a>
-                }
-            }
-        </div>
-        <div class="col-12 col-md-9">
-            latest things here
-        </div>
+<div>
+@if (TempData["rolesSavedAdmin"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["rolesSavedAdmin"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-</div>
+}
+</div> 

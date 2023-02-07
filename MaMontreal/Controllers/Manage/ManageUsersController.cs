@@ -91,6 +91,7 @@ namespace MaMontreal.Controllers.Manage
                 UserWithRoles refreshUserWithRoles = await _usersService.GetUserWithRolesAsync(id);
                 await _usersService.UpdateRolesForUserAsync(id, userWithRoles);
                 TempData["rolesSaved"] = "Changes are saved";
+                TempData["rolesSavedAdmin"] = "A user updated their Roles Changes";//TODO: Test
                 return View(refreshUserWithRoles);
             }
             catch (NullReferenceException ex)
