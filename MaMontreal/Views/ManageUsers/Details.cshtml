@@ -10,86 +10,120 @@
     var roles = await UserManager.GetRolesAsync(Model); 
 }
 
-<h1>@(Model.FullName?.Trim() != "" ? Model.FullName :  Model.Email)</h1>
-
 <div>
-    <h4>
-        @String.Join(", ", roles)
-        <a asp-action="EditRoles" asp-route-id="@Model?.Id"><i class="fa-solid fa-edit me-1"> </i></a></h4>
+    <h4>User Details</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-           <p>@Html.DisplayNameFor(model => model.UserName)</p> 
-        </dt>
-        <dd class = "col-sm-10">
-            <p>@Html.DisplayFor(model => model.UserName)</p>         
-        </dd>
-        <dt class = "col-sm-2">
-           <p>@Html.DisplayNameFor(model => model.Email)</p> 
-        </dt>
-        <dd class = "col-sm-10">
-           <p>@Html.DisplayFor(model => model.Email) 
-            @if (Model.EmailConfirmed)
-            {
-                <span class="text-success"><i class="fa-solid fa-check me-1"> </i>Confirmed</span>
-            }
-            else
-            {
-                <span class="text-warning">Not Confirmed</span>
-            }</p>
-        </dd>
-        <dt class = "col-sm-2">
-           <p> @Html.DisplayNameFor(model => model.PhoneNumber)</p>
-        </dt>
-        <dd class = "col-sm-10">
-           <p> @Html.DisplayFor(model => model.PhoneNumber)
-            @if (Model.PhoneNumber != null)
-            {
-                @if (Model.PhoneNumberConfirmed)
+    <div class="row">
+        <dl class="col row">
+            <dt class = "col-sm-4">
+            <p>@Html.DisplayNameFor(model => model.UserName)</p> 
+            </dt>
+            <dd class = "col-sm-8">
+                <p>@Html.DisplayFor(model => model.UserName)</p>         
+            </dd>
+            <dt class = "col-sm-4">
+            <p>@Html.DisplayNameFor(model => model.Email)</p> 
+            </dt>
+            <dd class = "col-sm-8">
+            <p>@Html.DisplayFor(model => model.Email) 
+                @if (Model.EmailConfirmed)
                 {
-                    <span class="text-success"><i class="fa-solid fa-check me-1"> </i>Confirmed</span>
+                    <span class="text-success badge bg-dark ms-2"><i class="fa-solid fa-check me-1"> </i>Confirmed</span>
                 }
                 else
                 {
-                    <span class="text-warning">Not Confirmed</span>
-                }
-            }  </p>
-        </dd>
-        <dt class = "col-sm-2">
-            <p>@Html.DisplayNameFor(model => model.SobrietyDate)</p>
-        </dt>
-        <dd class = "col-sm-10">
-            <p>@Model.SobrietyDate?.ToString().Substring(0,10)</p>
-        </dd>
-    </dl>
-</div>
-<div>
-    <table class="table">
-        <h4>Security Details</h4>
+                    <span class="text-warning badge bg-dark ms-2">Not Confirmed</span>
+                }</p>
+            </dd>
+        
+            <dt class = "col-sm-4">
+            <p>User Roles</p> 
+            </dt>
+            <dd class = "col-sm-8">
+                <p>@String.Join(", ", roles)</p>         
+            </dd>
+        </dl>
+        <dl class="col row">
+            <dt class = "col-sm-4">
+            <p>@Html.DisplayNameFor(model => model.FirstName)</p> 
+            </dt>
+            <dd class = "col-sm-8">
+                <p>@Html.DisplayFor(model => model.FirstName)</p>         
+            </dd>
+            <dt class = "col-sm-4">
+            <p>@Html.DisplayNameFor(model => model.LastName)</p> 
+            </dt>
+            <dd class = "col-sm-8">
+                <p>@Html.DisplayFor(model => model.LastName)</p>         
+            </dd>
+            <dt class = "col-sm-4">
+            <p> @Html.DisplayNameFor(model => model.PhoneNumber)</p>
+            </dt>
+            <dd class = "col-sm-8">
+            <p> @Html.DisplayFor(model => model.PhoneNumber)
+                @if (Model.PhoneNumber != null)
+                {
+                    @if (Model.PhoneNumberConfirmed)
+                    {
+                        <span class="text-success badge bg-black ms-2"><i class="fa-solid fa-check me-1"> </i>Confirmed</span>
+                    }
+                    else
+                    {
+                        <span class="text-warning badge bg-dark ms-2">Not Confirmed</span>
+                    }
+                }  </p>
+            </dd>
+            <dt class = "col-sm-4">
+                <p>@Html.DisplayNameFor(model => model.SobrietyDate)</p>
+            </dt>
+            <dd class = "col-sm-8">
+                <p>@Model.SobrietyDate?.ToString().Substring(0,10)</p>
+            </dd>
+        </dl>
+    </div>
 
-    <thead>
-        <tr>
-            <th scope="col">Two Factor Authentication</th>
-            <th scope="col">Lockout Enabled</th>
+
+
+
+    <h4>Security Details</h4>
+    <hr />
+    <div class="row">
+        <dl class="col row">
+            <dt class = "col-sm-4">
+            <p>Two Factor Authentication</p> 
+            </dt>
+            <dd class = "col-sm-8">
+                <p>@(Model.TwoFactorEnabled ? "yes" : "no")</p>         
+            </dd>
+            <dt class = "col-sm-4">
+            <p>Lockout Enabled</p> 
+            </dt>
+            <dd class = "col-sm-8">
+                <p>@(Model.LockoutEnabled ? "yes" : "no")</p>         
+            </dd>
+        </dl>  
+          <dl class="col row">
+
             @if(Model.LockoutEnd != null ){    
-                <th>Lockout End Date</th>
+                <dt class = "col-sm-4">
+                    <p>Lockout End</p> 
+                </dt>
+                <dd class = "col-sm-8">
+                    <p>Model.LockoutEnd</p> 
+                </dd>
             } 
-            <th scope="col">Failed logins</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>@(Model.TwoFactorEnabled ? "yes" : "no")</td>
-            <td>@(Model.LockoutEnabled ? "yes" : "no")</td>
-             @if(Model.LockoutEnd != null ){    
-                <th>@Model.LockoutEnd</th>
-            } 
-            <td>@Model.AccessFailedCount</td>
-        </tr>
-    </tbody>
-    </table>
+
+            
+            <dt class = "col-sm-4">
+                <p>Failed logins</p>         
+            </dt>
+            <dd class = "col-sm-8">
+                <p>@Model.AccessFailedCount</p>         
+            </dd>
+        </dl>    
+    </div>
 </div>
 <div>
 
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-dark"><i class="fa-solid fa-arrow-left me-1"></i>Back</a>
 </div>
