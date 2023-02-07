@@ -1,7 +1,7 @@
 @model MaMontreal.Models.NotMapped.UserWithRoles
-
 @{
     ViewData["Title"] = "Edit Roles";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
     var user = UserManager.FindByIdAsync(Model._userId).Result;
 }
 
@@ -44,7 +44,7 @@
             </div>
             } *@
             }
-
+<span class="text-success"><i class="fa-solid fa-check me-1"> </i>test</span>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Manage Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var loggedInUser = UserManager.GetUserAsync(User).Result;
+
+    if (UserManager.IsInRoleAsync(loggedInUser, "gsr").Result == true)
+    {
+        ViewData["Title"] = "GSR Dashboard"; 
+    }
+    if (UserManager.IsInRoleAsync(loggedInUser, "admin").Result == true)
+    {
+        ViewData["Title"] = "Admin Dashboard";
+    }
+}
+
+<div class="text-center">
+    <h1 class="display-4">
+        @ViewData["Title"]
+    </h1>
+    <p>Let's see what's new today</p>
+
+    <div class="row py-5">
+        
+        <div class="col-12 col-md-3">
+            <partial name="~/Views/Shared/_AdminSidebarPartial.cshtml" />
+        </div>
+        <div class="col-12 col-md-9">
+            @RenderBody()
+        </div>
+    </div>
+</div>
+
+@await RenderSectionAsync("Scripts", required: false)
