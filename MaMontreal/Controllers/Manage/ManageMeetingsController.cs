@@ -17,6 +17,7 @@ namespace MaMontreal.Controllers_Manage
         private readonly MeetingsService _service;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly List<MeetingType> _meetingTypes;
+        private readonly List<Language> _languages;
 
         public ManageMeetingsController(MamDbContext context, UserManager<ApplicationUser> userManager)
         {
@@ -26,6 +27,7 @@ namespace MaMontreal.Controllers_Manage
                 _userManager = userManager;
 
                 _meetingTypes = context.MeetingTypes.ToList<MeetingType>();
+                _languages = context.Languages.ToList<Language>();
             }
             catch (SystemException ex)
             {
@@ -56,6 +58,7 @@ namespace MaMontreal.Controllers_Manage
         public IActionResult Create()
         {
             ViewBag.MeetingTypes = _meetingTypes;
+            ViewBag.Languages = _languages;
             return View();
         }
 
@@ -64,9 +67,10 @@ namespace MaMontreal.Controllers_Manage
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("District,EventName,Description,_MeetingTypeId,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
+        public async Task<IActionResult> Create([Bind("District,EventName,Description,_MeetingTypeId,_LanguageId,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
         {
             ViewBag.MeetingTypes = _meetingTypes;
+            ViewBag.Languages = _languages;
 
             if (!ModelState.IsValid)
                 return View(meeting);
@@ -91,9 +95,14 @@ namespace MaMontreal.Controllers_Manage
         {
             try
             {
-                ViewBag.MeetingTypes = _meetingTypes;
                 var meeting = await _service.GetMeetingById(id);
-                meeting._MeetingTypeId = meeting.MeetingType.Id;
+
+                ViewBag.MeetingTypes = _meetingTypes;
+                meeting._MeetingTypeId = meeting.MeetingType?.Id;
+
+                ViewBag.Languages = _languages;
+                meeting._LanguageId = meeting.Language?.Id;
+
                 return View(meeting);
             }
             catch (NullReferenceException ex)
@@ -107,9 +116,11 @@ namespace MaMontreal.Controllers_Manage
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,District,EventName,Description,_MeetingTypeId,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,District,EventName,Description,_MeetingTypeId,_LanguageId,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
         {
             ViewBag.MeetingTypes = _meetingTypes;
+            ViewBag.Languages = _languages;
+
             if (!ModelState.IsValid)
                 return View(meeting);
 
