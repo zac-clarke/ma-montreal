@@ -32,20 +32,8 @@
             Model._selectedRoles[i]._roleName)
                     <br />
                 }
-
-                @* @foreach (var hasRole in Model._hasRoleList)
-            {
-            <div class="form-check">
-            @Html.CheckBox("hasRole._hasRole", hasRole._hasRole)
-
-            <input type="hidden" asp-for="@hasRole._roleName" />
-            <input class="form-check-input" type="checkbox" asp-="@hasRole._hasRole" asp-for="@hasRole._hasRole" onclick="$(this).val(this.checked ? true : false)" />
-            <label class="form-check-label" asp-for="@hasRole._roleName">@hasRole._roleName</label>
-            </div>
-            } *@
             }
-<span class="text-success"><i class="fa-solid fa-check me-1"> </i>test</span>
-            <div class="form-group">
+            <div class="form-group mt-">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>

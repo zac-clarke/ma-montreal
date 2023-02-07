@@ -1,10 +1,11 @@
 @model MaMontreal.Models.ApplicationUser
 
 @{
-    ViewData["Title"] = Model.Email;
+    ViewData["Title"] = "Manage " + Model.UserName;
+     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     @if (Model.FullName?.Trim() != "")
     {
-         ViewData["Title"] = Model.FullName;
+         ViewData["Title"] ="Manage " + Model.FullName;
     }
     var roles = await UserManager.GetRolesAsync(Model); 
 }
@@ -18,16 +19,16 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserName)
+           <p>@Html.DisplayNameFor(model => model.UserName)</p> 
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserName)
+            <p>@Html.DisplayFor(model => model.UserName)</p>         
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
+           <p>@Html.DisplayNameFor(model => model.Email)</p> 
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
+           <p>@Html.DisplayFor(model => model.Email) 
             @if (Model.EmailConfirmed)
             {
                 <span class="text-success"><i class="fa-solid fa-check me-1"> </i>Confirmed</span>
@@ -35,13 +36,13 @@
             else
             {
                 <span class="text-warning">Not Confirmed</span>
-            }
+            }</p>
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PhoneNumber)
+           <p> @Html.DisplayNameFor(model => model.PhoneNumber)</p>
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PhoneNumber)
+           <p> @Html.DisplayFor(model => model.PhoneNumber)
             @if (Model.PhoneNumber != null)
             {
                 @if (Model.PhoneNumberConfirmed)
@@ -52,39 +53,38 @@
                 {
                     <span class="text-warning">Not Confirmed</span>
                 }
-            }  
+            }  </p>
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SobrietyDate)
+            <p>@Html.DisplayNameFor(model => model.SobrietyDate)</p>
         </dt>
         <dd class = "col-sm-10">
             <p>@Model.SobrietyDate?.ToString().Substring(0,10)</p>
-        </dd>
-           <dt class = "col-sm-2">
-           <p>Two Factor Authentication</p>
-        </dt>
-        <dd class = "col-sm-10">
-            <p>@(Model.TwoFactorEnabled ? "Enabled" : "Disabled")</p>
         </dd>
     </dl>
 </div>
 <div>
     <table class="table">
+        <h4>Security Details</h4>
 
     <thead>
         <tr>
             <th scope="col">Two Factor Authentication</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.LockoutEnabled)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.LockoutEnd)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.AccessFailedCount)</th>
+            <th scope="col">Lockout Enabled</th>
+            @if(Model.LockoutEnd != null ){    
+                <th>Lockout End Date</th>
+            } 
+            <th scope="col">Failed logins</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td> @Html.DisplayFor(model => model.TwoFactorEnabled)</td>
-            <td> @Html.DisplayFor(model => model.LockoutEnabled)</td>
-            <td> @Html.DisplayFor(model => model.LockoutEnd)</td>
-            <td> @Html.DisplayFor(model => model.AccessFailedCount)</td>
+            <td>@(Model.TwoFactorEnabled ? "yes" : "no")</td>
+            <td>@(Model.LockoutEnabled ? "yes" : "no")</td>
+             @if(Model.LockoutEnd != null ){    
+                <th>@Model.LockoutEnd</th>
+            } 
+            <td>@Model.AccessFailedCount</td>
         </tr>
     </tbody>
     </table>

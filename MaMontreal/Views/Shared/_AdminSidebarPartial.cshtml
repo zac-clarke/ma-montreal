@@ -1,32 +1,36 @@
 @using MaMontreal.Models
 
 @{
-    var user = UserManager.GetUserAsync(User).Result;
+    var loggedInUser = UserManager.GetUserAsync(User).Result;
     bool admin = false;
     bool gsr = false;
-    if (UserManager.IsInRoleAsync(user, "gsr").Result == true)
+    if (UserManager.IsInRoleAsync(loggedInUser, "gsr").Result == true)
     { 
         gsr = true;
     }
-    if (UserManager.IsInRoleAsync(user, "admin").Result == true)
+    if (UserManager.IsInRoleAsync(loggedInUser, "admin").Result == true)
     {
         admin = true;
     }
 }
 <div class="d-flex gap-1 flex-column">
- @if (admin)
+ @if (admin || gsr)
 {
+
+    <a asp-controller="Manage" asp-action="Index" class="btn btn-outline-primary btn-sm">Dashboard</a>
+    <a asp-controller="ManageMeetings" asp-action="Index" class="btn btn-outline-primary btn-sm">Meetings</a>
+    <a asp-controller="ManageUserRequests" asp-action="Index" class="btn btn-outline-primary btn-sm">Requests</a>
+       @if (admin)
+    {
     <a asp-controller="ManageUsers" asp-action="Index" class="btn btn-outline-primary btn-sm">Users</a>
     @* <a asp-controller="ManageUsers" asp-action="Index" class="btn btn-outline-primary btn-sm">UserRoles</a> *@
 
     <a asp-controller="ManageTags" asp-action="Index" class="btn btn-outline-primary btn-sm">Tags</a>
     <a asp-controller="ManageLanguages" asp-action="Index" class="btn btn-outline-primary btn-sm">Languages</a>
     <a asp-controller="ManageMeetingTypes" asp-action="Index" class="btn btn-outline-primary btn-sm">Meeting Types</a>
-    @if (admin || gsr)
-    {
-        <a asp-controller="ManageMeetings" asp-action="Index" class="btn btn-outline-primary btn-sm">Meetings</a>
-        <a asp-controller="ManageUserRequests" asp-action="Index" class="btn btn-outline-primary btn-sm">Requests</a>
-    }
+   }
+        
+  
 }
 </div>
 
