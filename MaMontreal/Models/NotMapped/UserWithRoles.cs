@@ -7,8 +7,8 @@ namespace MaMontreal.Models.NotMapped
 {
     public class UserWithRoles
     {
-        public string _userId { get; set; }
-        public List<ManagedRole> _selectedRoles { get; set; }
+        public string _userId { get; set; } = null!;
+        public List<ManagedRole> _selectedRoles { get; set; } = null!;
     }
 
 }

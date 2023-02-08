@@ -10,11 +10,11 @@ namespace MaMontreal.Data
 {
     public class MamDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<Tag> Tags { get; set; }
-        public DbSet<Language> Languages { get; set; }
-        public DbSet<MeetingType> MeetingTypes { get; set; }
-        public DbSet<Meeting> Meetings { get; set; }
-        public DbSet<UserRequest> UserRequests { get; set; }
+        public DbSet<Tag> Tags { get; set; } = null!;
+        public DbSet<Language> Languages { get; set; } = null!;
+        public DbSet<MeetingType> MeetingTypes { get; set; } = null!;
+        public DbSet<Meeting> Meetings { get; set; } = null!;
+        public DbSet<UserRequest> UserRequests { get; set; } = null!;
 
         public MamDbContext(DbContextOptions<MamDbContext> options) : base(options)
         {

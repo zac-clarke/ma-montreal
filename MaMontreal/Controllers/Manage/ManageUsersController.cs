@@ -104,7 +104,7 @@ namespace MaMontreal.Controllers.Manage
                 UserWithRoles refreshUserWithRoles = await _usersService.GetUserWithRolesAsync(id);
                 await _usersService.UpdateRolesForUserAsync(id, userWithRoles);
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Roles Updated", "success"));
-                _logger.LogInformation($"Roles Updated for User {id}");
+                _logger?.LogInformation($"Roles Updated for User {id}");
                 return View(refreshUserWithRoles);
             }
             catch (NullReferenceException ex)

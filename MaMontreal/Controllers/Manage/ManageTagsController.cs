@@ -16,9 +16,9 @@ namespace MaMontreal.Controllers.Manage
     [Route("Manage/Tags/")]
     public class ManageTagsController : Controller
     {
-        private readonly TagsService _tagsService;
-        private readonly ILogger<ManageTagsController> _logger;
-        private readonly MamDbContext _context;
+        private readonly TagsService _tagsService = null!;
+        private readonly ILogger<ManageTagsController> _logger = null!;
+        private readonly MamDbContext _context = null!;
 
         public ManageTagsController(MamDbContext context, ILogger<ManageTagsController> logger)
         {
@@ -40,7 +40,7 @@ namespace MaMontreal.Controllers.Manage
         {
             try
             {
-                return View(_tagsService.GetAllAsync().Result);
+                return View(await _tagsService.GetAllAsync());
             }
             catch (SystemException ex)
             {

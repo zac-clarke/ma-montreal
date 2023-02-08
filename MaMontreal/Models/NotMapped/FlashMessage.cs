@@ -8,8 +8,8 @@ namespace MaMontreal.Models.NotMapped
 {
     public class FlashMessage : ISerializable
     {
-        public string Message { get; set; }
-        public string Type { get; set; }
+        public string Message { get; set; } = null!;
+        public string Type { get; set; } = null!;
 
         public FlashMessage()
         {
@@ -21,11 +21,11 @@ namespace MaMontreal.Models.NotMapped
             Type = type;
         }
 
-        public FlashMessage(SerializationInfo info, StreamingContext context)
-        {
-            Message = info.GetString("Message");
-            Type = info.GetString("Type");
-        }
+        // public FlashMessage(SerializationInfo info, StreamingContext context)
+        // {
+        //     Message = info.GetString("Message");
+        //     Type = info.GetString("Type");
+        // }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {

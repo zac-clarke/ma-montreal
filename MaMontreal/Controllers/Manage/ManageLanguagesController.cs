@@ -19,10 +19,10 @@ namespace MaMontreal.Controllers.Manage
     [Route("Manage/Languages/")]
     public class ManageLanguagesController : Controller
     {
-        private readonly LanguagesService? _languagesService;
+        private readonly LanguagesService _languagesService = null!;
         private readonly ILogger<ManageLanguagesController>? _logger;
 
-        public ManageLanguagesController(MamDbContext? context, ILogger<ManageLanguagesController>? logger)
+        public ManageLanguagesController(MamDbContext context, ILogger<ManageLanguagesController> logger)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace MaMontreal.Controllers.Manage
         {
             try
             {
-                return View(_languagesService.GetAllAsync().Result);
+                return View(await _languagesService.GetAllAsync());
             }
             catch (SystemException ex)
             {
