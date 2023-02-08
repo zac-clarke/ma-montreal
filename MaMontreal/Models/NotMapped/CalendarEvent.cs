@@ -51,7 +51,7 @@ namespace MaMontreal.Models.NotMapped
             {
                 outStr +=
                 $"start: '{String.Format("{0:yyyy-MM-ddTHH:mm:ss}", (meeting.Date.Value.Date + meeting.StartTime.TimeOfDay))}', " +
-                $"end: '{String.Format("{0:yyyy-MM-ddTHH:mm:ss}", (meeting.Date.Value.Date + meeting.EndTime.TimeOfDay))}', "
+                $"end: '{String.Format("{0:yyyy-MM-ddTHH:mm:ss}", ((meeting.StartTime.TimeOfDay.CompareTo(meeting.EndTime.TimeOfDay) > 0 ? meeting.Date.Value.AddDays(1).Date : meeting.Date.Value.Date) + meeting.EndTime.TimeOfDay))}', "
                 ;
             }
             else if (meeting.DayOfWeek != null) //recurring events

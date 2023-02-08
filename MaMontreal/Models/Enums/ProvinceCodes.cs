@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace MaMontreal.Models.Enums
 {
     public enum ProvinceCodes

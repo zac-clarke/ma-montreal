@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MaMontreal.Data;
 using MaMontreal.Models;
-using MaMontreal.Repositories;
+using MaMontreal.Models.NotMapped;
 using Microsoft.EntityFrameworkCore;
 
 namespace MaMontreal.Services
@@ -49,6 +45,9 @@ namespace MaMontreal.Services
         {
             _context.MeetingTypes.Add(meetingType);
             await _context.SaveChangesAsync();
+
+            //Update data file
+            CalendarEvent.UpdateEventsFile(_context.Meetings.ToList<Meeting>());
             return meetingType;
         }
 
@@ -68,6 +67,9 @@ namespace MaMontreal.Services
         {
             _context.MeetingTypes.Update(meetingType);
             await _context.SaveChangesAsync();
+
+            //Update data file
+            CalendarEvent.UpdateEventsFile(_context.Meetings.ToList<Meeting>());
             return meetingType;
         }
 
@@ -93,6 +95,9 @@ namespace MaMontreal.Services
 
             _context.MeetingTypes.Remove(meetingType);
             await _context.SaveChangesAsync();
+
+            //Update data file
+            CalendarEvent.UpdateEventsFile(_context.Meetings.ToList<Meeting>());
             return meetingType;
         }
     }

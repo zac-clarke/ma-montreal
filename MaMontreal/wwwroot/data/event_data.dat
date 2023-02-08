@@ -2,9 +2,9 @@
 	{id: 4, title: 'Juju Finally Has Hope!!!', daysOfWeek: '[0]', startTime: '16:20:00', endTime: '17:13:00', startRecur: '2023-02-03', },
 	{id: 14, title: 'EventName', daysOfWeek: '[1]', startTime: '17:08:02', endTime: '18:38:02', startRecur: '2023-02-08', },
 	{id: 15, title: 'EventName2', daysOfWeek: '[2]', startTime: '17:15:34', endTime: '18:45:34', startRecur: '2023-02-08', },
-	{id: 16, title: 'EventName3', daysOfWeek: '[3]', startTime: '17:30:24', endTime: '19:00:24', startRecur: '2023-02-08', },
+	{id: 16, title: 'EventName3', daysOfWeek: '[3]', startTime: '17:30:24', endTime: '20:00:24', startRecur: '2023-02-08', },
 	{id: 17, title: 'EventName4', daysOfWeek: '[4]', startTime: '17:40:28', endTime: '19:10:28', startRecur: '2023-02-08', },
-	{id: 18, title: 'Testing', start: '2023-02-23T22:22:00', end: '2023-02-23T23:23:00', },
-	{id: 19, title: 'fight for tyour life', daysOfWeek: '[2]', startTime: '12:28:00', endTime: '14:31:00', startRecur: '2023-02-09', },
+	{id: 18, title: 'Testing', start: '2023-02-23T22:22:00', end: '2023-02-24T01:23:00', },
+	{id: 19, title: 'Fight For Your Life', daysOfWeek: '[2]', startTime: '12:28:00', endTime: '14:31:00', startRecur: '2023-02-09', },
 	{id: 20, title: 'Jesus is King', start: '2023-02-16T17:22:00', end: '2023-02-16T19:23:00', },
 ]
