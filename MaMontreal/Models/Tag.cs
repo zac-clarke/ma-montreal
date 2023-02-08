@@ -11,6 +11,6 @@ namespace MaMontreal.Models
         public int Id { get; set; }
 
         [Required, MaxLength(30, ErrorMessage = "Must enter a Tag with no more than 30 characters")]
-        public string Title { get; set; }
+        public string Title { get; set; } = null!;
     }
 }

@@ -12,7 +12,7 @@ namespace MaMontreal.Models
         public int Id { get; set; }
 
         [Required, MaxLength(30, ErrorMessage = "You must enter a Language with less than 30 characters")]
-        public string Title { get; set; } = "Default Language Title";
+        public string Title { get; set; } = null!;
 
         [NotMapped]
         public IEnumerable<Meeting> Meetings { get; set; } = new List<Meeting>();

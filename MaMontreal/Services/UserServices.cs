@@ -35,7 +35,8 @@ namespace MaMontreal.Services
 
         public async Task<List<ApplicationUser>> GetAllAsync()
         {
-            return await _context.Users.ToListAsync();
+            List<ApplicationUser> users = await _context.Users.ToListAsync();
+            return users ?? new List<ApplicationUser>();
         }
 
 

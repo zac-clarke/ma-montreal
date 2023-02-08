@@ -20,7 +20,7 @@ namespace MaMontreal.Controllers.Manage
     public class ManageUsersController : Controller
     {
 
-        private readonly UsersService? _usersService;
+        private readonly UsersService _usersService = null!;
         private readonly ILogger<ManageUsersController>? _logger;
 
         public ManageUsersController(
