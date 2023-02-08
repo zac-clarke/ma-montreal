@@ -7,45 +7,66 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MaMontreal.Data;
 using MaMontreal.Models;
+using MaMontreal.Services;
+using Newtonsoft.Json;
+using MaMontreal.Models.NotMapped;
 
 namespace MaMontreal.Controllers.Manage
 {
+    [Route("Manage/Tags/")]
     public class ManageTagsController : Controller
     {
+        private readonly TagsService _tagsService;
+        private readonly ILogger<ManageTagsController> _logger;
         private readonly MamDbContext _context;
 
-        public ManageTagsController(MamDbContext context)
+        public ManageTagsController(MamDbContext context, ILogger<ManageTagsController> logger)
         {
-            _context = context;
+            try
+            {
+                _tagsService = new TagsService(context);
+                _logger = logger;
+            }
+            catch (SystemException ex)
+            {
+                _logger.LogError(ex.Message);
+                Problem(ex.Message);
+            }
         }
 
         // GET: ManageTags
+        [Route("")]
         public async Task<IActionResult> Index()
         {
-            return _context.Tags != null ?
-                        View(await _context.Tags.ToListAsync()) :
-                        Problem("Entity set 'MamDbContext.Tags'  is null.");
+            try
+            {
+                return View(_tagsService.GetAllAsync().Result);
+            }
+            catch (SystemException ex)
+            {
+                _logger.LogError(ex.Message);
+                return NotFound(ex.Message);
+            }
         }
 
         // GET: ManageTags/Details/5
-        public async Task<IActionResult> Details(int? id)
+        [Route("Details")]
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null || _context.Tags == null)
+            try
             {
-                return NotFound();
+                return View(await _tagsService.GetAsync(id));
             }
-
-            var tag = await _context.Tags
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (tag == null)
+            catch (SystemException ex)
             {
-                return NotFound();
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                _logger.LogError(ex.Message);
+                return RedirectToAction(nameof(Index));
             }
-
-            return View(tag);
         }
 
         // GET: ManageTags/Create
+        [Route("Create")]
         public IActionResult Create()
         {
             return View();
@@ -56,31 +77,43 @@ namespace MaMontreal.Controllers.Manage
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("Create")]
         public async Task<IActionResult> Create([Bind("Id,Title")] Tag tag)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(tag);
-                await _context.SaveChangesAsync();
+                return View(tag);
+            }
+            try
+            {
+                await _tagsService.CreateAsync(tag);
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage($"New tag added: {tag.Title} ", "success"));
+                _logger.LogInformation($"New tag added: {tag.Title} ");
                 return RedirectToAction(nameof(Index));
             }
-            return View(tag);
+            catch (SystemException ex)
+            {
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                _logger.LogError(ex.Message);
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         // GET: ManageTags/Edit/5
+        [Route("Edit")]
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Tags == null)
+            try
             {
-                return NotFound();
+                var tag = await _tagsService.GetAsync(id);
+                return View(tag);
             }
-
-            var tag = await _context.Tags.FindAsync(id);
-            if (tag == null)
+            catch (SystemException ex)
             {
-                return NotFound();
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                _logger.LogError(ex.Message);
+                return RedirectToAction(nameof(Index));
             }
-            return View(tag);
         }
 
         // POST: ManageTags/Edit/5
@@ -88,76 +121,76 @@ namespace MaMontreal.Controllers.Manage
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("Edit")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title")] Tag tag)
         {
-            if (id != tag.Id)
+            if (!ModelState.IsValid)
+                return View(tag);
+            try
             {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(tag);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TagExists(tag.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                await _tagsService.UpdateAsync(id, tag);
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage($"New tag Updated: {tag.Title} ", "success"));
+                _logger.LogInformation($"New tag Updated: {tag.Title} ");
                 return RedirectToAction(nameof(Index));
             }
-            return View(tag);
+            catch (SystemException ex)
+            {
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                _logger.LogError(ex.Message);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                _logger.LogError(ex.Message);
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         // GET: ManageTags/Delete/5
+        [Route("Delete")]
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Tags == null)
+            try
             {
-                return NotFound();
+                var tag = await _tagsService.GetAsync(id);
+                return View(tag);
             }
-
-            var tag = await _context.Tags
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (tag == null)
+            catch (SystemException ex)
             {
-                return NotFound();
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                _logger.LogError(ex.Message);
+                return RedirectToAction(nameof(Index));
             }
-
-            return View(tag);
         }
 
         // POST: ManageTags/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Route("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Tags == null)
+            try
             {
-                return Problem("Entity set 'MamDbContext.Tags'  is null.");
+                await _tagsService.DeleteAsync(id);
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage($"Tag Deleted", "success"));
+                _logger.LogInformation($"Tag {id} Deleted");
+                return RedirectToAction(nameof(Index));
             }
-            var tag = await _context.Tags.FindAsync(id);
-            if (tag != null)
+            catch (SystemException ex)
             {
-                _context.Tags.Remove(tag);
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                _logger.LogError(ex.Message);
+                return RedirectToAction(nameof(Index));
             }
+            catch (DbUpdateException ex)
+            {
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Tag is possibly used for existing meetings", "danger"));
+                _logger.LogError(ex.Message);
+                _logger.LogError(ex.InnerException?.Message.ToString());
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool TagExists(int id)
-        {
-            return (_context.Tags?.Any(e => e.Id == id)).GetValueOrDefault();
+                return View(await _tagsService.GetAsync(id));
+            }
         }
     }
 }
