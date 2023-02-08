@@ -32,11 +32,13 @@
     //]
     const calendar = new FullCalendar.Calendar(calendarEl, {
       headerToolbar: {
-        left: 'dayGridMonth,multiMonthYear,dayGridWeek,timeGridWeek,listWeek',
+        left: 'dayGridMonth,timeGridWeek,listWeek',
         center: 'title',
         right: 'prev,next today',
       },
-      initialView: 'dayGridMonth',
+      titleFormat: { year: 'numeric', month: 'long', day: 'numeric' },
+      themeSystem: 'bootstrap5',
+      initialView: 'listWeek',
       events: events,
       eventClick: function(info) {
           const id = info.event._def.publicId
