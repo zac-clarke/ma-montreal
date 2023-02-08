@@ -9,6 +9,7 @@ using MaMontreal.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace MaMontreal.Controllers.Manage
 {
@@ -16,25 +17,25 @@ namespace MaMontreal.Controllers.Manage
     [Route("Manage/Users/")]
     public class ManageUsersController : Controller
     {
-        private readonly MamDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
+
         private readonly UsersService _usersService;
+        private readonly ILogger<ManageUsersController> _logger;
 
         public ManageUsersController(
             MamDbContext context,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            ILogger<ManageUsersController> logger)
         {
             try
             {
                 _usersService = new UsersService(context, userManager);
+                _logger = logger;
             }
             catch (SystemException ex)
             {
+                _logger.LogError(ex.Message);
                 Problem(ex.Message);
             }
-            //tjhese might go
-            _context = context;
-            _userManager = userManager;
         }
 
 
@@ -48,6 +49,7 @@ namespace MaMontreal.Controllers.Manage
             }
             catch (SystemException ex)
             {
+                _logger.LogError(ex.Message);
                 return NotFound(ex.Message);
             }
         }
@@ -62,6 +64,12 @@ namespace MaMontreal.Controllers.Manage
             }
             catch (NullReferenceException ex)
             {
+                // TempData["flashMessageList"] = JsonConvert.SerializeObject(new List<FlashMessage>() {
+                //     new FlashMessage("ex.Message", "success")
+                // });
+
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                _logger.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -77,6 +85,8 @@ namespace MaMontreal.Controllers.Manage
             }
             catch (NullReferenceException ex)
             {
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                _logger.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -90,12 +100,14 @@ namespace MaMontreal.Controllers.Manage
             {
                 UserWithRoles refreshUserWithRoles = await _usersService.GetUserWithRolesAsync(id);
                 await _usersService.UpdateRolesForUserAsync(id, userWithRoles);
-                TempData["rolesSaved"] = "Changes are saved";
-                TempData["rolesSavedAdmin"] = "A user updated their Roles Changes";//TODO: Test
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Roles Updated", "success"));
+                _logger.LogInformation($"Roles Updated for User {id}");
                 return View(refreshUserWithRoles);
             }
             catch (NullReferenceException ex)
             {
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                _logger.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -111,6 +123,8 @@ namespace MaMontreal.Controllers.Manage
             }
             catch (NullReferenceException ex)
             {
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                _logger.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -125,10 +139,14 @@ namespace MaMontreal.Controllers.Manage
             try
             {
                 await _usersService.DeleteAsync(id);
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("User Deleted", "sucess"));
+                _logger.LogInformation($"User {id} Deleted");
                 return RedirectToAction(nameof(Index));
             }
             catch (NullReferenceException ex)
             {
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                _logger.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
         }

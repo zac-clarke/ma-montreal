@@ -18,7 +18,7 @@
         @ViewData["Title"]
     </h1>
     <p>Let's see what's new today</p>
-
+    @Html.Partial("~/Views/Shared/_FlashMessagePartial.cshtml", @TempData["flashMessage"])
     <div class="row py-5">
         
         <div class="col-12 col-md-3">

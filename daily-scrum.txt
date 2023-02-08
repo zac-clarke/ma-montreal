@@ -1,4 +1,63 @@
 
+=============================================================================
+                                 Tuesday - 2023-02-07
+=============================================================================
+
+
+1.User Story or Task:                        ######   JULIETA   #######
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+- Create Language Service and Repo
+
+
+2.Result:
+▔▔▔▔▔▔
+V Create User Service and Repo
+V Cleanup leftover scaffoldin code
+V Make nested Views
+V Style Dashboard
+
+3.Help:
+▔▔▔▔▔
+
+1.User Story or Task:                        ########   AFTAB   ####### 
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+- ManageMeetings -> Tabs to filter meetings (pending, approved, declined, Mine)
+- Test meeting validation
+- Implement Authorization for ManageMeeting, ManageMeetingType, Manage...
+- GSR can only manage their own meetings
+		
+
+2.Result:
+▔▔▔▔▔▔
+v MeetingsService -> Get/GetAll -> Include gsr, updatedBy, language, and meetingType
+v Applicant can select meeting -> MeetingType (when creating/editing meetings)
+v Applicant can select meeting -> Language (when creating/editing meetings)
+v Show an error message when trying to delete MeetingTypes that are being used
+v Meetings Calendar implemented with Monthly, Weekly, and List views>
+
+3.Help:
+▔▔▔▔▔
+
+
+1.User Story or Task:                        #######    ZAK    #########
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+
+
+
+2.Result:
+▔▔▔▔▔▔
+V Researched Google API
+V Tried to implement Google calenda API but got stuck (Documentation is not great)
+V Added Calendar Iframe
+
+3.Help:
+▔▔▔▔▔
+ - Help with Google calendar API and Documentation
+
+
+
+
+
 
 =============================================================================
                                  Monday - 2023-02-06
@@ -8,10 +67,12 @@
 1.User Story or Task:                        ######   JULIETA   #######
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 
-- Create User Service and Repo
+V Create User Service and Repo
 - Create Language Service and Repo
 - Admin can Delete Members only in manage/users
-- Cleanup leftover scaffoldin code
+V Cleanup leftover scaffoldin code
+V Make nested Views
+V Style Dashboard
 
 
 2.Result:

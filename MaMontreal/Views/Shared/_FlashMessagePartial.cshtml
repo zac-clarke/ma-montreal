@@ -1,0 +1,17 @@
+@using MaMontreal.Models
+@using MaMontreal.Models.NotMapped
+@using Newtonsoft.Json
+
+@if (Model != null)
+{  
+    var message = JsonConvert.DeserializeObject<FlashMessage>(Model);
+    @if (message != null){
+        <div class='alert alert-@message.Type alert-dismissible fade show' role="alert">
+            @message.Message
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+} 
+
+
+

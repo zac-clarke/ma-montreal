@@ -1,0 +1,21 @@
+@using MaMontreal.Models
+@using MaMontreal.Models.NotMapped
+@using Newtonsoft.Json
+
+@if (Model != null)
+{  
+    var flashMessageList = JsonConvert.DeserializeObject<List<FlashMessage>>(Model);
+    @if (flashMessageList != null){
+
+        foreach (var message in flashMessageList)
+        {
+            <div class='alert alert-@message.Type alert-dismissible fade show' role="alert">
+                @message.Message
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>     
+        }
+    }
+} 
+
+
+
