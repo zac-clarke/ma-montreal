@@ -33,6 +33,11 @@ namespace MaMontreal.Services
             _userManager = userManager;
         }
 
+        public async Task<ApplicationUser?> GetCurUserAsync(ClaimsPrincipal User)
+        {
+            return await _userManager.GetUserAsync(User);
+        }
+
         public async Task<List<ApplicationUser>> GetAllAsync()
         {
             return await _context.Users.ToListAsync();

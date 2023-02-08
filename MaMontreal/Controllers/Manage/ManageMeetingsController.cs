@@ -2,6 +2,7 @@ using MaMontreal.Data;
 using MaMontreal.Models;
 using MaMontreal.Models.NotMapped;
 using MaMontreal.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using Newtonsoft.Json;
 
 namespace MaMontreal.Controllers_Manage
 {
+    [Authorize(Roles = "admin,gsr")]
     public class ManageMeetingsController : Controller
     {
         private readonly MamDbContext _context = null!;
@@ -45,7 +47,23 @@ namespace MaMontreal.Controllers_Manage
         // GET: ManageMeetings
         public async Task<IActionResult> Index()
         {
-            return View(await _service.GetAllMeetings());
+            try
+            {
+                UsersService userService = new UsersService(_context, _userManager);
+                ApplicationUser? user = await userService.GetCurUserAsync(User);
+
+                var meetings = User.IsInRole("admin") ? await _service.GetAllMeetings() :
+                                User.IsInRole("gsr") ? await _service.GetAllMeetingsByGsrId(user?.Id) : null;
+                if (meetings == null)
+                    return RedirectToPage("/");
+                return View(meetings);
+            }
+            catch (NullReferenceException ex)
+            {
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                _logger?.LogError(ex.Message);
+                return RedirectToPage("/Manage");
+            }
         }
 
         // GET: ManageMeetings/Details/5

@@ -2,12 +2,14 @@ using MaMontreal.Data;
 using MaMontreal.Models;
 using MaMontreal.Models.NotMapped;
 using MaMontreal.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace MaMontreal.Controllers_Manage
 {
+    [Authorize(Roles = "admin,gsr")]
     public class ManageMeetingTypesController : Controller
     {
         private readonly MeetingTypesService _service = null!;
