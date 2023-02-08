@@ -6,26 +6,14 @@ using MaMontreal.Services;
 
 namespace MaMontreal.Models.NotMapped
 {
-    public class CalendarEvent
+    public static class CalendarEvent
     {
+        //FIXME: Meetings with the same name break the code
         public static string filePath = @"./wwwroot/data/event_data.dat";
-        private int Id { get; set; }
-        private string Title { get; set; }
-        private string Start { get; set; }
-        private string End { get; set; }
-
-        public CalendarEvent(int id, String title, DateTime startDate, DateTime endDate, DateTime startTime, DateTime endTime)
-        {
-            Id = id;
-            Title = title;
-            Start = String.Format("{0:yyyy-MM-ddTHH:mm:ss}", (startDate.Date + startTime.TimeOfDay));
-            End = String.Format("{0:yyyy-MM-ddTHH:mm:ss}", (endDate.Date + endTime.TimeOfDay));
-        }
 
         public static void DeleteEventsFile()
         {
             Console.WriteLine("CalanderEvent.cs: Deleting Events Data File");
-            // IEnumerable<Meeting> meetings = _meetingService.GetAllMeetings(m => m.Id);
             if (File.Exists(filePath))
                 File.Delete(filePath);
         }
@@ -33,8 +21,7 @@ namespace MaMontreal.Models.NotMapped
         public static void UpdateEventsFile(IEnumerable<Meeting> meetings)
         {
             Console.WriteLine("CalanderEvent.cs: Updating Events Data File");
-            // IEnumerable<Meeting> meetings = _meetingService.GetAllMeetings(m => m.Id);
-            string data = ConvertMeetingsToEventString(meetings);
+            string data = ConvertToString(meetings.ToList<Meeting>());
             (new FileInfo(filePath)).Directory?.Create();
             File.WriteAllText(filePath, data);
         }
@@ -52,69 +39,51 @@ namespace MaMontreal.Models.NotMapped
             return File.ReadAllText(filePath);
         }
 
-        public static string ConvertMeetingsToEventString(IEnumerable<Meeting> meetings)
+        public static string ConvertToString(Meeting meeting)
         {
-            List<CalendarEvent> eventsList = new List<CalendarEvent>();
-
-            DateTime today = DateTime.Now.Date;
-
-            foreach (Meeting m in meetings)
-            {
-                CalendarEvent? e = null;
-
-                if (m.DeletedAt != null || (m.DayOfWeek == null && m.Date == null))
-                {
-                    break;
-                }
-                else if (m.DayOfWeek == null && m.Date != null)
-                {
-                    e = new CalendarEvent(m.Id, m.EventName, m.Date.Value, m.Date.Value, m.StartTime, m.EndTime);
-                    eventsList.Add(e);
-                }
-                else if (m.DayOfWeek != null)
-                {
-                    DateTime start = m.Date == null ? m.CreatedAt.Value : m.Date.Value;
-                    int targetDay = (int)m.DayOfWeek;
-                    if (targetDay <= (int)start.DayOfWeek)
-                        targetDay += 7;
-                    start = start.AddDays((targetDay - (int)start.DayOfWeek) % 7);
-
-                    DateTime end = today.AddYears(1);
-                    double numWeeks = ((end - start).TotalDays) / 7 + 1;
-
-                    for (int i = 0; i < numWeeks; i++)
-                    {
-                        DateTime date = start.Date.AddDays(i * 7);
-                        e = new CalendarEvent(m.Id, m.EventName, date, date, m.StartTime, m.EndTime);
-                        eventsList.Add(e);
-                    }
-                }
-            }
-
-            return ToJson(eventsList);
-        }
-
-        public static String ToJson(CalendarEvent e)
-        {
-            return "{" +
-                "id: " + $"'{e.Id}'," +
-                "title: " + $"'{e.Title}'," +
-                "start: " + $"'{e.Start}'," +
-                "end: " + $"'{e.End}'" +
-            "}"
+            string outStr = "\n\t{"
             ;
+            outStr += $"id: {meeting.Id}, " +
+                      $"title: '{meeting.EventName}', "
+                      ;
+
+            if (meeting.DayOfWeek == null && meeting.Date != null) // non-recurring events
+            {
+                outStr +=
+                $"start: '{String.Format("{0:yyyy-MM-ddTHH:mm:ss}", (meeting.Date.Value.Date + meeting.StartTime.TimeOfDay))}', " +
+                $"end: '{String.Format("{0:yyyy-MM-ddTHH:mm:ss}", (meeting.Date.Value.Date + meeting.EndTime.TimeOfDay))}', "
+                ;
+            }
+            else if (meeting.DayOfWeek != null) //recurring events
+            {
+                outStr +=
+                 $"daysOfWeek: '[{(int)meeting.DayOfWeek}]', " +
+                 $"startTime: '{String.Format("{0:HH:mm:ss}", meeting.StartTime)}', " +
+                 $"endTime: '{String.Format("{0:HH:mm:ss}", meeting.EndTime)}', " +
+                 $"startRecur: '{String.Format("{0:yyyy-MM-dd}", meeting.Date == null ? DateTime.Now.Date : meeting.Date.Value.Date)}', "
+                 ;
+            }
+
+            //TODO: Event color depending on Event Type
+
+            outStr += "},";
+            return outStr;
         }
 
-        public static String ToJson(List<CalendarEvent> list)
+        public static string ConvertToString(List<Meeting> meetingsList)
         {
+
             string outStr = "[";
-            for (int i = 0; i < list.Count; i++)
+
+            for (int i = 0; i < meetingsList.Count; i++)
             {
-                outStr += ToJson(list[i]);
-                if (i < list.Count - 1)
-                    outStr += ",";
+                Meeting m = meetingsList[i];
+                if (m.DeletedAt != null || (m.DayOfWeek == null && m.Date == null))
+                    break;
+                outStr += ConvertToString(m);
             }
-            outStr += "]";
+
+            outStr += "\n]";
             return outStr;
         }
     }
