@@ -65,7 +65,8 @@ namespace MaMontreal.Controllers.Manage
             catch (NullReferenceException ex)
             {
                 // TempData["flashMessageList"] = JsonConvert.SerializeObject(new List<FlashMessage>() {
-                //     new FlashMessage("ex.Message", "success")
+                //     new FlashMessage("ex.Message", "success"),
+                //     new FlashMessage("ex.Message", "danger")
                 // });
 
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));

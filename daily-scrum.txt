@@ -1,12 +1,85 @@
 
 =============================================================================
+                                 Wednesday - 2023-02-08
+=============================================================================
+
+
+1.User Story or Task:                        ######   JULIETA   #######
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+- make User details responsive
+- Work on Manage languages Styling and Code Cleanup
+- Restrict Manage Users and Languages actions to Admin Only
+- Start working on requests
+
+
+2.Result:
+▔▔▔▔▔▔
+V Create Language Service and Repo and Cleanup
+V Create Flash Message serializable Class and Partial with Dynamic Data
+V Test and Implement Flash Messages
+V Make Flash message List for Admin Welcome dashboard (for fotifications)
+V Implemen Flash Messages into Manage Users
+V Implemented Flash messages into Manage Languages
+V Implemented Logger into Manage Users and Languages
+
+3.Help:
+▔▔▔▔▔
+- Help with handling constructor exceptions
+
+1.User Story or Task:                        ########   AFTAB   ####### 
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+- Test meeting validation
+- ManageMeetings -> Tabs to filter meetings (pending, approved, declined, Mine)
+- Implement Authorization for ManageMeeting, ManageMeetingType, Manage...
+- GSR can only manage their own meetings
+- Applicant can upload an image for their meetings
+		
+
+2.Result:
+▔▔▔▔▔▔
+V MeetingCalendar events are saved to a file (The file is updated once a week or if it is deleted)
+V MeetingCalendar file gets deleted and created again in case there was an error loading the file
+V Refined MeetingCalendar SaveToFile - It now saves a smaller file and matches FullCalendar documentation
+V Help Julieta
+
+3.Help:
+▔▔▔▔▔
+
+
+1.User Story or Task:                        #######    ZAK    #########
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+- Tags Services
+- Add flashmessages and Logger to Tags
+- Cleanup code
+- Style like
+
+
+2.Result:
+▔▔▔▔▔▔
+V Peer test Completed functionalit
+
+3.Help:
+▔▔▔▔▔
+ - Help with Google calendar API and Documentation
+
+
+
+
+
+=============================================================================
                                  Tuesday - 2023-02-07
 =============================================================================
 
 
 1.User Story or Task:                        ######   JULIETA   #######
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-- Create Language Service and Repo
+V Create Language Service and Repo
+V Create Flash Message serializable Class and Partial with Dynamic Data
+V Test and Implement Flash Messages
+V Make Flash message List for Admin Welcome dashboard (for fotifications)
+V Implemen Flash Messages into Manage Users
+V Implemented Flash messages into Manage Languages
+V Implemented Logger into Manage users and Languages
 
 
 2.Result:
@@ -41,7 +114,7 @@ v Meetings Calendar implemented with Monthly, Weekly, and List views>
 
 1.User Story or Task:                        #######    ZAK    #########
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-
+- Peer test Completed functionality
 
 
 2.Result:
