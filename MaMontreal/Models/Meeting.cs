@@ -8,8 +8,8 @@ namespace MaMontreal.Models
     {
         public int Id { get; set; }
 
-        [Range(minimum: 1, maximum: 512, ErrorMessage = "District # must be between 1 and 512")]
-        public int District { get; set; }
+        [Range(minimum: 0, maximum: 512, ErrorMessage = "District # must be between 1 and 512")]
+        public int District { get; set; } = 0;
 
         [Required]
         [MaxLength(60, ErrorMessage = "Event Name cannot be longer than 60 characters")]

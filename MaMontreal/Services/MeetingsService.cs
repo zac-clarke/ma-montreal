@@ -38,6 +38,19 @@ namespace MaMontreal.Services
                                 .ToListAsync<Meeting>();
         }
 
+        public async Task<IEnumerable<Meeting>> GetAllMeetingsByGsrId(string? userId)
+        {
+            if (userId == null)
+                throw new NullReferenceException("Trying to Fetch User meetings failed. UserId is null");
+            return await _context.Meetings
+                                    .Include(m => m.Gsr)
+                                    .Include(m => m.UpdatedBy)
+                                    .Include(m => m.Language)
+                                    .Include(m => m.MeetingType)
+                                    .Where(m => m.Gsr != null && m.Gsr.Id == userId)
+                                    .ToListAsync<Meeting>();
+        }
+
         public IEnumerable<Meeting> GetAllMeetings(Func<Meeting, object> orderBy)
         {
             return _context.Meetings
@@ -82,6 +95,8 @@ namespace MaMontreal.Services
             else if (language == null)
                 throw new ArgumentException("Language is invalid!");
 
+            if (User.IsInRole("gsr"))
+                meeting.Status = Statuses.Pending;
             meeting.PostalCode = meeting.PostalCode
                 .Replace(" ", string.Empty)
                 .Replace("-", string.Empty)
@@ -135,6 +150,8 @@ namespace MaMontreal.Services
             else if (language == null)
                 throw new ArgumentException("_LanguageId,Language is invalid!");
 
+            if (User.IsInRole("gsr"))
+                meeting.Status = Statuses.Pending;
             meeting.PostalCode = meeting.PostalCode
                 .Replace(" ", string.Empty)
                 .Replace("-", string.Empty)

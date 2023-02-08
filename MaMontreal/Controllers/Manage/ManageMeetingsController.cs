@@ -2,6 +2,7 @@ using MaMontreal.Data;
 using MaMontreal.Models;
 using MaMontreal.Models.NotMapped;
 using MaMontreal.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,11 +10,12 @@ using Newtonsoft.Json;
 
 namespace MaMontreal.Controllers_Manage
 {
+    [Authorize(Roles = "admin,gsr")]
     public class ManageMeetingsController : Controller
     {
         private readonly MamDbContext _context = null!;
         private readonly MeetingsService _service = null!;
-        private readonly ILogger<ManageMeetingsController>? _logger;
+        private readonly ILogger<ManageMeetingsController> _logger = null!;
         private readonly UserManager<ApplicationUser> _userManager = null!;
 
         public ManageMeetingsController(MamDbContext context, UserManager<ApplicationUser> userManager, ILogger<ManageMeetingsController> logger)
@@ -31,7 +33,7 @@ namespace MaMontreal.Controllers_Manage
             catch (SystemException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger?.LogError(ex.Message);
+                _logger.LogError(ex.Message);
                 Problem(ex.Message);
             }
             if (_context == null)
@@ -45,7 +47,23 @@ namespace MaMontreal.Controllers_Manage
         // GET: ManageMeetings
         public async Task<IActionResult> Index()
         {
-            return View(await _service.GetAllMeetings());
+            try
+            {
+                UsersService userService = new UsersService(_context, _userManager);
+                ApplicationUser? user = await userService.GetCurUserAsync(User);
+
+                var meetings = User.IsInRole("admin") ? await _service.GetAllMeetings() :
+                                User.IsInRole("gsr") ? await _service.GetAllMeetingsByGsrId(user?.Id) : null;
+                if (meetings == null)
+                    return RedirectToPage("/");
+                return View(meetings);
+            }
+            catch (NullReferenceException ex)
+            {
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                _logger.LogError(ex.Message);
+                return RedirectToPage("/Manage");
+            }
         }
 
         // GET: ManageMeetings/Details/5
@@ -58,7 +76,7 @@ namespace MaMontreal.Controllers_Manage
             catch (NullReferenceException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger?.LogError(ex.Message);
+                _logger.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -88,13 +106,13 @@ namespace MaMontreal.Controllers_Manage
             {
                 await _service.CreateMeeting(meeting, _userManager, User);
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Meeting created successfully: " + meeting.EventName, "success"));
-                _logger?.LogInformation("Meeting created successfully: " + meeting.Id);
+                _logger.LogInformation("Meeting created successfully: " + meeting.Id);
                 return RedirectToAction(nameof(Index));
             }
             catch (ArgumentException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger?.LogError(ex.Message);
+                _logger.LogError(ex.Message);
                 string[] exception = ex.Message.Split(",");
                 string key = exception[0];
                 string message = exception[1];
@@ -121,7 +139,7 @@ namespace MaMontreal.Controllers_Manage
             catch (NullReferenceException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger?.LogError(ex.Message);
+                _logger.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -143,26 +161,26 @@ namespace MaMontreal.Controllers_Manage
             {
                 await _service.EditMeeting(id, meeting, _userManager, User);
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Meeting edited successfully: " + meeting.EventName, "success"));
-                _logger?.LogInformation("Meeting edited successfully: " + meeting.Id);
+                _logger.LogInformation("Meeting edited successfully: " + meeting.Id);
                 return RedirectToAction(nameof(Index));
             }
             catch (NullReferenceException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger?.LogError(ex.Message);
+                _logger.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
             catch (DbUpdateConcurrencyException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger?.LogError(ex.Message);
+                _logger.LogError(ex.Message);
                 ModelState.AddModelError("Id", "Looks like someone else edited/delete this Meeting!");
                 return View(meeting);
             }
             catch (ArgumentException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger?.LogError(ex.Message);
+                _logger.LogError(ex.Message);
                 if (ex.Message.Contains(','))
                 {
                     string[] exception = ex.Message.Split(",");
@@ -184,7 +202,7 @@ namespace MaMontreal.Controllers_Manage
             catch (NullReferenceException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger?.LogError(ex.Message);
+                _logger.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -198,13 +216,13 @@ namespace MaMontreal.Controllers_Manage
             {
                 Meeting meeting = await _service.DeleteMeeting(id, _userManager, User);
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Meeting deleted successfully: " + meeting.EventName, "success"));
-                _logger?.LogInformation("Meeting deleted successfully: " + id);
+                _logger.LogInformation("Meeting deleted successfully: " + id);
                 return RedirectToAction(nameof(Index));
             }
             catch (NullReferenceException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger?.LogError(ex.Message);
+                _logger.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -216,13 +234,13 @@ namespace MaMontreal.Controllers_Manage
             {
                 Meeting meeting = await _service.RestoreMeeting(id, _userManager, User);
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Meeting restored successfully: " + meeting.EventName, "success"));
-                _logger?.LogInformation("Meeting restored successfully: " + id);
+                _logger.LogInformation("Meeting restored successfully: " + id);
                 return RedirectToAction(nameof(Index));
             }
             catch (NullReferenceException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger?.LogError(ex.Message);
+                _logger.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
         }
