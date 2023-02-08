@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Details</h1>
+
 
 <div>
-    <h4>Language</h4>
+    <h4>Language Details</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -20,6 +20,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+     <a asp-action="Index" class="btn btn-dark"><i class="fa-solid fa-arrow-left me-1"></i>Back</a>
+     <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary"><i class="fa-solid fa-edit me-1"></i>Edit</a>
 </div>

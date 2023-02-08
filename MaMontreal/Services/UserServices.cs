@@ -79,10 +79,10 @@ namespace MaMontreal.Services
             {
                 ManagedRole newRole = new ManagedRole()
                 {
-                    _roleName = role,
+                    _roleName = role == null ? "unknown" : role,
                     _roleSelected = false
                 };
-                if (userRoles.Contains(role))
+                if (role != null && userRoles.Contains(role))
                     newRole._roleSelected = true;
 
                 currentUserRoles.Add(newRole);

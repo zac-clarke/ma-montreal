@@ -3,7 +3,7 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        @if (UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "admin").Result == true)
+        @if (User.IsInRole("admin") || User.IsInRole("gsr"))
         {
             <li class="nav-item">
                 <a class="btn btn-primary" asp-area="" asp-controller="Manage" asp-action="Index">Manage</a>
@@ -12,12 +12,12 @@
 
         <li class="nav-item">
             <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello
-                @(UserManager.GetUserAsync(User).Result != null ? UserManager.GetUserAsync(User).Result?.FirstName : UserManager.GetUserName(User))
+                @(User.Identity?.Name)
                 !</a>
         </li>
 
         <li class="nav-item">
-            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl='@Url.Action("Index", "Home", new { area = "" })'>
                 <button id="logout" type="submit" class="nav-link btn btn-link text-dark border-0">Logout</button>
             </form>
         </li>

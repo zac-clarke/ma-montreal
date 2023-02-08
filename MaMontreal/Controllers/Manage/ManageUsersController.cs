@@ -6,6 +6,7 @@ using MaMontreal.Data;
 using MaMontreal.Models;
 using MaMontreal.Models.NotMapped;
 using MaMontreal.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,12 +15,13 @@ using Newtonsoft.Json;
 namespace MaMontreal.Controllers.Manage
 {
 
+    [Authorize(Roles = "admin")]
     [Route("Manage/Users/")]
     public class ManageUsersController : Controller
     {
 
-        private readonly UsersService _usersService;
-        private readonly ILogger<ManageUsersController> _logger;
+        private readonly UsersService? _usersService;
+        private readonly ILogger<ManageUsersController>? _logger;
 
         public ManageUsersController(
             MamDbContext context,
@@ -33,7 +35,7 @@ namespace MaMontreal.Controllers.Manage
             }
             catch (SystemException ex)
             {
-                _logger.LogError(ex.Message);
+                _logger?.LogError(ex.Message);
                 Problem(ex.Message);
             }
         }
@@ -45,11 +47,11 @@ namespace MaMontreal.Controllers.Manage
         {
             try
             {
-                return View(_usersService.GetAllAsync().Result);
+                return View(await _usersService.GetAllAsync());
             }
             catch (SystemException ex)
             {
-                _logger.LogError(ex.Message);
+                _logger?.LogError(ex.Message);
                 return NotFound(ex.Message);
             }
         }
@@ -70,7 +72,7 @@ namespace MaMontreal.Controllers.Manage
                 // });
 
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger.LogError(ex.Message);
+                _logger?.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -87,7 +89,7 @@ namespace MaMontreal.Controllers.Manage
             catch (NullReferenceException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger.LogError(ex.Message);
+                _logger?.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -108,7 +110,7 @@ namespace MaMontreal.Controllers.Manage
             catch (NullReferenceException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger.LogError(ex.Message);
+                _logger?.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -125,7 +127,7 @@ namespace MaMontreal.Controllers.Manage
             catch (NullReferenceException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger.LogError(ex.Message);
+                _logger?.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -141,13 +143,13 @@ namespace MaMontreal.Controllers.Manage
             {
                 await _usersService.DeleteAsync(id);
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("User Deleted", "sucess"));
-                _logger.LogInformation($"User {id} Deleted");
+                _logger?.LogInformation($"User {id} Deleted");
                 return RedirectToAction(nameof(Index));
             }
             catch (NullReferenceException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger.LogError(ex.Message);
+                _logger?.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
         }
