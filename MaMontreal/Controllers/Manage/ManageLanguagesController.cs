@@ -7,45 +7,66 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MaMontreal.Data;
 using MaMontreal.Models;
+using MaMontreal.Services;
+using MaMontreal.Models.NotMapped;
+using Newtonsoft.Json;
 
 namespace MaMontreal.Controllers.Manage
 {
+    [Route("Manage/Languages/")]
     public class ManageLanguagesController : Controller
     {
-        private readonly MamDbContext _context;
+        private readonly LanguagesService _languagesService;
+        private readonly ILogger<ManageLanguagesController> _logger;
 
-        public ManageLanguagesController(MamDbContext context)
+        public ManageLanguagesController(MamDbContext context, ILogger<ManageLanguagesController> logger)
         {
-            _context = context;
+            try
+            {
+                _languagesService = new LanguagesService(context);
+                _logger = logger;
+            }
+            catch (SystemException ex)
+            {
+                _logger.LogError(ex.Message);
+                Problem(ex.Message);
+            }
+
         }
 
         // GET: ManageLanguages
+        [Route("")]
         public async Task<IActionResult> Index()
         {
-            return _context.Languages != null ?
-                        View(await _context.Languages.ToListAsync()) :
-                        Problem("Entity set 'MamDbContext.Languages'  is null.");
+            try
+            {
+                return View(_languagesService.GetAllAsync().Result);
+            }
+            catch (SystemException ex)
+            {
+                _logger.LogError(ex.Message);
+                return NotFound(ex.Message);
+            }
         }
 
         // GET: ManageLanguages/Details/5
-        public async Task<IActionResult> Details(int? id)
+        [Route("Details")]
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null || _context.Languages == null)
+            try
             {
-                return NotFound();
+                return View(await _languagesService.GetAsync(id));
             }
-
-            var language = await _context.Languages
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (language == null)
+            catch (SystemException ex)
             {
-                return NotFound();
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                _logger.LogError(ex.Message);
+                return RedirectToAction(nameof(Index));
             }
-
-            return View(language);
         }
 
         // GET: ManageLanguages/Create
+        [Route("Create")]
         public IActionResult Create()
         {
             return View();
@@ -56,108 +77,122 @@ namespace MaMontreal.Controllers.Manage
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("Create")]
         public async Task<IActionResult> Create([Bind("Id,Title")] Language language)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(language);
-                await _context.SaveChangesAsync();
+                return View(language);
+            }
+            try
+            {
+                await _languagesService.CreateAsync(language);
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage($"New language added: {language.Title} ", "success"));
+                _logger.LogInformation($"New language added: {language.Title} ");
                 return RedirectToAction(nameof(Index));
             }
-            return View(language);
+            catch (SystemException ex)
+            {
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                _logger.LogError(ex.Message);
+                return RedirectToAction(nameof(Index));
+            }
         }
+
 
         // GET: ManageLanguages/Edit/5
+        [Route("Edit")]
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Languages == null)
+            try
             {
-                return NotFound();
+                var language = await _languagesService.GetAsync(id);
+                return View(language);
             }
-
-            var language = await _context.Languages.FindAsync(id);
-            if (language == null)
+            catch (SystemException ex)
             {
-                return NotFound();
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                _logger.LogError(ex.Message);
+                return RedirectToAction(nameof(Index));
             }
-            return View(language);
         }
 
-        // POST: ManageLanguages/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // // POST: ManageLanguages/Edit/5
+        // // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Route("Edit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title")] Language language)
         {
-            if (id != language.Id)
+            if (!ModelState.IsValid)
+                return View(language);
+            try
             {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(language);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!LanguageExists(language.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                await _languagesService.UpdateAsync(id, language);
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage($"New language Updated: {language.Title} ", "success"));
+                _logger.LogInformation($"New language Updated: {language.Title} ");
                 return RedirectToAction(nameof(Index));
             }
-            return View(language);
+            catch (SystemException ex)
+            {
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                _logger.LogError(ex.Message);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                _logger.LogError(ex.Message);
+                return RedirectToAction(nameof(Index));
+            }
         }
 
-        // GET: ManageLanguages/Delete/5
+        // // GET: ManageLanguages/Delete/5
+        [Route("Delete")]
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Languages == null)
+            try
             {
-                return NotFound();
+                var language = await _languagesService.GetAsync(id);
+                return View(language);
+            }
+            catch (SystemException ex)
+            {
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                _logger.LogError(ex.Message);
+                return RedirectToAction(nameof(Index));
             }
 
-            var language = await _context.Languages
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (language == null)
-            {
-                return NotFound();
-            }
-
-            return View(language);
         }
 
         // POST: ManageLanguages/Delete/5
+        [Route("Delete")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
-            if (_context.Languages == null)
+            try
             {
-                return Problem("Entity set 'MamDbContext.Languages'  is null.");
+                await _languagesService.DeleteAsync(id);
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage($"Language Deleted", "success"));
+                _logger.LogInformation($"Language {id} Deleted");
+                return RedirectToAction(nameof(Index));
             }
-            var language = await _context.Languages.FindAsync(id);
-            if (language != null)
+            catch (SystemException ex)
             {
-                _context.Languages.Remove(language);
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                _logger.LogError(ex.Message);
+                return RedirectToAction(nameof(Index));
             }
+            catch (DbUpdateException ex)
+            {
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Language is possibly used for existing meetings", "danger"));
+                _logger.LogError(ex.Message);
+                _logger.LogError(ex.InnerException?.Message.ToString());
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool LanguageExists(int id)
-        {
-            return (_context.Languages?.Any(e => e.Id == id)).GetValueOrDefault();
+                return View(await _languagesService.GetAsync(id));
+            }
         }
     }
 }
