@@ -1,108 +1,86 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@{ ViewData["Title"] = "Home Page"; }
 
 <div class="">
-
-    <div class="d-flex justify-content-center mt-4">
-        <img src="~/images/ma_logo.png" width=200 alt="marijuana anonymous logo" />
-    </div>
-    <div class="card border-3 shadow mt-4">
-    <div class="container mt-3 ">
-        <div class="row">
-            <div class="col m-5  justify-content-center">
-                <h2>There is a Solution</h2>
-                <p>The solution for addiction over many substances has been found for many through the <a>12 steps</a> of 
-                alcoholics anonymous. With the help of the steps we have found not only freedom from addictions that make our 
-                existence unbearable, but a sense of comfort inside of our own skin. We say the program is simple, but it isnt 
-                necesarily easy. We are NOT religious. We do not support ANY causes. We simply want to help each other recover from the
-                strong grip of addiction!
-                 </p>
-                 <div class="d-flex justify-content-center">
-                    <Button class="btn btn-primary" asp-controller="Home" asp-action="HowItWorks">How It Works</Button>
-                 </div>
-            </div>
-            <div class="col m-5">
-                <div class="d-flex justify-content-center">
-                    <img src="~/images/teddy_bears.jpg" width=350 alt="Teddy bear helping another teddy bear" />
-                </div>
-            </div>
+  <div class="d-flex justify-content-center mt-4">
+    <img src="~/images/ma_logo.png" width="200" alt="marijuana anonymous logo" />
+  </div>
+  <div class="card border-3 shadow mt-4">
+    <div class="container mt-3">
+      <div class="row">
+        <div class="col m-5 justify-content-center">
+          <h2>There is a Solution</h2>
+          <p>
+            The solution for addiction over many substances has been found for many through the <a>12 steps</a> of alcoholics anonymous. With the help of the steps we have found not only freedom from addictions that make our existence unbearable, but a sense of comfort inside of our own skin. We say
+            the program is simple, but it isnt necesarily easy. We are NOT religious. We do not support ANY causes. We simply want to help each other recover from the strong grip of addiction!
+          </p>
+          <div class="d-flex justify-content-center">
+            <a asp-controller="Solution" asp-action="HowItWorks"><button class="btn btn-primary">How It Works</button></a>
+          </div>
         </div>
-    </div>
-    </div>
-     <div class="container ">
-
-        <div class="row">
-            <div class="col m-5">
-                <div class="d-flex justify-content-center">
-                    <iframe
-                        width="350"
-                        height="350"
-                        style="border:0"
-                        loading="lazy"
-                        allowfullscreen
-                        referrerpolicy="no-referrer-when-downgrade"
-                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB3r_BZwT-zIXZc7KCAl4onrAVBZNVHZv4&q=chabbadlifeline,Montreal+Qc+">@*TODO:add second location *@
-                    </iframe>
-                </div>
-            </div>
-            <div class="col m-5  justify-content-center">
-                <h2>Find a meeting near you</h2>
-                <p>One of the most important components to staying sober is going to meetings and connecting with other addictions
-                    who are trying to stay sober as well. As a young fellowhip in Montreal we only have a few meetings, but what
-                    we lack in quantity we make up for in quality. Many people have come through the rooms of MA in Montreal who are
-                    sober today. Going to meetings helps you escape the isolation that often accompanies addiction. It is also a way of 
-                    deciding for yourself whether or not this program could work for you. Do yourself a favor if you think you have a 
-                    problem with marijuana and join us <3!
-                 </p>
-                 <div class="d-flex justify-content-center">
-                    <Button class="btn btn-primary" asp-controller="Meetings" asp-action="MeetingsList">Meetings</Button>
-                 </div>
-            </div>
+        <div class="col m-5">
+          <div class="d-flex justify-content-center">
+            <img src="~/images/teddy_bears.jpg" width="350" alt="Teddy bear helping another teddy bear" />
+          </div>
         </div>
+      </div>
     </div>
-
-    <div class="card border-3 shadow ">
-    <div class="container  ">
-        <div class="row">
-            <div class="col m-5  justify-content-center">
-                <h2>Reach out to us</h2>
-                <p>Our program teaches us that the only way we can stay sober is to help the still suffering marijuana addict.
-                    By contacting us you give us the opertunity to stay clean. This can be a difficult step to take, but it 
-                    may be the most important first step to getting your life back on track. Be strong, but do not do it alone
-                 </p>
-                 <div class="d-flex justify-content-center">
-                    <Button class="btn btn-primary" asp-controller="Home" asp-action="SeekHelp">Seek Help</Button>
-                 </div>
-            </div>
-            <div class="col m-5">
-                <div class="d-flex justify-content-center">
-                    <img src="~/images/helping_hand.jpg" width=450 alt="kid helping anothe kid climb mountain" />
-                </div>
-            </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col m-5">
+        <div class="d-flex justify-content-center">
+          <iframe width="350" height="350" style="border: 0" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB3r_BZwT-zIXZc7KCAl4onrAVBZNVHZv4&q=chabbadlifeline,Montreal+Qc+">@*TODO:add second location *@ </iframe>
         </div>
-    </div>
-    </div>
-    <div class="container ">
-
-        <div class="row">
-            <div class="col m-5">
-                <div class="d-flex justify-content-center">
-                   <img src="~/images/LifeWithHope.jpg" width=250 alt="photo of M A book life with hope" />
-                </div>
-            </div>
-            <div class="col m-5  justify-content-center">
-                <h2>There is plenty to read to get started</h2>
-                <p>Written by marijuana addicts and for marijuana addicts, download pdfs of our literature for free directly off the site.
-
-
-                 </p>
-                 <div class="d-flex justify-content-center">
-                    <Button class="btn btn-primary" asp-controller="Home" asp-action="Literature">Literature</Button>
-                 </div>
-            </div>
+      </div>
+      <div class="col m-5 justify-content-center">
+        <h2>Find a meeting near you</h2>
+        <p>
+          One of the most important components to staying sober is going to meetings and connecting with other addictions who are trying to stay sober as well. As a young fellowhip in Montreal we only have a few meetings, but what we lack in quantity we make up for in quality. Many people have come
+          through the rooms of MA in Montreal who are sober today. Going to meetings helps you escape the isolation that often accompanies addiction. It is also a way of deciding for yourself whether or not this program could work for you. Do yourself a favor if you think you have a problem with
+          marijuana and join us <3!
+        </p>
+        <div class="d-flex justify-content-center">
+          <a asp-controller="Meetings" asp-action="Calendar"><button class="btn btn-primary">Meetings</button></a>
         </div>
+      </div>
     </div>
+  </div>
 
-
+  <div class="card border-3 shadow">
+    <div class="container">
+      <div class="row">
+        <div class="col m-5 justify-content-center">
+          <h2>Reach out to us</h2>
+          <p>
+            Our program teaches us that the only way we can stay sober is to help the still suffering marijuana addict. By contacting us you give us the opertunity to stay clean. This can be a difficult step to take, but it may be the most important first step to getting your life back on track. Be
+            strong, but do not do it alone
+          </p>
+          <div class="d-flex justify-content-center">
+            <a asp-controller="Home" asp-action="SeekHelp"><button class="btn btn-primary">Seek Help</button></a>
+          </div>
+        </div>
+        <div class="col m-5">
+          <div class="d-flex justify-content-center">
+            <img src="~/images/helping_hand.jpg" width="450" alt="kid helping anothe kid climb mountain" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col m-5">
+        <div class="d-flex justify-content-center">
+          <img src="~/images/LifeWithHope.jpg" width="250" alt="photo of M A book life with hope" />
+        </div>
+      </div>
+      <div class="col m-5 justify-content-center">
+        <h2>There is plenty to read to get started</h2>
+        <p>Written by marijuana addicts and for marijuana addicts, download pdfs of our literature for free directly off the site.</p>
+        <div class="d-flex justify-content-center">
+          <a asp-controller="Home" asp-action="Literature"><button class="btn btn-primary">Literature</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
