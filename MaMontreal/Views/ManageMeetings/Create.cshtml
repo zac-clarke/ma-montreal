@@ -5,6 +5,7 @@
 
 @{
     ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
     List<MeetingType> mtList = ViewBag.MeetingTypes as List<MeetingType>;
     List<SelectListItem> mtSelectList = new List<SelectListItem>();
@@ -35,7 +36,7 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="All" class="text-danger"></div>
-            @if(UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "admin").Result == true)
+            @if(UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "admin")?.Result == true)
             {
                 <div class="form-group">
                     <label asp-for="District" class="control-label"></label>
@@ -56,13 +57,13 @@
             
             <div class="form-group">
                 <label asp-for="_MeetingTypeId" class="control-label"></label>
-                @Html.DropDownList("_MeetingTypeId", mtSelectList)
+                @Html.DropDownList("_MeetingTypeId", mtSelectList, new {@class = "form-control"})
                 <span asp-validation-for="_MeetingTypeId" class="text-danger"></span>
             </div>
             
             <div class="form-group">
                 <label asp-for="_LanguageId" class="control-label"></label>
-                @Html.DropDownList("_LanguageId", langSelectList)
+                @Html.DropDownList("_LanguageId", langSelectList, new {@class = "form-control"})
                 <span asp-validation-for="_LanguageId" class="text-danger"></span>
             </div>
 
@@ -140,8 +141,4 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <script defer>
-        $('#zMeetingTypeId').addClass('form-control')
-        $('#zLanguageId').addClass('form-control')
-    </script>
 }
