@@ -2,13 +2,13 @@ using System.Security.Claims;
 using MaMontreal.Data;
 using MaMontreal.Models;
 using MaMontreal.Models.Enums;
-using MaMontreal.Repositories;
+using MaMontreal.Models.NotMapped;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace MaMontreal.Services
 {
-    public class MeetingsService : IMeetingsRepo
+    public class MeetingsService
     {
         private readonly MamDbContext _context;
 
@@ -69,9 +69,9 @@ namespace MaMontreal.Services
         ///<exception cref="ArgumentException"/>
         public async Task<Meeting> CreateMeeting(Meeting meeting, UserManager<ApplicationUser> userManager, ClaimsPrincipal User)
         {
-            ApplicationUser curUser = userManager.GetUserAsync(User).Result;
-            MeetingType meetingType = _context.MeetingTypes.Where(mt => mt.Id == meeting._MeetingTypeId).FirstOrDefault();
-            Language language = _context.Languages.Where(l => l.Id == meeting._LanguageId).FirstOrDefault();
+            ApplicationUser? curUser = userManager?.GetUserAsync(User)?.Result;
+            MeetingType? meetingType = _context.MeetingTypes?.Where(mt => mt.Id == meeting._MeetingTypeId)?.FirstOrDefault();
+            Language? language = _context.Languages?.Where(l => l.Id == meeting._LanguageId)?.FirstOrDefault();
 
             if (meeting.DayOfWeek == null && meeting.Date == null)
                 throw new ArgumentException("DayOfWeek,Day of Week and Date cannot both be empty!");
@@ -93,6 +93,10 @@ namespace MaMontreal.Services
 
             _context.Meetings.Add(meeting);
             await _context.SaveChangesAsync();
+
+            //Update data file
+            CalendarEvent.UpdateEventsFile(_context.Meetings.ToList<Meeting>());
+
             return meeting;
         }
 
@@ -114,18 +118,18 @@ namespace MaMontreal.Services
         ///<exception cref="ArgumentException"/>
         public async Task<Meeting> EditMeeting(Meeting meeting, UserManager<ApplicationUser> userManager, ClaimsPrincipal User)
         {
-            ApplicationUser curUser = userManager.GetUserAsync(User).Result;
-            MeetingType meetingType = _context.MeetingTypes.Where(mt => mt.Id == meeting._MeetingTypeId).FirstOrDefault();
-            Language language = _context.Languages.Where(l => l.Id == meeting._LanguageId).FirstOrDefault();
+            ApplicationUser? curUser = userManager?.GetUserAsync(User)?.Result;
+            MeetingType? meetingType = _context.MeetingTypes?.Where(mt => mt.Id == meeting._MeetingTypeId)?.FirstOrDefault();
+            Language? language = _context.Languages?.Where(l => l.Id == meeting._LanguageId)?.FirstOrDefault();
 
             if (meeting.DayOfWeek == null && meeting.Date == null)
                 throw new ArgumentException("DayOfWeek,Day of Week and Date cannot both be empty!");
             else if (curUser == null)
-                throw new ArgumentException("Current User is invalid!");
+                throw new ArgumentException("Id,Current User is invalid!");
             else if (meetingType == null)
-                throw new ArgumentException("Meeting Type is invalid!");
+                throw new ArgumentException("_MeetingTypeId,Meeting Type is invalid!");
             else if (language == null)
-                throw new ArgumentException("Language is invalid!");
+                throw new ArgumentException("_LanguageId,Language is invalid!");
 
             meeting.MeetingType = meetingType;
             meeting.Language = language;
@@ -134,6 +138,11 @@ namespace MaMontreal.Services
 
             _context.Meetings.Update(meeting);
             await _context.SaveChangesAsync();
+
+
+            //Update data file
+            CalendarEvent.UpdateEventsFile(_context.Meetings.ToList<Meeting>());
+
             return meeting;
         }
 
@@ -159,6 +168,10 @@ namespace MaMontreal.Services
 
             _context.Meetings.Update(meeting);
             await _context.SaveChangesAsync();
+
+            //Update data file
+            CalendarEvent.UpdateEventsFile(_context.Meetings.ToList<Meeting>());
+
             return meeting;
         }
 
@@ -184,6 +197,10 @@ namespace MaMontreal.Services
 
             _context.Meetings.Update(meeting);
             await _context.SaveChangesAsync();
+
+            //Update data file
+            CalendarEvent.UpdateEventsFile(_context.Meetings.ToList<Meeting>());
+
             return meeting;
         }
     }

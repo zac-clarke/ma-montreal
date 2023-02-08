@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MaMontreal.Services
 {
-    public class MeetingTypesService : IMeetingTypesRepo
+    public class MeetingTypesService
     {
         private readonly MamDbContext _context;
 

@@ -6,11 +6,25 @@
 @* <iframe src="https://calendar.google.com/calendar/embed?src=02751f6ac646e07e64c6e7024ab14a5727edb9a5fb194814a23038a8cbf91f38%40group.calendar.google.com&ctz=America%2FToronto" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe> *@
 <div id='calendar'></div>
 
+<div id="errorBox" class="alert alert-danger d-none">
+  <p>There was an error loading the calendar! Try <a href="?refresh">refreshing</a> this page</p>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src=" https://cdn.jsdelivr.net/npm/fullcalendar@6.1.1/index.global.min.js "></script>
 <script>
+  window.addEventListener('error', function(e) {
+    document.getElementById('errorBox').classList.remove('d-none');
+    $.ajax({
+      type: "POST",
+      url:"/Meetings/Calandar",
+    })
+  });
+</script>
+<script>
   document.addEventListener('DOMContentLoaded', function() {
-    console.log(@data)
     const calendarEl = document.getElementById('calendar')
+    const events = @data
     const calendar = new FullCalendar.Calendar(calendarEl, {
       headerToolbar: {
         left: 'dayGridMonth,timeGridWeek,listWeek',
@@ -18,11 +32,11 @@
         right: 'prev,next today',
       },
       initialView: 'dayGridMonth',
-      events: @data,
+      events: events,
       eventClick: function(info) {
           const id = info.event._def.publicId
           @* TODO: Change URL to go to non-admin meeting detail page *@
-          window.location.href = "http://localhost:5192/ManageMeetings/Details/" + id
+          window.location.href = "/ManageMeetings/Details/" + id
       }
     })
     calendar.render()
