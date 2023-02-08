@@ -11,10 +11,10 @@ namespace MaMontreal.Controllers_Manage
 {
     public class ManageMeetingsController : Controller
     {
-        private readonly MamDbContext _context;
-        private readonly MeetingsService _service;
+        private readonly MamDbContext _context = null!;
+        private readonly MeetingsService _service = null!;
         private readonly ILogger<ManageMeetingsController>? _logger;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager = null!;
 
         public ManageMeetingsController(MamDbContext context, UserManager<ApplicationUser> userManager, ILogger<ManageMeetingsController> logger)
         {
@@ -59,7 +59,7 @@ namespace MaMontreal.Controllers_Manage
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
                 _logger?.LogError(ex.Message);
-                return NotFound(ex.Message);
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -122,7 +122,7 @@ namespace MaMontreal.Controllers_Manage
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
                 _logger?.LogError(ex.Message);
-                return NotFound(ex.Message);
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -150,7 +150,7 @@ namespace MaMontreal.Controllers_Manage
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
                 _logger?.LogError(ex.Message);
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
             catch (DbUpdateConcurrencyException ex)
             {
@@ -163,10 +163,13 @@ namespace MaMontreal.Controllers_Manage
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
                 _logger?.LogError(ex.Message);
-                string[] exception = ex.Message.Split(",");
-                string key = exception[0];
-                string message = exception[1];
-                ModelState.AddModelError(key, message);
+                if (ex.Message.Contains(','))
+                {
+                    string[] exception = ex.Message.Split(",");
+                    string key = exception[0];
+                    string message = exception[1];
+                    ModelState.AddModelError(key, message);
+                }
                 return View(meeting);
             }
         }
@@ -182,7 +185,7 @@ namespace MaMontreal.Controllers_Manage
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
                 _logger?.LogError(ex.Message);
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -202,7 +205,7 @@ namespace MaMontreal.Controllers_Manage
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
                 _logger?.LogError(ex.Message);
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -220,7 +223,7 @@ namespace MaMontreal.Controllers_Manage
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
                 _logger?.LogError(ex.Message);
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
         }
 

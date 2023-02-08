@@ -82,6 +82,10 @@ namespace MaMontreal.Services
             else if (language == null)
                 throw new ArgumentException("Language is invalid!");
 
+            meeting.PostalCode = meeting.PostalCode
+                .Replace(" ", string.Empty)
+                .Replace("-", string.Empty)
+                .ToUpper();
             meeting.Language = language;
             meeting.MeetingType = meetingType;
             meeting.UpdatedAt = DateTime.Now;
@@ -105,7 +109,7 @@ namespace MaMontreal.Services
         public async Task<Meeting> EditMeeting(int? id, Meeting meeting, UserManager<ApplicationUser> userManager, ClaimsPrincipal User)
         {
             if (id == null)
-                throw new NullReferenceException("Id cannot be null");
+                throw new NullReferenceException("Id,Id cannot be null");
             // if (_context.Meetings.Find(id.Value) == null)
             //     throw new NullReferenceException("No Meeting Type found with id " + id.Value);
 
@@ -131,6 +135,10 @@ namespace MaMontreal.Services
             else if (language == null)
                 throw new ArgumentException("_LanguageId,Language is invalid!");
 
+            meeting.PostalCode = meeting.PostalCode
+                .Replace(" ", string.Empty)
+                .Replace("-", string.Empty)
+                .ToUpper();
             meeting.MeetingType = meetingType;
             meeting.Language = language;
             meeting.UpdatedAt = DateTime.Now;

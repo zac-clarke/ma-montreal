@@ -10,16 +10,19 @@ using MaMontreal.Models;
 using MaMontreal.Services;
 using MaMontreal.Models.NotMapped;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MaMontreal.Controllers.Manage
 {
+
+    [Authorize(Roles = "admin,gsr")]
     [Route("Manage/Languages/")]
     public class ManageLanguagesController : Controller
     {
-        private readonly LanguagesService _languagesService;
-        private readonly ILogger<ManageLanguagesController> _logger;
+        private readonly LanguagesService? _languagesService;
+        private readonly ILogger<ManageLanguagesController>? _logger;
 
-        public ManageLanguagesController(MamDbContext context, ILogger<ManageLanguagesController> logger)
+        public ManageLanguagesController(MamDbContext? context, ILogger<ManageLanguagesController>? logger)
         {
             try
             {
@@ -28,7 +31,7 @@ namespace MaMontreal.Controllers.Manage
             }
             catch (SystemException ex)
             {
-                _logger.LogError(ex.Message);
+                _logger?.LogError(ex.Message);
                 Problem(ex.Message);
             }
 
@@ -44,7 +47,7 @@ namespace MaMontreal.Controllers.Manage
             }
             catch (SystemException ex)
             {
-                _logger.LogError(ex.Message);
+                _logger?.LogError(ex.Message);
                 return NotFound(ex.Message);
             }
         }
@@ -60,12 +63,13 @@ namespace MaMontreal.Controllers.Manage
             catch (SystemException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger.LogError(ex.Message);
+                _logger?.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
         }
 
         // GET: ManageLanguages/Create
+        [Authorize(Roles = "admin")]
         [Route("Create")]
         public IActionResult Create()
         {
@@ -88,13 +92,13 @@ namespace MaMontreal.Controllers.Manage
             {
                 await _languagesService.CreateAsync(language);
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage($"New language added: {language.Title} ", "success"));
-                _logger.LogInformation($"New language added: {language.Title} ");
+                _logger?.LogInformation($"New language added: {language.Title} ");
                 return RedirectToAction(nameof(Index));
             }
             catch (SystemException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger.LogError(ex.Message);
+                _logger?.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -112,7 +116,7 @@ namespace MaMontreal.Controllers.Manage
             catch (SystemException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger.LogError(ex.Message);
+                _logger?.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -131,19 +135,19 @@ namespace MaMontreal.Controllers.Manage
             {
                 await _languagesService.UpdateAsync(id, language);
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage($"New language Updated: {language.Title} ", "success"));
-                _logger.LogInformation($"New language Updated: {language.Title} ");
+                _logger?.LogInformation($"New language Updated: {language.Title} ");
                 return RedirectToAction(nameof(Index));
             }
             catch (SystemException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger.LogError(ex.Message);
+                _logger?.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
             catch (DbUpdateConcurrencyException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger.LogError(ex.Message);
+                _logger?.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -160,7 +164,7 @@ namespace MaMontreal.Controllers.Manage
             catch (SystemException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger.LogError(ex.Message);
+                _logger?.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -176,20 +180,20 @@ namespace MaMontreal.Controllers.Manage
             {
                 await _languagesService.DeleteAsync(id);
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage($"Language Deleted", "success"));
-                _logger.LogInformation($"Language {id} Deleted");
+                _logger?.LogInformation($"Language {id} Deleted");
                 return RedirectToAction(nameof(Index));
             }
             catch (SystemException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger.LogError(ex.Message);
+                _logger?.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
             catch (DbUpdateException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Language is possibly used for existing meetings", "danger"));
-                _logger.LogError(ex.Message);
-                _logger.LogError(ex.InnerException?.Message.ToString());
+                _logger?.LogError(ex.Message);
+                _logger?.LogError(ex.InnerException?.Message.ToString());
 
                 return View(await _languagesService.GetAsync(id));
             }

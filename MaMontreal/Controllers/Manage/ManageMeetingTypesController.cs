@@ -10,8 +10,8 @@ namespace MaMontreal.Controllers_Manage
 {
     public class ManageMeetingTypesController : Controller
     {
-        private readonly MeetingTypesService _service;
-        private readonly ILogger<ManageMeetingTypesController>? _logger;
+        private readonly MeetingTypesService _service = null!;
+        private readonly ILogger<ManageMeetingTypesController>? _logger = null!;
 
         public ManageMeetingTypesController(MamDbContext context, ILogger<ManageMeetingTypesController> logger)
         {
@@ -26,8 +26,6 @@ namespace MaMontreal.Controllers_Manage
                 _logger?.LogError(ex.Message);
                 Problem(ex.Message);
             }
-            if (_service == null)
-                throw new NullReferenceException("MeetingTypesService is null!");
         }
 
         // GET: ManageMeetingTypes
@@ -47,7 +45,7 @@ namespace MaMontreal.Controllers_Manage
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
                 _logger?.LogError(ex.Message);
-                return NotFound(ex.Message);
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -86,7 +84,7 @@ namespace MaMontreal.Controllers_Manage
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
                 _logger?.LogError(ex.Message);
-                return NotFound(ex.Message);
+                return RedirectToAction(nameof(Index));
             }
         }
 
