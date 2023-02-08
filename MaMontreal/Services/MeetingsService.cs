@@ -186,7 +186,9 @@ namespace MaMontreal.Services
 
         public async Task<Meeting> DeleteMeeting(Meeting meeting, UserManager<ApplicationUser> userManager, ClaimsPrincipal User)
         {
-            ApplicationUser curUser = userManager.GetUserAsync(User).Result;
+            ApplicationUser? curUser = await userManager.GetUserAsync(User);
+            if (curUser == null)
+                throw new NullReferenceException("User cannot be null");
             meeting.UpdatedAt = DateTime.Now;
             meeting.UpdatedBy = curUser;
             meeting.DeletedAt = DateTime.Now;
@@ -215,7 +217,9 @@ namespace MaMontreal.Services
 
         public async Task<Meeting> RestoreMeeting(Meeting meeting, UserManager<ApplicationUser> userManager, ClaimsPrincipal User)
         {
-            ApplicationUser curUser = userManager.GetUserAsync(User).Result;
+            ApplicationUser? curUser = await userManager.GetUserAsync(User);
+            if (curUser == null)
+                throw new NullReferenceException("User cannot be null");
             meeting.UpdatedAt = DateTime.Now;
             meeting.UpdatedBy = curUser;
             meeting.DeletedAt = null;

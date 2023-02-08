@@ -27,13 +27,15 @@
             @Html.DisplayNameFor(model => model.MeetingType)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MeetingType == null ? "" : model.MeetingType.Title)
+                 @Model.MeetingType?.Title
+            @* @Html.DisplayFor(model => model.MeetingType == null ? "" : model.MeetingType.Title) *@
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Language)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Language == null ? "" : model.Language.Title)
+            @Model.Language?.Title
+            @* @Html.DisplayFor(model => model.Language == null ? "" : model.Language.Title) *@
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Description)
