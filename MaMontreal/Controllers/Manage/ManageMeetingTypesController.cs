@@ -13,7 +13,7 @@ namespace MaMontreal.Controllers_Manage
     public class ManageMeetingTypesController : Controller
     {
         private readonly MeetingTypesService _service = null!;
-        private readonly ILogger<ManageMeetingTypesController>? _logger = null!;
+        private readonly ILogger<ManageMeetingTypesController> _logger = null!;
 
         public ManageMeetingTypesController(MamDbContext context, ILogger<ManageMeetingTypesController> logger)
         {
@@ -25,7 +25,7 @@ namespace MaMontreal.Controllers_Manage
             catch (SystemException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger?.LogError(ex.Message);
+                _logger.LogError(ex.Message);
                 Problem(ex.Message);
             }
         }
@@ -46,7 +46,7 @@ namespace MaMontreal.Controllers_Manage
             catch (NullReferenceException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger?.LogError(ex.Message);
+                _logger.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -68,7 +68,7 @@ namespace MaMontreal.Controllers_Manage
             {
                 await _service.CreateMeetingType(meetingType);
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Meeting Type created successfully: " + meetingType.Title, "success"));
-                _logger?.LogInformation("MeetingType created successfully: " + meetingType.Id);
+                _logger.LogInformation("MeetingType created successfully: " + meetingType.Id);
                 return RedirectToAction(nameof(Index));
             }
             return View(meetingType);
@@ -85,7 +85,7 @@ namespace MaMontreal.Controllers_Manage
             catch (NullReferenceException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger?.LogError(ex.Message);
+                _logger.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -104,19 +104,19 @@ namespace MaMontreal.Controllers_Manage
             {
                 await _service.EditMeetingType(id, meetingType);
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Meeting Type edited successfully: " + meetingType.Title, "success"));
-                _logger?.LogInformation("MeetingType created successfully: " + id);
+                _logger.LogInformation("MeetingType created successfully: " + id);
                 return RedirectToAction(nameof(Index));
             }
             catch (NullReferenceException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger?.LogError(ex.Message);
+                _logger.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
             catch (DbUpdateConcurrencyException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger?.LogError(ex.Message);
+                _logger.LogError(ex.Message);
                 ModelState.AddModelError("Id", "Looks like someone else edited/deleted this Meeting Type!");
                 return View(meetingType);
             }
@@ -132,7 +132,7 @@ namespace MaMontreal.Controllers_Manage
             catch (NullReferenceException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger?.LogError(ex.Message);
+                _logger.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -146,19 +146,19 @@ namespace MaMontreal.Controllers_Manage
             {
                 MeetingType mt = await _service.DeleteMeetingType(id);
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Meeting Type deleted successfully: " + mt.Title, "success"));
-                _logger?.LogInformation("MeetingType deleted successfully: " + id);
+                _logger.LogInformation("MeetingType deleted successfully: " + id);
                 return RedirectToAction(nameof(Index));
             }
             catch (NullReferenceException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger?.LogError(ex.Message);
+                _logger.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
             catch (DbUpdateException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                _logger?.LogError(ex.Message);
+                _logger.LogError(ex.Message);
                 ViewBag.error = ex.Message;
                 return View(await _service.GetMeetingTypeById(id));
             }
