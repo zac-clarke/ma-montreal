@@ -25,25 +25,19 @@ public class MeetingsController : Controller
         }
     }
 
-    [Route("Calandar")]
-    public IActionResult Calandar()
+    [Route("Calendar")]
+    public IActionResult Calendar()
     {
         ViewData["meetings"] = CalendarEvent.GetEventStringFromFile(_meetingService);
         return View();
     }
 
-    [Route("Calandar")]
+    [Route("Calendar")]
     [HttpDelete, ActionName("Calendar")]
-    public IActionResult CalandarReset()
+    public IActionResult CalendarReset()
     {
         CalendarEvent.DeleteEventsFile();
         ViewData["meetings"] = CalendarEvent.GetEventStringFromFile(_meetingService);
-        return View();
-    }
-
-    [Route("MeetingsList")]
-    public IActionResult MeetingsList()
-    {
         return View();
     }
 
