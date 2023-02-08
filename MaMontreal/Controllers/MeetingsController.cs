@@ -33,7 +33,7 @@ public class MeetingsController : Controller
     }
 
     [Route("Calandar")]
-    [HttpPost, ActionName("Calendar")]
+    [HttpDelete, ActionName("Calendar")]
     public IActionResult CalandarReset()
     {
         CalendarEvent.DeleteEventsFile();
