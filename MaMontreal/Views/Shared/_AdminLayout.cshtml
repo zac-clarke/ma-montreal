@@ -17,7 +17,7 @@
     <h1 class="display-4">
         @ViewData["Title"]
     </h1>
-    @Html.Partial("~/Views/Shared/_FlashMessagePartial.cshtml", @TempData["flashMessage"])
+<partial name="~/Views/Shared/_FlashMessagePartial.cshtml" model='@TempData["flashMessage"]'/>
     <div class="row py-5">
         
         <div class="col-12 col-md-3">

@@ -18,7 +18,6 @@ namespace MaMontreal.Controllers.Manage
     {
         private readonly TagsService _tagsService = null!;
         private readonly ILogger<ManageTagsController> _logger = null!;
-        private readonly MamDbContext _context = null!;
 
         public ManageTagsController(MamDbContext context, ILogger<ManageTagsController> logger)
         {
