@@ -79,7 +79,7 @@ namespace MaMontreal.Models.NotMapped
             {
                 Meeting m = meetingsList[i];
                 if (m.DeletedAt != null || (m.DayOfWeek == null && m.Date == null))
-                    break;
+                    continue;
                 outStr += ConvertToString(m);
             }
 
