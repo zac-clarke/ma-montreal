@@ -11,7 +11,7 @@ namespace MaMontreal.Controllers;
 public class MeetingsController : Controller
 {
 
-    private readonly MeetingsService _meetingService;
+    private readonly MeetingsService _meetingService = null!;
 
     public MeetingsController(MamDbContext context)
     {

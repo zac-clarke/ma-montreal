@@ -14,22 +14,22 @@ namespace MaMontreal.Models
         [Required]
         [MaxLength(60, ErrorMessage = "Event Name cannot be longer than 60 characters")]
         [Display(Name = "Event Name")]
-        public string EventName { get; set; }
+        public string EventName { get; set; } = null!;
 
         [Required]
         [MaxLength(3000, ErrorMessage = "Description cannot be longer than 3000 characters")]
-        public string Description { get; set; }
+        public string Description { get; set; } = null!;
 
         [Display(Name = "Image Url")]
         public string? ImageUrl { get; set; }
 
         [Required]
         [MaxLength(255, ErrorMessage = "Address cannot be longer than 255 characters")]
-        public string Address { get; set; }
+        public string Address { get; set; } = null!;
 
         [Required]
         [MaxLength(64, ErrorMessage = "City cannot be longer than 64 characters")]
-        public string City { get; set; }
+        public string City { get; set; } = null!;
 
         [Required]
         [Display(Name = "Province Code")]
@@ -38,9 +38,10 @@ namespace MaMontreal.Models
         [Required]
         [MinLength(6, ErrorMessage = "Postal Code cannot be shorter than 6 characters")]
         [MaxLength(7, ErrorMessage = "Postal Code cannot be longer than 7 characters")]
+        [RegularExpression(@"^([A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d)$", ErrorMessage = "Please enter a valid Canadian Postal Code")]
         [DataType(DataType.PostalCode)]
         [Display(Name = "Postal Code")]
-        public string PostalCode { get; set; }
+        public string PostalCode { get; set; } = null!;
 
         [Display(Name = "Day of Week")]
         [Range(minimum: 0, maximum: 6, ErrorMessage = "Day of Week must be between 0 and 7")]
@@ -84,16 +85,5 @@ namespace MaMontreal.Models
         [Display(Name = "Updated By")]
         [ForeignKey("UpdatedById")]
         public ApplicationUser? UpdatedBy { get; set; }
-
-        // [Required]
-        // [Display(Name = "Created At")]
-        // public DateTime CreatedAt { get; set; } = DateTime.Now;
-
-        // [Required]
-        // [Display(Name = "Updated At")]
-        // public DateTime UpdatedAt { get; set; } = DateTime.Now;
-
-        // [Display(Name = "Deleted At")]
-        // public DateTime? DeletedAt { get; set; }
     }
 }
