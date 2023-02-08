@@ -7,8 +7,9 @@
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
-    List<MeetingType> mtList = ViewBag.MeetingTypes as List<MeetingType>;
+    List<MeetingType>? mtList = ViewBag.MeetingTypes as List<MeetingType>;
     List<SelectListItem> mtSelectList = new List<SelectListItem>();
+    if(mtList == null) mtList = new List<MeetingType>();
     foreach(MeetingType mt in mtList)
     {
         mtSelectList.Add(new SelectListItem(){
@@ -17,8 +18,9 @@
         });
     }
 
-    List<Language> langList = ViewBag.Languages as List<Language>;
+    List<Language>? langList = ViewBag.Languages as List<Language>;
     List<SelectListItem> langSelectList = new List<SelectListItem>();
+    if(langList == null) langList = new List<Language>();
     foreach(Language lang in langList)
     {
         langSelectList.Add(new SelectListItem(){
@@ -36,7 +38,7 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="All" class="text-danger"></div>
-            @if(UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "admin")?.Result == true)
+            @if(User.IsInRole("admin"))
             {
                 <div class="form-group">
                     <label asp-for="District" class="control-label"></label>
@@ -121,11 +123,14 @@
                 <input asp-for="EndTime" class="form-control" />
                 <span asp-validation-for="EndTime" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <select asp-for="Status" asp-items="@Html.GetEnumSelectList<Statuses>()" class="form-control"></select>
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
+            @if(User.IsInRole("admin"))
+            {
+                <div class="form-group">
+                    <label asp-for="Status" class="control-label"></label>
+                    <select asp-for="Status" asp-items="@Html.GetEnumSelectList<Statuses>()" class="form-control"></select>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+            }
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
