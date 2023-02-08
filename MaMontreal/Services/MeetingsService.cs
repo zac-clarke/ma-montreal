@@ -176,7 +176,7 @@ namespace MaMontreal.Services
         }
 
         ///<exception cref="NullReferenceException"/>
-        public async Task<Meeting> UnDeleteMeeting(int? id, UserManager<ApplicationUser> userManager, ClaimsPrincipal User)
+        public async Task<Meeting> RestoreMeeting(int? id, UserManager<ApplicationUser> userManager, ClaimsPrincipal User)
         {
             if (id == null)
                 throw new NullReferenceException("Id cannot be null");
@@ -185,10 +185,10 @@ namespace MaMontreal.Services
             if (meeting == null)
                 throw new NullReferenceException("No meeting type found with the id provided");
 
-            return await UnDeleteMeeting(meeting, userManager, User);
+            return await RestoreMeeting(meeting, userManager, User);
         }
 
-        public async Task<Meeting> UnDeleteMeeting(Meeting meeting, UserManager<ApplicationUser> userManager, ClaimsPrincipal User)
+        public async Task<Meeting> RestoreMeeting(Meeting meeting, UserManager<ApplicationUser> userManager, ClaimsPrincipal User)
         {
             ApplicationUser curUser = userManager.GetUserAsync(User).Result;
             meeting.UpdatedAt = DateTime.Now;

@@ -5,6 +5,7 @@
 
 @{
     ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
     List<MeetingType> mtList = ViewBag.MeetingTypes as List<MeetingType>;
     List<SelectListItem> mtSelectList = new List<SelectListItem>();
@@ -60,12 +61,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="_MeetingTypeId" class="control-label"></label>
-                @Html.DropDownList("_MeetingTypeId", mtSelectList)
+                @Html.DropDownList("_MeetingTypeId", mtSelectList, new {@class = "form-control"})
                 <span asp-validation-for="_MeetingTypeId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="_LanguageId" class="control-label"></label>
-                @Html.DropDownList("_LanguageId", langSelectList)
+                @Html.DropDownList("_LanguageId", langSelectList, new {@class = "form-control"})
                 <span asp-validation-for="_LanguageId" class="text-danger"></span>
             </div>
             <div class="form-group">
