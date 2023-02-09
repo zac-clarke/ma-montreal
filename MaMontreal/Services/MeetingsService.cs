@@ -1,8 +1,12 @@
 using System.Security.Claims;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using MaMontreal.Data;
 using MaMontreal.Models;
 using MaMontreal.Models.Enums;
 using MaMontreal.Models.NotMapped;
+using MaMontreal.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -67,8 +71,18 @@ namespace MaMontreal.Services
         }
 
         ///<exception cref="ArgumentException"/>
-        public async Task<Meeting> CreateMeeting(Meeting meeting, UserManager<ApplicationUser> userManager, ClaimsPrincipal User)
+        public async Task<Meeting> CreateMeeting(Meeting meeting, UserManager<ApplicationUser> userManager, ClaimsPrincipal User, AzureStorageService azureStorage)
         {
+            if (meeting._ImageFile != null && meeting._ImageFile.Length > 0)
+            {
+                IFormFile file = meeting._ImageFile;
+                BlobResponseDto? response = await azureStorage.UploadMeetingImage(file, meeting);
+                if (!response.Error)
+                {
+                    meeting.ImageUrl = response.Blob.Uri;
+                }
+            }
+
             ApplicationUser? curUser = userManager?.GetUserAsync(User)?.Result;
             MeetingType? meetingType = _context.MeetingTypes?.Where(mt => mt.Id == meeting._MeetingTypeId)?.FirstOrDefault();
             Language? language = _context.Languages?.Where(l => l.Id == meeting._LanguageId)?.FirstOrDefault();
@@ -108,8 +122,17 @@ namespace MaMontreal.Services
 
         ///<exception cref="NullReferenceException"/>
         ///<exception cref="ArgumentException"/>
-        public async Task<Meeting> EditMeeting(int? id, Meeting meeting, UserManager<ApplicationUser> userManager, ClaimsPrincipal User)
+        public async Task<Meeting> EditMeeting(int? id, Meeting meeting, UserManager<ApplicationUser> userManager, ClaimsPrincipal User, AzureStorageService azureStorage)
         {
+            if (meeting._ImageFile != null && meeting._ImageFile.Length > 0)
+            {
+                IFormFile file = meeting._ImageFile;
+                BlobResponseDto? response = await azureStorage.UploadMeetingImage(file, meeting);
+                if (!response.Error)
+                {
+                    meeting.ImageUrl = response.Blob.Uri;
+                }
+            }
             if (id == null)
                 throw new NullReferenceException("Id,Id cannot be null");
             // if (_context.Meetings.Find(id.Value) == null)

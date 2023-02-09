@@ -1,6 +1,7 @@
 using MaMontreal.Data;
 using MaMontreal.Models;
 using MaMontreal.Models.NotMapped;
+using MaMontreal.Repositories;
 using MaMontreal.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -19,8 +20,9 @@ namespace MaMontreal.Controllers_Manage
         private readonly UsersService _userService = null!;
         private readonly ILogger<ManageMeetingsController> _logger = null!;
         private readonly UserManager<ApplicationUser> _userManager = null!;
+        private readonly AzureStorageService _storage = null!;
 
-        public ManageMeetingsController(MamDbContext context, UserManager<ApplicationUser> userManager, ILogger<ManageMeetingsController> logger)
+        public ManageMeetingsController(MamDbContext context, UserManager<ApplicationUser> userManager, AzureStorageService storage, ILogger<ManageMeetingsController> logger)
         {
             try
             {
@@ -29,6 +31,7 @@ namespace MaMontreal.Controllers_Manage
                 _userManager = userManager;
                 _logger = logger;
                 _userService = new UsersService(context, userManager);
+                _storage = storage;
             }
             catch (SystemException ex)
             {
@@ -104,17 +107,16 @@ namespace MaMontreal.Controllers_Manage
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route(template: "Create")]
-        public async Task<IActionResult> Create([Bind("District,EventName,Description,_MeetingTypeId,_LanguageId,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
+        public async Task<IActionResult> Create([Bind("District,EventName,Description,_MeetingTypeId,_LanguageId,_ImageFile,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
         {
             ViewBag.MeetingTypes = _context.MeetingTypes.ToList<MeetingType>();
             ViewBag.Languages = _context.Languages.ToList<Language>();
 
-            if (!ModelState.IsValid)
-                return View(meeting);
-
             try
             {
-                await _service.CreateMeeting(meeting, _userManager, User);
+                if (!ModelState.IsValid)
+                    return View(meeting);
+                await _service.CreateMeeting(meeting, _userManager, User, _storage);
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Meeting created successfully: " + meeting.EventName, "success"));
                 _logger.LogInformation("Meeting created successfully: " + meeting.Id);
                 return RedirectToAction(nameof(Index));
@@ -169,8 +171,12 @@ namespace MaMontreal.Controllers_Manage
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Edit")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,District,EventName,Description,_MeetingTypeId,_LanguageId,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,District,EventName,Description,_MeetingTypeId,_LanguageId,_ImageFile,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
         {
+            // if (meeting == null) Console.WriteLine("meeting is null");
+            // else if (meeting._ImageFile == null) Console.WriteLine("ImageFile is null");
+            // else Console.WriteLine(meeting._ImageFile.FileName);
+
             Meeting oldMeeting = await _service.GetMeetingById(id);
             ApplicationUser? _curUser = _userService?.GetCurUserAsync(User).Result;
             _context.Entry<Meeting>(oldMeeting).State = EntityState.Detached;
@@ -185,12 +191,11 @@ namespace MaMontreal.Controllers_Manage
             ViewBag.MeetingTypes = _context.MeetingTypes.ToList<MeetingType>();
             ViewBag.Languages = _context.Languages.ToList<Language>();
 
-            if (!ModelState.IsValid)
-                return View(meeting);
-
             try
             {
-                await _service.EditMeeting(id, meeting, _userManager, User);
+                if (!ModelState.IsValid)
+                    return View(meeting);
+                await _service.EditMeeting(id, meeting, _userManager, User, _storage);
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Meeting edited successfully: " + meeting.EventName, "success"));
                 _logger.LogInformation("Meeting edited successfully: " + meeting.Id);
                 return RedirectToAction(nameof(Index));

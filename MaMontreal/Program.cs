@@ -1,10 +1,9 @@
 using MaMontreal.Data;
 using MaMontreal.Models;
+using MaMontreal.Repositories;
+using MaMontreal.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,13 +15,11 @@ builder.Services
 .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<MamDbContext>();
 
-
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-
-
-
+//Azure Blob
+builder.Services.AddTransient<AzureStorageService>();
 
 var app = builder.Build();
 

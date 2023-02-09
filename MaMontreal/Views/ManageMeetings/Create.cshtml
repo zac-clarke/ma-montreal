@@ -30,14 +30,16 @@
     }
 }
 
+
+
 <h1>Create</h1>
 
 <h4>Meeting</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="col-md-6">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @if(User.IsInRole("admin"))
             {
                 <div class="form-group">
@@ -67,13 +69,6 @@
                 <label asp-for="_LanguageId" class="control-label"></label>
                 @Html.DropDownList("_LanguageId", langSelectList, new {@class = "form-control"})
                 <span asp-validation-for="_LanguageId" class="text-danger"></span>
-            </div>
-
-            @* TODO: Allow user to upload images and then store them in the blob storage *@
-            <div class="form-group">
-                <label asp-for="ImageUrl" class="control-label"></label>
-                <input asp-for="ImageUrl" class="form-control" />
-                <span asp-validation-for="ImageUrl" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Address" class="control-label"></label>
@@ -131,6 +126,14 @@
                     <span asp-validation-for="Status" class="text-danger"></span>
                 </div>
             }
+
+            <div class="form-group">
+                <label asp-for="_ImageFile" class="control-label"></label>
+                <input asp-for="_ImageFile" type='file' class="form-control" />
+                <span asp-validation-for="_ImageFile" class="text-danger"></span>
+                <img id="image_upload_preview" alt="Select the Image for this meeting" width="256px" height="256px" />
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -146,4 +149,5 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script src="~/js/imagePreview.js" ></script>
 }

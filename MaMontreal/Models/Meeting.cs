@@ -20,6 +20,10 @@ namespace MaMontreal.Models
         [MaxLength(3000, ErrorMessage = "Description cannot be longer than 3000 characters")]
         public string Description { get; set; } = null!;
 
+        [NotMapped]
+        [Display(Name = "Image")]
+        public IFormFile? _ImageFile { get; set; }
+
         [Display(Name = "Image Url")]
         public string? ImageUrl { get; set; }
 

@@ -36,7 +36,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Id" class="control-label d-none"></label>
@@ -70,11 +70,6 @@
                 <label asp-for="_LanguageId" class="control-label"></label>
                 @Html.DropDownList("_LanguageId", langSelectList, new {@class = "form-control"})
                 <span asp-validation-for="_LanguageId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImageUrl" class="control-label"></label>
-                <input asp-for="ImageUrl" class="form-control" />
-                <span asp-validation-for="ImageUrl" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Address" class="control-label"></label>
@@ -127,6 +122,14 @@
                     <span asp-validation-for="Status" class="text-danger"></span>
                 </div>
             }
+
+            <div class="form-group">
+                <label asp-for="_ImageFile" class="control-label"></label>
+                <input asp-for="_ImageFile" type='file' class="form-control" />
+                <span asp-validation-for="_ImageFile" class="text-danger"></span>
+                <img id="image_upload_preview" alt="Select the Image for this meeting" width="256px" height="256px" />
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -140,6 +143,7 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/imagePreview.js" ></script>
     <script defer>
         $('#zMeetingTypeId').addClass('form-control')
         $('#zLanguageId').addClass('form-control')

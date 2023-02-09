@@ -10,43 +10,12 @@
   <p>There was an error loading the calendar! Try <a href="?refresh">refreshing</a> this page</p>
 </div>
 
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src=" https://cdn.jsdelivr.net/npm/fullcalendar@6.1.1/index.global.min.js "></script>
-<script>
-  // In case there's an error when reading from the file, we will delete the file. Forcing it to recreate it
-  window.addEventListener('error', function(e) {
-    document.getElementById('errorBox').classList.remove('d-none');
-    $.ajax({
-      type: "DELETE",
-      url:"/Meetings/Calandar",
+@section Scripts {
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.1/index.global.min.js "></script>
+  <script src="~/js/calendar.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      loadCalender(@data)
     })
-  });
-</script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const calendarEl = document.getElementById('calendar')
-    const events = @data
-    //const events = [
-    //  {title: 'Test', startRecur:'2023-02-03', startTime: '16:20:00', daysOfWeek: ['2']},
-    //  {title: 'Test2', start:'2023-02-03T04:00:00'}
-    //]
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-      headerToolbar: {
-        left: 'dayGridMonth,timeGridWeek,listWeek',
-        center: 'title',
-        right: 'prev,next today',
-      },
-      themeSystem: 'bootstrap5',
-      initialView: 'listWeek',
-      events: events,
-      eventClick: function(info) {
-          const id = info.event._def.publicId
-          @* TODO: Change URL to go to non-admin meeting detail page *@
-          window.location.href = "/ManageMeetings/Details/" + id
-      }
-    })
-    calendar.render()
-    calendar.setOption('locale', 'en-CA');
-  })
-
-</script>
+  </script>
+}
