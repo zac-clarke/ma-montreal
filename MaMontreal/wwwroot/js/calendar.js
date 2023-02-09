@@ -28,7 +28,7 @@ const loadCalender = (data) => {
         eventClick: function (info) {
             const id = info.event._def.publicId
             //TODO: Change URL to go to non - admin meeting detail page
-            window.location.href = "/Manage/Meetings/Details/" + id
+            window.location.href = "/Manage/Meetings/Details?id=" + id
         }
     })
     calendar.render()
