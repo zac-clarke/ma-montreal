@@ -1,6 +1,6 @@
 [
 	{id: 4, title: 'Juju Finally Has Hope!!!', daysOfWeek: '[0]', startTime: '16:20:00', endTime: '17:13:00', startRecur: '2023-02-03', },
-	{id: 14, title: 'EventName', daysOfWeek: '[1]', startTime: '17:08:02', endTime: '18:38:02', startRecur: '2023-02-09', },
+	{id: 14, title: 'EventName', daysOfWeek: '[2]', startTime: '17:08:02', endTime: '18:38:02', startRecur: '2023-02-09', },
 	{id: 15, title: 'EventName2', daysOfWeek: '[2]', startTime: '17:15:34', endTime: '18:45:34', startRecur: '2023-02-09', },
 	{id: 16, title: 'EventName3', daysOfWeek: '[3]', startTime: '17:30:24', endTime: '20:00:24', startRecur: '2023-02-09', },
 	{id: 17, title: 'EventName4', daysOfWeek: '[4]', startTime: '17:40:28', endTime: '19:10:28', startRecur: '2023-02-09', },
