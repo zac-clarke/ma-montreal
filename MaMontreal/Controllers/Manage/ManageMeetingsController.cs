@@ -107,7 +107,7 @@ namespace MaMontreal.Controllers_Manage
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route(template: "Create")]
-        public async Task<IActionResult> Create([Bind("District,EventName,Description,_MeetingTypeId,_LanguageId,_ImageFile,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
+        public async Task<IActionResult> Create([Bind("District,EventName,Description,_MeetingTypeId,_LanguageId,_ImageFile,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
         {
             ViewBag.MeetingTypes = _context.MeetingTypes.ToList<MeetingType>();
             ViewBag.Languages = _context.Languages.ToList<Language>();
@@ -171,7 +171,7 @@ namespace MaMontreal.Controllers_Manage
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Edit")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,District,EventName,Description,_MeetingTypeId,_LanguageId,_ImageFile,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,District,EventName,Description,_MeetingTypeId,_LanguageId,_ImageFile,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
         {
             // if (meeting == null) Console.WriteLine("meeting is null");
             // else if (meeting._ImageFile == null) Console.WriteLine("ImageFile is null");
