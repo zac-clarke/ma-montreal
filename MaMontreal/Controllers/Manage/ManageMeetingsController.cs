@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 namespace MaMontreal.Controllers_Manage
 {
     [Authorize(Roles = "admin,gsr")]
+    [Route("Manage/Meetings/")]
     public class ManageMeetingsController : Controller
     {
         private readonly MamDbContext _context = null!;
@@ -44,6 +45,7 @@ namespace MaMontreal.Controllers_Manage
         }
 
         // GET: ManageMeetings
+        [Route("")]
         public async Task<IActionResult> Index()
         {
             try
@@ -63,6 +65,7 @@ namespace MaMontreal.Controllers_Manage
         }
 
         // GET: ManageMeetings/Details/5
+        [Route("Details")]
         public async Task<IActionResult> Details(int? id)
         {
             try
@@ -87,6 +90,7 @@ namespace MaMontreal.Controllers_Manage
         }
 
         // GET: ManageMeetings/Create
+        [Route("Create")]
         public IActionResult Create()
         {
             ViewBag.MeetingTypes = _context.MeetingTypes.ToList<MeetingType>();
@@ -99,6 +103,7 @@ namespace MaMontreal.Controllers_Manage
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route(template: "Create")]
         public async Task<IActionResult> Create([Bind("District,EventName,Description,_MeetingTypeId,_LanguageId,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
         {
             ViewBag.MeetingTypes = _context.MeetingTypes.ToList<MeetingType>();
@@ -127,6 +132,7 @@ namespace MaMontreal.Controllers_Manage
         }
 
         // GET: ManageMeetings/Edit/5
+        [Route("Edit")]
         public async Task<IActionResult> Edit(int? id)
         {
             try
@@ -162,6 +168,7 @@ namespace MaMontreal.Controllers_Manage
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("Edit")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,District,EventName,Description,_MeetingTypeId,_LanguageId,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
         {
             Meeting oldMeeting = await _service.GetMeetingById(id);
@@ -217,6 +224,7 @@ namespace MaMontreal.Controllers_Manage
         }
 
         // GET: ManageMeetings/Delete/5
+        [Route("Delete")]
         public async Task<IActionResult> Delete(int? id)
         {
             try
@@ -244,6 +252,7 @@ namespace MaMontreal.Controllers_Manage
         // POST: ManageMeetings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Route("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             try
@@ -272,6 +281,7 @@ namespace MaMontreal.Controllers_Manage
         }
 
         // GET: ManageMeetings/UnDelete/5
+        [Route("Restore")]
         public async Task<IActionResult> Restore(int? id)
         {
             try

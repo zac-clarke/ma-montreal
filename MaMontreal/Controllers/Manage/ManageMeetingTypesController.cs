@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 namespace MaMontreal.Controllers_Manage
 {
     [Authorize(Roles = "admin")]
+    [Route("Manage/MeetingTypes/")]
     public class ManageMeetingTypesController : Controller
     {
         private readonly MeetingTypesService _service = null!;
@@ -31,12 +32,14 @@ namespace MaMontreal.Controllers_Manage
         }
 
         // GET: ManageMeetingTypes
+        [Route("")]
         public async Task<IActionResult> Index()
         {
             return View(await _service.GetAllMeetingTypes());
         }
 
         // GET: ManageMeetingTypes/Details/5
+        [Route("Details")]
         public async Task<IActionResult> Details(int? id)
         {
             try
@@ -52,6 +55,7 @@ namespace MaMontreal.Controllers_Manage
         }
 
         // GET: ManageMeetingTypes/Create
+        [Route(template: "Create")]
         public IActionResult Create()
         {
             return View();
@@ -62,6 +66,7 @@ namespace MaMontreal.Controllers_Manage
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route(template: "Create")]
         public async Task<IActionResult> Create([Bind("Title")] MeetingType meetingType)
         {
             if (ModelState.IsValid)
@@ -75,6 +80,7 @@ namespace MaMontreal.Controllers_Manage
         }
 
         // GET: ManageMeetingTypes/Edit/5
+        [Route("Edit")]
         public async Task<IActionResult> Edit(int? id)
         {
             try
@@ -95,6 +101,7 @@ namespace MaMontreal.Controllers_Manage
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("Edit")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title")] MeetingType meetingType)
         {
             if (!ModelState.IsValid)
@@ -123,6 +130,7 @@ namespace MaMontreal.Controllers_Manage
         }
 
         // GET: ManageMeetingTypes/Delete/5
+        [Route("Delete")]
         public async Task<IActionResult> Delete(int? id)
         {
             try
@@ -140,6 +148,7 @@ namespace MaMontreal.Controllers_Manage
         // POST: ManageMeetingTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Route("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             try
