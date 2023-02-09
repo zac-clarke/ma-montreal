@@ -15,6 +15,7 @@ namespace MaMontreal.Controllers_Manage
     {
         private readonly MamDbContext _context = null!;
         private readonly MeetingsService _service = null!;
+        private readonly UsersService _userService = null!;
         private readonly ILogger<ManageMeetingsController> _logger = null!;
         private readonly UserManager<ApplicationUser> _userManager = null!;
 
@@ -26,9 +27,7 @@ namespace MaMontreal.Controllers_Manage
                 _service = new MeetingsService(context);
                 _userManager = userManager;
                 _logger = logger;
-
-                // _meetingTypes = context.MeetingTypes.ToList<MeetingType>();
-                // _languages = context.Languages.ToList<Language>();
+                _userService = new UsersService(context, userManager);
             }
             catch (SystemException ex)
             {
@@ -36,12 +35,12 @@ namespace MaMontreal.Controllers_Manage
                 _logger.LogError(ex.Message);
                 Problem(ex.Message);
             }
-            if (_context == null)
-                throw new NullReferenceException("MamDbContext is null!");
-            if (_service == null)
-                throw new NullReferenceException("MeetingsService is null!");
-            if (_userManager == null)
-                throw new NullReferenceException("UserManager is null!");
+            // if (_context == null)
+            //     throw new NullReferenceException("MamDbContext is null!");
+            // if (_service == null)
+            //     throw new NullReferenceException("MeetingsService is null!");
+            // if (_userManager == null)
+            //     throw new NullReferenceException("UserManager is null!");
         }
 
         // GET: ManageMeetings
@@ -49,11 +48,8 @@ namespace MaMontreal.Controllers_Manage
         {
             try
             {
-                UsersService userService = new UsersService(_context, _userManager);
-                ApplicationUser? user = await userService.GetCurUserAsync(User);
-
                 var meetings = User.IsInRole("admin") ? await _service.GetAllMeetings() :
-                                User.IsInRole("gsr") ? await _service.GetAllMeetingsByGsrId(user?.Id) : null;
+                                User.IsInRole("gsr") ? await _service.GetAllMeetingsByGsrId(_userService.GetCurUserAsync(User).Result?.Id) : null;
                 if (meetings == null)
                     return RedirectToPage("/");
                 return View(meetings);
@@ -71,7 +67,16 @@ namespace MaMontreal.Controllers_Manage
         {
             try
             {
-                return View(await _service.GetMeetingById(id));
+                Meeting meeting = await _service.GetMeetingById(id);
+                ApplicationUser? _curUser = _userService?.GetCurUserAsync(User).Result;
+
+                if (!User.IsInRole("admin") && !meeting.IsOwnedBy(_curUser))
+                {
+                    TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("You are not the GSR of that Meeting!", "danger"));
+                    _logger.LogError($"{_curUser?.UserName} tried getting details of meeting #{meeting.Id} which doesn't belong to them!");
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(meeting);
             }
             catch (NullReferenceException ex)
             {
@@ -126,7 +131,15 @@ namespace MaMontreal.Controllers_Manage
         {
             try
             {
-                var meeting = await _service.GetMeetingById(id);
+                Meeting meeting = await _service.GetMeetingById(id);
+                ApplicationUser? _curUser = _userService?.GetCurUserAsync(User).Result;
+
+                if (!User.IsInRole("admin") && !meeting.IsOwnedBy(_curUser))
+                {
+                    TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("You are not the GSR of that Meeting!", "danger"));
+                    _logger.LogError($"{_curUser?.UserName} tried editing meeting #{meeting.Id} which doesn't belong to them!");
+                    return RedirectToAction(nameof(Index));
+                }
 
                 ViewBag.MeetingTypes = _context.MeetingTypes.ToList<MeetingType>();
                 ViewBag.Languages = _context.Languages.ToList<Language>();
@@ -151,6 +164,17 @@ namespace MaMontreal.Controllers_Manage
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,District,EventName,Description,_MeetingTypeId,_LanguageId,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
         {
+            Meeting oldMeeting = await _service.GetMeetingById(id);
+            ApplicationUser? _curUser = _userService?.GetCurUserAsync(User).Result;
+            _context.Entry<Meeting>(oldMeeting).State = EntityState.Detached;
+
+            if (!User.IsInRole("admin") && !oldMeeting.IsOwnedBy(_curUser))
+            {
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("You are not the GSR of that Meeting!", "danger"));
+                _logger.LogError($"{_curUser?.UserName} tried editing meeting #{meeting.Id} which doesn't belong to them!");
+                return RedirectToAction(nameof(Index));
+            }
+
             ViewBag.MeetingTypes = _context.MeetingTypes.ToList<MeetingType>();
             ViewBag.Languages = _context.Languages.ToList<Language>();
 
@@ -197,6 +221,16 @@ namespace MaMontreal.Controllers_Manage
         {
             try
             {
+                Meeting meeting = await _service.GetMeetingById(id);
+                ApplicationUser? _curUser = _userService?.GetCurUserAsync(User).Result;
+
+                if (!User.IsInRole("admin") && !meeting.IsOwnedBy(_curUser))
+                {
+                    TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("You are not the GSR of that Meeting!", "danger"));
+                    _logger.LogError($"{_curUser?.UserName} tried deleting meeting #{meeting.Id} which doesn't belong to them!");
+                    return RedirectToAction(nameof(Index));
+                }
+
                 return View(await _service.GetMeetingById(id));
             }
             catch (NullReferenceException ex)
@@ -214,7 +248,17 @@ namespace MaMontreal.Controllers_Manage
         {
             try
             {
-                Meeting meeting = await _service.DeleteMeeting(id, _userManager, User);
+                Meeting meeting = await _service.GetMeetingById(id);
+                ApplicationUser? _curUser = _userService?.GetCurUserAsync(User).Result;
+
+                if (!User.IsInRole("admin") && !meeting.IsOwnedBy(_curUser))
+                {
+                    TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("You are not the GSR of that Meeting!", "danger"));
+                    _logger.LogError($"{_curUser?.UserName} tried deleting meeting #{meeting.Id} which doesn't belong to them!");
+                    return RedirectToAction(nameof(Index));
+                }
+
+                await _service.DeleteMeeting(id, _userManager, User);
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Meeting deleted successfully: " + meeting.EventName, "success"));
                 _logger.LogInformation("Meeting deleted successfully: " + id);
                 return RedirectToAction(nameof(Index));
@@ -232,7 +276,17 @@ namespace MaMontreal.Controllers_Manage
         {
             try
             {
-                Meeting meeting = await _service.RestoreMeeting(id, _userManager, User);
+                Meeting meeting = await _service.GetMeetingById(id);
+                ApplicationUser? _curUser = _userService?.GetCurUserAsync(User).Result;
+
+                if (!User.IsInRole("admin") && !meeting.IsOwnedBy(_curUser))
+                {
+                    TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("You are not the GSR of that Meeting!", "danger"));
+                    _logger.LogError($"{_curUser?.UserName} tried restoring meeting #{meeting.Id} which doesn't belong to them!");
+                    return RedirectToAction(nameof(Index));
+                }
+
+                await _service.RestoreMeeting(id, _userManager, User);
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Meeting restored successfully: " + meeting.EventName, "success"));
                 _logger.LogInformation("Meeting restored successfully: " + id);
                 return RedirectToAction(nameof(Index));

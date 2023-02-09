@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace MaMontreal.Controllers_Manage
 {
-    [Authorize(Roles = "admin,gsr")]
+    [Authorize(Roles = "admin")]
     public class ManageMeetingTypesController : Controller
     {
         private readonly MeetingTypesService _service = null!;

@@ -85,5 +85,10 @@ namespace MaMontreal.Models
         [Display(Name = "Updated By")]
         [ForeignKey("UpdatedById")]
         public ApplicationUser? UpdatedBy { get; set; }
+
+        public bool IsOwnedBy(ApplicationUser? user)
+        {
+            return Gsr != null && Gsr.Id.Equals(user?.Id);
+        }
     }
 }
