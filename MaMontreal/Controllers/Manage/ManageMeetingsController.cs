@@ -38,12 +38,6 @@ namespace MaMontreal.Controllers_Manage
                 _logger.LogError(ex.Message);
                 Problem(ex.Message);
             }
-            // if (_context == null)
-            //     throw new NullReferenceException("MamDbContext is null!");
-            // if (_service == null)
-            //     throw new NullReferenceException("MeetingsService is null!");
-            // if (_userManager == null)
-            //     throw new NullReferenceException("UserManager is null!");
         }
 
         // GET: ManageMeetings
@@ -115,6 +109,17 @@ namespace MaMontreal.Controllers_Manage
             ViewBag.MeetingTypes = _context.MeetingTypes.ToList<MeetingType>();
             ViewBag.Languages = _context.Languages.ToList<Language>();
             ViewData["Gsrs"] = _userService?.GetUsersWithRole("gsr").Result;
+
+            if (meeting._ImageFile?.Length > 250000)
+            {
+                ModelState.AddModelError("_ImageFile", "Image file size cannot exceed 250KB");
+                return View(meeting);
+            }
+            else if (meeting._ImageFile?.ContentType != "image/*")
+            {
+                ModelState.AddModelError("_ImageFile", "The file you uploaded is not an image file");
+                return View(meeting);
+            }
 
             try
             {
@@ -197,6 +202,17 @@ namespace MaMontreal.Controllers_Manage
             ViewBag.MeetingTypes = _context.MeetingTypes.ToList<MeetingType>();
             ViewBag.Languages = _context.Languages.ToList<Language>();
             ViewData["Gsrs"] = _userService?.GetUsersWithRole("gsr").Result;
+
+            if (meeting._ImageFile?.Length > 250000)
+            {
+                ModelState.AddModelError("_ImageFile", "Image file size cannot exceed 250KB");
+                return View(meeting);
+            }
+            else if (meeting._ImageFile?.ContentType != "image/*")
+            {
+                ModelState.AddModelError("_ImageFile", "The file you uploaded is not an image file");
+                return View(meeting);
+            }
 
             try
             {

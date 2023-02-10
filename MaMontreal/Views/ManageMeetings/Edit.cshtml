@@ -149,7 +149,7 @@
 
             <div class="form-group">
                 <label asp-for="_ImageFile" class="control-label"></label>
-                <input asp-for="_ImageFile" type='file' class="form-control" />
+                <input asp-for="_ImageFile" type='file' class="form-control" accept="image/*" />
                 <span asp-validation-for="_ImageFile" class="text-danger"></span>
                 <img id="image_upload_preview" alt="Select the Image for this meeting" width="256px" height="256px" />
             </div>
