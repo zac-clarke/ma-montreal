@@ -2,29 +2,30 @@
 
 @{
     ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>Submit New User Role requesr</h1>
 
-<h4>UserRequest</h4>
+<h4>This will be available to Members via a button somewhere</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group form-check">
+            @* <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="IsApproved" /> @Html.DisplayNameFor(model => model.IsApproved)
                 </label>
-            </div>
-            <div class="form-group">
+            </div> *@
+            @* <div class="form-group">
                 <label asp-for="ProcessedDate" class="control-label"></label>
                 <input asp-for="ProcessedDate" class="form-control" />
                 <span asp-validation-for="ProcessedDate" class="text-danger"></span>
-            </div>
+            </div> *@
             <div class="form-group">
                 <label asp-for="Note" class="control-label"></label>
-                <input asp-for="Note" class="form-control" />
+                <textarea asp-for="Note" class="form-control" ></textarea>
                 <span asp-validation-for="Note" class="text-danger"></span>
             </div>
             @* <div class="form-group">
@@ -32,16 +33,16 @@
             <input asp-for="CreatedAt" class="form-control" />
             <span asp-validation-for="CreatedAt" class="text-danger"></span>
             </div> *@
-            <div class="form-group">
+            @* <div class="form-group">
                 <label asp-for="UpdatedAt" class="control-label"></label>
                 <input asp-for="UpdatedAt" class="form-control" />
                 <span asp-validation-for="UpdatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+            </div> *@
+            @* <div class="form-group">
                 <label asp-for="DeletedAt" class="control-label"></label>
                 <input asp-for="DeletedAt" class="form-control" />
                 <span asp-validation-for="DeletedAt" class="text-danger"></span>
-            </div>
+            </div> *@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

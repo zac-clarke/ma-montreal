@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using MaMontreal.Services;
 
 namespace MaMontreal.Models
 {
@@ -22,7 +23,7 @@ namespace MaMontreal.Models
         [ForeignKey("RequestHandlerId")]
         public ApplicationUser? RequestHandler { get; set; }
 
-        public bool IsApproved { get; set; } = false;
+        public bool? IsApproved { get; set; } = null;
 
         // // Using base entity instead
         // [DataType(DataType.DateTime)]
@@ -32,5 +33,22 @@ namespace MaMontreal.Models
         public DateTime? ProcessedDate { get; set; }
 
         public string? Note { get; set; }
+
+        public UserRequest()
+        {
+        }
+        public UserRequest(RoleManager<IdentityRole> roleManager, ApplicationUser requestee, string? roleName, string? note = null)
+        {
+            if (roleName == null)
+            {
+                RoleRequested = roleManager.Roles.Where(r => r.Name == "gsr").FirstOrDefault();
+            }
+            else
+            {
+                RoleRequested = roleManager.Roles.Where(r => r.Name == roleName).FirstOrDefault();
+            }
+            Requestee = requestee;
+            Note = note;
+        }
     }
 }

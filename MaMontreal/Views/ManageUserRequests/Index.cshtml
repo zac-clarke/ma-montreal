@@ -2,64 +2,79 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>User Role requests</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" asp-route-role="gsr">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IsApproved)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProcessedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Note)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeletedAt)
-            </th>
             <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Requestee)
+            </th>
+            <th> Role requested </th>
+            <th> Note </th>
+            <th> Submited  </th>
+            <th> Status  </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsApproved)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProcessedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Note)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeletedAt)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-eye"></i></a>
+                   
+                    @if(item.IsApproved != null){
+                        <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash text-danger"></i></a>
+                    } else{
+                        <a asp-action="Approve" asp-route-id="@item.Id"><i class="fa-solid fa-circle-check text-success" title="Approve Request"></i></a>
+                        <a asp-action="Reject" asp-route-id="@item.Id"><i class="fa-solid fa-circle-xmark text-danger" title="Reject request"></i></a>
+                    }
+      
+                </td>
+                <td>
+                    @{
+                        <p>@item.Requestee?.FullName</p>
+                        <p>@item.Requestee?.Email</p>
+                    }
+                </td>
+                <td>
+                    @if (item.RoleRequested != null) { <i class="fa-solid fa-user"></i><br>
+                    @item.RoleRequested.Name}
+                </td>
+                   <td>
+                    @if (item.Note != null) { <i class="fa-solid fa-note-sticky"></i> }
+                </td>
+                <td>
+                    @item.CreatedAt?.ToString().Substring(0, 10)<br>
+                    @item.CreatedAt?.ToString().Substring(11, 10)
+                </td>
+                <td>
+                    <p>@if (item.IsApproved == true)
+                        {
+                            <i class="fa-solid fa-circle-check text-success" title="approved"></i>
+                        }
+                        else if (item.IsApproved == false)
+                        {
+                            <i class="fa-solid fa-circle-xmark text-danger" title="rejected"></i>
+                        }
+                        else
+                        {
+                            <i class="fa-solid fa-clock-rotate-left text-warning" title="pending"></i>
+                        }
+                      
+                    </p>
+                          @Html.DisplayFor(modelItem => item.ProcessedDate)
+                            <p>@item.RequestHandler?.FullName</p>
+                </td>
+
+            </tr>
+        }
     </tbody>
 </table>

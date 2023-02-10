@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MaMontreal.Services
 {
+
     public class UsersService
     {
         private readonly MamDbContext _context;
@@ -32,6 +33,7 @@ namespace MaMontreal.Services
                 throw new NullReferenceException("userManager is null!");
             _userManager = userManager;
         }
+
 
         public async Task<ApplicationUser?> GetCurUserAsync(ClaimsPrincipal User)
         {
@@ -62,6 +64,9 @@ namespace MaMontreal.Services
         public async Task UpdateRolesForUserAsync(string id, UserWithRoles userWithRoles)
         {
             var user = await this.GetAsync(id);
+            if (user.FirstName == null || user.LastName == null || user.PhoneNumber == null || user.SobrietyDate == null)
+                throw new NullReferenceException("Not updated: User Profile must be complete with Full Name, Phone Numevr and Sobriety Date before updating role to other than Member.");
+
             foreach (var role in userWithRoles._selectedRoles)
             {
                 if (role._roleSelected)
