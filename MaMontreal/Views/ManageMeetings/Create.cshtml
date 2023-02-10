@@ -28,6 +28,17 @@
             Text = lang.Title
         });
     }
+
+    List<ApplicationUser>? gsrList = ViewData["Gsrs"] as List<ApplicationUser>;
+    List<SelectListItem> gsrSelectList = new List<SelectListItem>();
+    if(gsrList == null) gsrList = new List<ApplicationUser>();
+    foreach(ApplicationUser gsr in gsrList)
+    {
+        gsrSelectList.Add(new SelectListItem(){
+            Value = gsr.Id.ToString(),
+            Text = gsr.FullName != null && !gsr.FullName.Trim().Equals("") ? gsr.FullName : gsr.UserName?.Substring(0, gsr.UserName.IndexOf("@"))
+        });
+    }
 }
 
 
@@ -121,6 +132,16 @@
                 <input asp-for="EndTime" class="form-control" />
                 <span asp-validation-for="EndTime" class="text-danger"></span>
             </div>
+            
+            @if(User.IsInRole("admin"))
+            {
+                <div class="form-group">
+                    <label asp-for="_GsrAssignedId" class="control-label"></label>
+                    @Html.DropDownList("_GsrAssignedId", gsrSelectList, new {@class = "form-control"})
+                    <span asp-validation-for="_GsrAssignedId" class="text-danger"></span>
+                </div>
+            }
+
             @if(User.IsInRole("admin"))
             {
                 <div class="form-group">

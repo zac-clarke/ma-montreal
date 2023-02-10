@@ -81,6 +81,9 @@ namespace MaMontreal.Models
         [Display(Name = "Meeting Type")]
         public MeetingType? MeetingType { get; set; }
 
+        [NotMapped]
+        [Display(Name = "Gsr")]
+        public string? _GsrAssignedId { get; set; }
         // [Required]
         [ForeignKey("GsrId")]
         public ApplicationUser? Gsr { get; set; }

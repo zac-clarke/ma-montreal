@@ -15,14 +15,19 @@ namespace MaMontreal.Services
     {
         // TODO: Delete file logic so we don't use up too much space
         // Tutorial: https://blog.christian-schou.dk/how-to-use-azure-blob-storage-with-asp-net-core/
-        private readonly string _storageConnectionString = null!;
-        private readonly string _storageContainerName = null!;
+        private readonly string? _storageConnectionString = null!;
+        private readonly string? _storageContainerName = null!;
         private readonly ILogger<AzureStorageService> _logger = null!;
 
         public AzureStorageService(IConfiguration configuration, ILogger<AzureStorageService> logger)
         {
-            _storageConnectionString = configuration.GetValue<string>("BlobConnectionString");
-            _storageContainerName = configuration.GetValue<string>("BlobNameMeetingImages");
+            _storageConnectionString = configuration?.GetValue<string>("BlobConnectionString");
+            _storageContainerName = configuration?.GetValue<string>("BlobNameMeetingImages");
+            if (_storageConnectionString == null || _storageContainerName == null)
+            {
+                logger.LogError("BlobConnectionString or BlobNameMeetingImages is null");
+                throw new ArgumentNullException("BlobConnectionString or BlobNameMeetingImages is null");
+            }
             _logger = logger;
         }
 

@@ -1,7 +1,6 @@
 using MaMontreal.Data;
 using MaMontreal.Models;
 using MaMontreal.Models.NotMapped;
-using MaMontreal.Repositories;
 using MaMontreal.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -98,7 +97,11 @@ namespace MaMontreal.Controllers_Manage
         {
             ViewBag.MeetingTypes = _context.MeetingTypes.ToList<MeetingType>();
             ViewBag.Languages = _context.Languages.ToList<Language>();
-            return View();
+            ViewData["Gsrs"] = _userService?.GetUsersWithRole("gsr").Result;
+
+            Meeting meeting = new Meeting();
+            meeting._GsrAssignedId = _userService?.GetCurUserAsync(User).Result?.Id;
+            return View(meeting);
         }
 
         // POST: ManageMeetings/Create
@@ -107,10 +110,11 @@ namespace MaMontreal.Controllers_Manage
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route(template: "Create")]
-        public async Task<IActionResult> Create([Bind("District,EventName,Description,_MeetingTypeId,_LanguageId,_ImageFile,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
+        public async Task<IActionResult> Create([Bind("District,EventName,Description,_MeetingTypeId,_LanguageId,_ImageFile,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,_GsrAssignedId,Status")] Meeting meeting)
         {
             ViewBag.MeetingTypes = _context.MeetingTypes.ToList<MeetingType>();
             ViewBag.Languages = _context.Languages.ToList<Language>();
+            ViewData["Gsrs"] = _userService?.GetUsersWithRole("gsr").Result;
 
             try
             {
@@ -123,12 +127,16 @@ namespace MaMontreal.Controllers_Manage
             }
             catch (ArgumentException ex)
             {
-                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                string message = ex.Message;
                 _logger.LogError(ex.Message);
-                string[] exception = ex.Message.Split(",");
-                string key = exception[0];
-                string message = exception[1];
-                ModelState.AddModelError(key, message);
+                if (ex.Message.Contains(','))
+                {
+                    string[] exception = ex.Message.Split(",");
+                    string key = exception[0];
+                    message = exception[1];
+                    ModelState.AddModelError(key, message);
+                }
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
                 return View(meeting);
             }
         }
@@ -151,9 +159,11 @@ namespace MaMontreal.Controllers_Manage
 
                 ViewBag.MeetingTypes = _context.MeetingTypes.ToList<MeetingType>();
                 ViewBag.Languages = _context.Languages.ToList<Language>();
+                ViewData["Gsrs"] = _userService?.GetUsersWithRole("gsr").Result;
 
                 meeting._MeetingTypeId = meeting.MeetingType?.Id;
                 meeting._LanguageId = meeting.Language?.Id;
+                meeting._GsrAssignedId = meeting.Gsr?.Id;
 
                 return View(meeting);
             }
@@ -171,12 +181,8 @@ namespace MaMontreal.Controllers_Manage
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Edit")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,District,EventName,Description,_MeetingTypeId,_LanguageId,_ImageFile,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,Status")] Meeting meeting)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,District,EventName,Description,_MeetingTypeId,_LanguageId,_ImageFile,ImageUrl,Address,City,ProvinceCode,PostalCode,DayOfWeek,Date,StartTime,EndTime,_GsrAssignedId,Status")] Meeting meeting)
         {
-            // if (meeting == null) Console.WriteLine("meeting is null");
-            // else if (meeting._ImageFile == null) Console.WriteLine("ImageFile is null");
-            // else Console.WriteLine(meeting._ImageFile.FileName);
-
             Meeting oldMeeting = await _service.GetMeetingById(id);
             ApplicationUser? _curUser = _userService?.GetCurUserAsync(User).Result;
             _context.Entry<Meeting>(oldMeeting).State = EntityState.Detached;
@@ -190,6 +196,7 @@ namespace MaMontreal.Controllers_Manage
 
             ViewBag.MeetingTypes = _context.MeetingTypes.ToList<MeetingType>();
             ViewBag.Languages = _context.Languages.ToList<Language>();
+            ViewData["Gsrs"] = _userService?.GetUsersWithRole("gsr").Result;
 
             try
             {
@@ -215,15 +222,16 @@ namespace MaMontreal.Controllers_Manage
             }
             catch (ArgumentException ex)
             {
-                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                string message = ex.Message;
                 _logger.LogError(ex.Message);
                 if (ex.Message.Contains(','))
                 {
                     string[] exception = ex.Message.Split(",");
                     string key = exception[0];
-                    string message = exception[1];
+                    message = exception[1];
                     ModelState.AddModelError(key, message);
                 }
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
                 return View(meeting);
             }
         }
