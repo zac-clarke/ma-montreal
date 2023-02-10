@@ -1,0 +1,43 @@
+﻿@model MaMontreal.Models.Meeting 
+@{ ViewData["Title"] = "MeetingDetails"; }
+<div class="container">
+  <div class="row">
+    <div class="col mb-4">
+      <div class="card">
+        <div class="card-header">
+          <h4>@Html.DisplayFor(model => model.EventName)</h4>
+          <h5>@Model.MeetingType?.Title</h5>
+          @Model.Language?.Title
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">@Html.DisplayNameFor(model => model.Description)</h5>
+          <p class="card-text">@Html.DisplayFor(model => model.Description)</p>
+          <h5 class="card-title">@Html.DisplayNameFor(model => model.Address)</h5>
+          <p class="card-text">@Html.DisplayFor(model => model.Address) , @Html.DisplayFor(model => model.City), @Html.DisplayFor(model => model.ProvinceCode),@Html.DisplayFor(model => model.PostalCode)</p>
+
+          <h5 class="card-title mb-3">@Html.DisplayFor(model => model.DayOfWeek) @Html.DisplayFor(model => model.StartTime) - @Html.DisplayFor(model => model.EndTime)</h5>
+          @if(Model.DayOfWeek == null){
+          <h5 class="card-title">@Html.DisplayNameFor(model => model.Date)</h5>
+          <p class="card-text">@Html.DisplayFor(model => model.Date)</p>
+          }
+          <a asp-controller="Meetings" asp-action="Calendar" class="btn btn-dark mt-3"><i class="fa-solid fa-arrow-left me-1"></i>Back To Meetings List</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-5 mb-4">
+      <img class="img-fluid" src="@Html.DisplayFor(model => model.ImageUrl)" />
+    </div>
+  </div>
+  <div class="row">
+    <iframe
+      width="350"
+      height="350"
+      style="border: 0"
+      loading="lazy"
+      allowfullscreen
+      referrerpolicy="no-referrer-when-downgrade"
+      src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB3r_BZwT-zIXZc7KCAl4onrAVBZNVHZv4&q=@Html.DisplayFor(model => model.Address),@Html.DisplayFor(model => model.PostalCode),@Html.DisplayFor(model => model.City)+@Html.DisplayFor(model => model.ProvinceCode)+"
+      >@*TODO:add second location *@
+    </iframe>
+  </div>
+</div>
