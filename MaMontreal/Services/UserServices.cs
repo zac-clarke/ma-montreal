@@ -1,15 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using MaMontreal.Data;
 using MaMontreal.Models;
 using MaMontreal.Models.NotMapped;
-using MaMontreal.Repositories;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace MaMontreal.Services
@@ -112,6 +105,26 @@ namespace MaMontreal.Services
             var user = await this.GetAsync(id);
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
+        }
+
+
+        public async Task<List<ApplicationUser>?> GetUsersWithRole(string roleName)
+        {
+            string? gsrRoleId = _context.Roles?
+                                        .Where(r => r.Name != null && r.Name.ToLower().Equals(roleName.ToLower()))?
+                                        .FirstOrDefaultAsync()?
+                                        .Result?
+                                        .Id;
+            List<string> userIds = await _context.UserRoles?
+                                                    .Where(ur => ur.RoleId.Equals(gsrRoleId))
+                                                    .Select(ur => ur.UserId)
+                                                    .ToListAsync<string>()!;
+            List<ApplicationUser> users = new List<ApplicationUser>();
+            foreach (var userId in userIds)
+            {
+                users.Add(await this.GetAsync(userId));
+            }
+            return users;
         }
     }
 }

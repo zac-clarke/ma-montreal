@@ -84,13 +84,19 @@ namespace MaMontreal.Services
             Language? language = _context.Languages?.Where(l => l.Id == meeting._LanguageId)?.FirstOrDefault();
 
             if (meeting.DayOfWeek == null && meeting.Date == null)
-                throw new ArgumentException("DayOfWeek,Day of Week and Date cannot both be empty!");
+                throw new ArgumentException("Date,Date and Recurring Day cannot both be empty!");
             else if (curUser == null)
                 throw new ArgumentException("Current User is invalid!");
             else if (meetingType == null)
                 throw new ArgumentException("Meeting Type is invalid!");
             else if (language == null)
                 throw new ArgumentException("Language is invalid!");
+            else if (meeting._GsrAssignedId == null)
+                throw new ArgumentException("_GsrAssignedId,Gsr is invalid!");
+
+            meeting.Gsr = _context.Users.Where(u => u.Id == meeting._GsrAssignedId).FirstOrDefault();
+            if (meeting.Gsr == null)
+                throw new ArgumentException("_GsrAssignedId,Gsr is invalid!");
 
             if (User.IsInRole("gsr"))
                 meeting.Status = Statuses.Pending;
@@ -102,7 +108,6 @@ namespace MaMontreal.Services
             meeting.MeetingType = meetingType;
             meeting.UpdatedAt = DateTime.Now;
             meeting.UpdatedBy = curUser;
-            meeting.Gsr = curUser;
 
             if (User.IsInRole("admin"))
                 meeting.Status = Statuses.Approved;
@@ -152,17 +157,22 @@ namespace MaMontreal.Services
             MeetingType? meetingType = _context.MeetingTypes?.Where(mt => mt.Id == meeting._MeetingTypeId)?.FirstOrDefault();
             Language? language = _context.Languages?.Where(l => l.Id == meeting._LanguageId)?.FirstOrDefault();
 
+
             if (meeting.DayOfWeek == null && meeting.Date == null)
-                throw new ArgumentException("DayOfWeek,Day of Week and Date cannot both be empty!");
+                throw new ArgumentException("Date,Date and Recurring Day cannot both be empty!");
             else if (curUser == null)
                 throw new ArgumentException("Id,Current User is invalid!");
             else if (meetingType == null)
                 throw new ArgumentException("_MeetingTypeId,Meeting Type is invalid!");
             else if (language == null)
                 throw new ArgumentException("_LanguageId,Language is invalid!");
+            else if (meeting._GsrAssignedId == null)
+                throw new ArgumentException("_GsrAssignedId,Gsr is invalid!");
 
-            if (User.IsInRole("gsr"))
-                meeting.Status = Statuses.Pending;
+            meeting.Gsr = _context.Users.Where(u => u.Id == meeting._GsrAssignedId).FirstOrDefault();
+            if (meeting.Gsr == null)
+                throw new ArgumentException("_GsrAssignedId,Gsr is invalid!");
+
             meeting.PostalCode = meeting.PostalCode
                 .Replace(" ", string.Empty)
                 .Replace("-", string.Empty)
