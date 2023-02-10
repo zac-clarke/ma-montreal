@@ -142,7 +142,7 @@ namespace MaMontreal.Controllers.Manage
             try
             {
                 await _usersService.DeleteAsync(id);
-                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("User Deleted", "sucess"));
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("User Deleted", "success"));
                 _logger?.LogInformation($"User {id} Deleted");
                 return RedirectToAction(nameof(Index));
             }
@@ -151,6 +151,20 @@ namespace MaMontreal.Controllers.Manage
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
                 _logger?.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
+            }
+            catch (SystemException ex)
+            {
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                _logger?.LogError(ex.Message);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateException ex)
+            {
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("User might have existing Meetings and can not be deleted", "danger"));
+                _logger?.LogError(ex.Message);
+                _logger?.LogError(ex.InnerException?.Message.ToString());
+
+                return View(await _usersService.GetAsync(id));
             }
         }
     }

@@ -1,3 +1,68 @@
+=============================================================================
+                                 Wednesday - 2023-02-08
+=============================================================================
+
+
+1.User Story or Task:                        ######   JULIETA   #######
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+V Manage Users -> Handle Foreign key dependancy exception
+- Start working on requests
+
+2.Result:
+▔▔▔▔▔▔
+V make User details responsive
+V Work on Manage languages Styling and Code Cleanup
+V Restrict Manage Users and Languages actions to Admin Only
+V Handeled all the warnings
+V UI conditional restrictions fix
+
+
+3.Help:
+▔▔▔▔▔
+
+
+1.User Story or Task:                        ########   AFTAB   ####### 
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+- ManageMeetings -> Search box
+- ManageMeetings -> Tabs to filter meetings (pending, approved, declined, Mine)
+- AzureBlob -> Validation (File size, ...)
+
+2.Result:
+▔▔▔▔▔▔
+V Implemented Logger, adminLayout, and FlashMeetings to all Manage Meetings and Manage MeetingTypes pages
+V Added meeting and meetingType validation
+V Tested meeting and meetingType validation
+V Cleaned up code and got rid of all warnings
+V Implemented Authorization for ManageMeeting and ManageMeetingType
+V GSR can only manage their own meetings
+V Applicant can upload an image for their meetings (Tutorial: https://blog.christian-schou.dk/how-to-use-azure-blob-storage-with-asp-net-core/)
+V AzureBlob -> Handle File Already Exists and change logger/exception messages - using unique names
+
+3.Help:
+▔▔▔▔▔
+- I had a live preview working, but for some reason it stopped (@section Scripts being rendered before jQuery is loaded)
+- Bug: Recurring meetings that end the next day
+
+1.User Story or Task:                        #######    ZAK    #########
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+- Build Display Meeting Details public Page
+- Start working on emails
+
+2.Result:
+▔▔▔▔▔▔
+V Tags Services
+V Add flashmessages and Logger to Tags
+V Cleanup code
+V Style like Users
+V Finish building Public Pages
+V Testing
+
+3.Help:
+▔▔▔▔▔
+
+
+
+
 
 =============================================================================
                                  Wednesday - 2023-02-08
