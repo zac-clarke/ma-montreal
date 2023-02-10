@@ -47,7 +47,7 @@ namespace MaMontreal.Models
         [Display(Name = "Postal Code")]
         public string PostalCode { get; set; } = null!;
 
-        [Display(Name = "Day of Week")]
+        [Display(Name = "Repeats on")]
         [Range(minimum: 0, maximum: 6, ErrorMessage = "Day of Week must be between 0 and 7")]
         public DaysOfWeek? DayOfWeek { get; set; }
 
