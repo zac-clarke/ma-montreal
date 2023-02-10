@@ -10,6 +10,7 @@
 <p>
     <a asp-action="Create" asp-route-role="gsr">Create New</a>
 </p>
+if(@Model != null){
 <table class="table">
     <thead>
         <tr>
@@ -19,8 +20,8 @@
             </th>
             <th> Role requested </th>
             <th> Note </th>
-            <th> Submited  </th>
-            <th> Status  </th>
+            <th> Submited </th>
+            <th> Status </th>
         </tr>
     </thead>
     <tbody>
@@ -29,31 +30,45 @@
             <tr>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-eye"></i></a>
-                   
-                    @if(item.IsApproved != null){
+                    @if (item.IsApproved != null)
+                    {
                         <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash text-danger"></i></a>
-                    } else{
+                    }
+                    else
+                    {
                         <a asp-action="Approve" asp-route-id="@item.Id"><i class="fa-solid fa-circle-check text-success" title="Approve Request"></i></a>
                         <a asp-action="Reject" asp-route-id="@item.Id"><i class="fa-solid fa-circle-xmark text-danger" title="Reject request"></i></a>
                     }
-      
                 </td>
                 <td>
                     @{
-                        <p>@item.Requestee?.FullName</p>
-                        <p>@item.Requestee?.Email</p>
+                        <span class="fw-bold">@item.Requestee?.FullName</span>
+
+                        <br>
+                        <span class="fst-italic">@item.Requestee?.Email</span>
+
+                        <br>
+                        <span class="fst-italic">@(item.Requestee != null ? @String.Join(", ", UserManager.GetRolesAsync(item.Requestee).Result.ToList()) : "")</span>
                     }
                 </td>
                 <td>
-                    @if (item.RoleRequested != null) { <i class="fa-solid fa-user"></i><br>
-                    @item.RoleRequested.Name}
+                    @if (item.RoleRequested != null)
+                    {
+                        <i class="fa-solid fa-user"></i>
+
+                        <br>
+                        @item.RoleRequested.Name
+                    }
                 </td>
-                   <td>
-                    @if (item.Note != null) { <i class="fa-solid fa-note-sticky"></i> }
+                <td>
+                    @if (item.Note != null)
+                    {
+                        <i class="fa-solid fa-note-sticky"></i>
+                    }
                 </td>
                 <td>
                     @item.CreatedAt?.ToString().Substring(0, 10)<br>
-                    @item.CreatedAt?.ToString().Substring(11, 10)
+                    @item.CreatedAt?.ToString().Substring(11)
                 </td>
                 <td>
                     <p>@if (item.IsApproved == true)
@@ -68,13 +83,15 @@
                         {
                             <i class="fa-solid fa-clock-rotate-left text-warning" title="pending"></i>
                         }
-                      
-                    </p>
-                          @Html.DisplayFor(modelItem => item.ProcessedDate)
-                            <p>@item.RequestHandler?.FullName</p>
-                </td>
 
+                    </p>
+                    @Html.DisplayFor(modelItem => item.ProcessedDate)
+                    <p>@item.RequestHandler?.FullName</p>
+                </td>
             </tr>
         }
     </tbody>
 </table>
+} else {
+<p> No requests found </p>
+}

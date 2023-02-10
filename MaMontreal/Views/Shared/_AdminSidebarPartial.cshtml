@@ -2,23 +2,25 @@
 
 
 <div class="d-flex gap-1 flex-column">
- @if (User.IsInRole("admin") || User.IsInRole("gsr"))
-{
-
-    <a asp-controller="Manage" asp-action="Index" class="btn btn-outline-primary btn-sm">Dashboard</a>
-    <a asp-controller="ManageMeetings" asp-action="Index" class="btn btn-outline-primary btn-sm">Meetings</a>
-    <a asp-controller="ManageUserRequests" asp-action="Index" class="btn btn-outline-primary btn-sm">Requests</a>
-    
-    @if (User.IsInRole("admin"))
+    @if (User.IsInRole("admin") || User.IsInRole("gsr") || User.IsInRole("member"))
     {
-    <a asp-controller="ManageUsers" asp-action="Index" class="btn btn-outline-primary btn-sm">Users</a>
-    <a asp-controller="ManageTags" asp-action="Index" class="btn btn-outline-primary btn-sm">Tags</a>
-    <a asp-controller="ManageLanguages" asp-action="Index" class="btn btn-outline-primary btn-sm">Languages</a>
-    <a asp-controller="ManageMeetingTypes" asp-action="Index" class="btn btn-outline-primary btn-sm">Meeting Types</a>
-   }
-        
-  
-}
+
+        <a asp-controller="Manage" asp-action="Index" class="btn btn-outline-primary btn-sm">Dashboard</a>
+        <a asp-controller="ManageUserRequests" asp-action="Index" class="btn btn-outline-primary btn-sm">Requests</a>
+
+        @if (User.IsInRole("gsr"))
+        {
+            <a asp-controller="ManageMeetings" asp-action="Index" class="btn btn-outline-primary btn-sm">Meetings</a>
+        }
+
+        @if (User.IsInRole("admin"))
+        {
+            <a asp-controller="ManageUsers" asp-action="Index" class="btn btn-outline-primary btn-sm">Users</a>
+            <a asp-controller="ManageTags" asp-action="Index" class="btn btn-outline-primary btn-sm">Tags</a>
+            <a asp-controller="ManageLanguages" asp-action="Index" class="btn btn-outline-primary btn-sm">Languages</a>
+            <a asp-controller="ManageMeetingTypes" asp-action="Index" class="btn btn-outline-primary btn-sm">Meeting Types</a>
+        }
+    }
 </div>
 
 

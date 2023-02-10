@@ -44,9 +44,15 @@ namespace MaMontreal.Controllers_Manage
         // GET: ManageUserRequests
         public async Task<IActionResult> Index()
         {
-            return _context.UserRequests != null ?
-                        View(await _context.UserRequests.Include("Requestee").Include("RequestHandler").Include("RoleRequested").OrderByDescending(r => r.CreatedAt).ToListAsync()) :
-                        Problem("Entity set 'MamDbContext.UserRequests'  is null.");
+            try
+            {
+                return View(await _requestsService.GetAllAsync());
+            }
+            catch (NullReferenceException ex)
+            {
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                return View();
+            }
         }
 
 

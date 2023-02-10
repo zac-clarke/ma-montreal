@@ -35,6 +35,8 @@ namespace MaMontreal.Services
         }
 
 
+
+
         public async Task CreateAsync(ClaimsPrincipal User, UserRequest request, string? role)
         {
 
@@ -51,38 +53,6 @@ namespace MaMontreal.Services
             //all good
             UserRequest userRequest = new UserRequest(_roleManager, currUser, role, request.Note);
             _context.Add(userRequest);
-            await _context.SaveChangesAsync();
-        }
-
-        internal async Task ApproveAsync(int? id, ClaimsPrincipal User)
-        {
-            if (id == null)
-                throw new NullReferenceException("No Request Found");
-            ApplicationUser? reqHandler = await _userManager.GetUserAsync(User);
-            if (reqHandler == null || _userManager.IsInRoleAsync(reqHandler, "admin").Result == false)
-                throw new NullReferenceException("You don't have permission to approve this request.");
-
-            UserRequest? request = await _context.UserRequests.Where(r => r.Id == id).Include(r => r.RoleRequested).Include(r => r.Requestee).FirstOrDefaultAsync();
-            // Console.WriteLine("Request: " + request.RoleRequested);
-            if (request == null)
-                throw new NullReferenceException("No Request Found");
-
-            if (request.Requestee == null)
-                throw new NullReferenceException("Requestee User Not Found");
-
-            ApplicationUser? user = await _userManager.FindByIdAsync(request.Requestee.Id);
-            if (user == null)
-                throw new NullReferenceException("Requestee User Not Found");
-            // Console.WriteLine("Request Role: " + request.RoleRequested.ToString());
-            if (request.RoleRequested?.Name == null)
-                throw new NullReferenceException("Request Role Not Found");
-
-            var result = await _userManager.AddToRoleAsync(user, request.RoleRequested.Name);
-            request.IsApproved = true;
-            request.RequestHandler = reqHandler;
-            request.UpdatedAt = DateTime.Now;
-            request.ProcessedDate = DateTime.Now;
-            _context.Update(request);
             await _context.SaveChangesAsync();
         }
 
@@ -125,9 +95,10 @@ namespace MaMontreal.Services
             await _context.SaveChangesAsync();
         }
 
-        internal Task RejectAsync(int? id, ClaimsPrincipal user)
+
+        public async Task<List<UserRequest>> GetAllAsync()
         {
-            throw new NotImplementedException("Not implemented yet.");
+            return await _context.UserRequests.Include("Requestee").Include("RequestHandler").Include("RoleRequested").OrderByDescending(r => r.CreatedAt).ToListAsync();
         }
     }
 }

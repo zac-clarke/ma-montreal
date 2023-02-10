@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace MaMontreal.Controllers.Manage
 {
 
-    [Authorize(Roles = "admin,gsr")]
+    [Authorize]
     [Route("/Manage")]
     public class ManageController : Controller
     {

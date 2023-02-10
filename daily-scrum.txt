@@ -1,5 +1,72 @@
 =============================================================================
-                                 Wednesday - 2023-02-08
+                                 Friday - 2023-02-10
+=============================================================================
+
+
+1.User Story or Task:                        ######   JULIETA   #######
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+
+- Dasboard-> make member Dashboard
+- requests -> Add the submit request functioality to Member Dashboard
+- requests -> display the request status
+- requests -> limit 1 request per user
+- make sure all pages work and navigate properly and have proper permissions
+
+2.Result:
+▔▔▔▔▔▔
+
+V Manage Users -> Handle Foreign key dependancy exception
+V Start working on requests
+V Requests -> Submit
+V Requests -> Approve
+V Requests -> Reject
+3.Help:
+▔▔▔▔▔
+
+
+1.User Story or Task:                        ########   AFTAB   ####### 
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+- Fix Bugs that Zac put on my trello cards
+- ManageMeetings -> Search box
+- ManageMeetings -> Tabs to filter meetings (pending, approved, declined, Mine)
+- Fix foreign key constraints
+
+
+
+2.Result:
+▔▔▔▔▔▔
+V ManageMeeting Edit/Create -> Fixed Javascript bug that caused imagePreview to not work
+V MeetingCreateEdit -> Added a recurring? switch
+V MeetingCreateEdit -> Allow admin and owner of meeting to change GSR
+V AzureBlob -> File Validation (size 250kb, ...)
+
+
+3.Help:
+▔▔▔▔▔
+- I had a live preview working, but for some reason it stopped (@section Scripts being rendered before jQuery is loaded)
+- Bug: Recurring meetings that end the next day
+
+1.User Story or Task:                        #######    ZAK    #########
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+- Finish emial integration
+- navbar and footer
+- Fix Tags Titles look like (Language and Users)
+- Meeting types like (Language and Users)
+- display request notifications on admin dashboard
+
+
+2.Result:
+▔▔▔▔▔▔
+V Build Display Meeting Details public Page
+V Start working on emails
+
+3.Help:
+
+
+
+
+=============================================================================
+                                 Thursday- 2023-02-09
 =============================================================================
 
 

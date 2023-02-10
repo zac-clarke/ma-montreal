@@ -12,7 +12,7 @@
         @if (User.IsInRole("member") && !User.IsInRole("gsr") && !User.IsInRole("admin"))
         {
             <li class="nav-item">
-                <a class="btn btn-primary" asp-area="" asp-controller="ManageUserRequests" asp-action="Create" asp-route-role="gsr">Request GSR</a>
+                <a class="btn btn-primary" asp-area="" asp-controller="ManageUserRequests" asp-action="Index" asp-route-role="gsr">Requests</a>
             </li>
         }
 
