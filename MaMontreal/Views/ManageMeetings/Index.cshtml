@@ -13,6 +13,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th></th>
             <th>
                 @Html.DisplayNameFor(model => model.ImageUrl)
             </th>
@@ -49,7 +50,6 @@
             <th>
                 Deleted
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -57,10 +57,23 @@
         {
             <tr>
                 <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> <br />
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> <br />
+                    
+                    @if(item.DeletedAt == null)
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    }
+                    else
+                    {
+                        <a asp-action="Restore" asp-route-id="@item.Id">Restore</a>
+                    }
+                </td>
+                <td>
                     <img src="@item.ImageUrl" alt="Image" style="width: 100px; height: 100px;" />
                     @* @Html.DisplayFor(modelItem => item.ImageUrl) *@
                 </td>
-                <td>
+                <td class="text-center">
                     @Html.DisplayFor(modelItem => item.District)
                 </td>
                 <td>
@@ -97,19 +110,6 @@
                     @if(item.DeletedAt != null) 
                     {
                         <i class="fa-sharp fa-solid fa-xmark text-danger"></i>
-                    }
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> <br />
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> <br />
-                    
-                    @if(item.DeletedAt == null)
-                    {
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    }
-                    else
-                    {
-                        <a asp-action="Restore" asp-route-id="@item.Id">Restore</a>
                     }
                 </td>
             </tr>

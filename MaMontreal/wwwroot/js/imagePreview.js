@@ -1,9 +1,14 @@
 window.addEventListener('DOMContentLoaded',
     function () {
-        $("#ImageUrl").change(function () {
+        $("#zImageFile").change(function () {
             readURL(this);
         });
     });
+document.addEventListener('DOMContentLoaded',
+    function () {
+        $('#zMeetingTypeId').addClass('form-control')
+        $('#zLanguageId').addClass('form-control')
+    })
 
 function readURL(input) {
     if (input.files && input.files[0]) {
