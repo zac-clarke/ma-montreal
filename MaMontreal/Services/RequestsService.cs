@@ -44,6 +44,16 @@ namespace MaMontreal.Services
             if (currUser == null)
                 throw new NullReferenceException("User not found.");
 
+            role = role ?? "gsr";
+            if (User.IsInRole(role))
+                throw new InvalidOperationException($"You are already a {role}");
+
+            UserRequest? existingRequest = await _context.UserRequests.Where(r => r.Requestee!.Id == currUser.Id
+            && r.RoleRequested!.Name == role
+            && r.IsApproved == null).FirstOrDefaultAsync();
+            if (existingRequest != null)
+                throw new InvalidOperationException($"You already have a pending request to become a {role}.");
+
             // Check if currUser has a FullName, PhoneNumber and SobrietyDate and if not throw only one exception for all to be caught by the controller
             //Testing Copilot to write this code. It's not perfect but it's a start. but i still like it. even if I am the only one who will ever see it.
             // Both the comment above and the if sttatement below were written by Copilot. :)))) Daaaaamn Copilot is good.
@@ -98,11 +108,20 @@ namespace MaMontreal.Services
 
         public async Task<List<UserRequest>> GetAllAsync(bool? archived)
         {
-            if (archived == null)
-            {
-                return await _context.UserRequests.Where(r => r.DeletedAt == null).Include("Requestee").Include("RequestHandler").Include("RoleRequested").OrderByDescending(r => r.CreatedAt).ToListAsync();
-            }
-            return await _context.UserRequests.Where(r => r.DeletedAt != null).Include("Requestee").Include("RequestHandler").Include("RoleRequested").OrderByDescending(r => r.CreatedAt).ToListAsync();
+            return await _context.UserRequests.Where(r => archived == null ? r.DeletedAt == null : r.DeletedAt != null)
+            .Include("Requestee").Include("RequestHandler").Include("RoleRequested").OrderByDescending(r => r.CreatedAt).ToListAsync();
+        }
+
+        public async Task<List<UserRequest>> GetAllByUserIdAsync(bool? archived, ClaimsPrincipal User)
+        {
+            // string? userId = _userManager.GetUserId(User);
+            // if (userId == null)
+            //     throw new NullReferenceException("User not found.");
+            // return await _context.UserRequests.Where(r => (archived == null ? r.DeletedAt == null : r.DeletedAt != null) && r.Requestee!.Id == userId)
+            return await _context.UserRequests
+            .Where(r => r.Requestee!.Id == _userManager.GetUserId(User))
+            .Where(r => (archived == null ? r.DeletedAt == null : r.DeletedAt != null))
+            .Include("Requestee").Include("RequestHandler").Include("RoleRequested").OrderByDescending(r => r.CreatedAt).ToListAsync();
         }
 
 
@@ -131,7 +150,7 @@ namespace MaMontreal.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task ArchiveAsync(int? id)
+        public async Task ToggleArchiveAsync(int? id, bool archive)
         {
             if (id == null)
                 throw new NullReferenceException("Parameter 'id' is null.");
@@ -139,13 +158,31 @@ namespace MaMontreal.Services
             var request = await this.GetAsync(id);
             if (request.IsApproved == null)
                 throw new InvalidOperationException("The request must be handled before it can be archived");
-            if (request.DeletedAt != null)
+            if (request.DeletedAt != null && archive == true)
                 throw new InvalidOperationException("The request is already archived");
 
-            request.DeletedAt = DateTime.Now;
+            request.DeletedAt = archive ? DateTime.Now : null;
+
             request.UpdatedAt = DateTime.Now;
             _context.UserRequests.Update(request);
             await _context.SaveChangesAsync();
         }
+
+        // public async Task ArchiveAsync(int? id)
+        // {
+        //     if (id == null)
+        //         throw new NullReferenceException("Parameter 'id' is null.");
+
+        //     var request = await this.GetAsync(id);
+        //     if (request.IsApproved == null)
+        //         throw new InvalidOperationException("The request must be handled before it can be archived");
+        //     if (request.DeletedAt != null)
+        //         throw new InvalidOperationException("The request is already archived");
+
+        //     request.DeletedAt = DateTime.Now;
+        //     request.UpdatedAt = DateTime.Now;
+        //     _context.UserRequests.Update(request);
+        //     await _context.SaveChangesAsync();
+        // }
     }
 }

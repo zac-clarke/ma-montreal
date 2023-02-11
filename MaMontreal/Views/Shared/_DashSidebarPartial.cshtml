@@ -5,7 +5,10 @@
 
 
     <a asp-controller="Manage" asp-action="Index" class="btn btn-outline-primary btn-sm">Dashboard</a>
-    <a asp-controller="ManageUserRequests" asp-action="Index" class="btn btn-outline-primary btn-sm">Requests</a>
+    @if ((!User.IsInRole("gsr") && !User.IsInRole("admin")) || User.IsInRole("admin"))
+    {
+        <a asp-controller="ManageUserRequests" asp-action="Index" class="btn btn-outline-primary btn-sm">Requests</a>
+    }
 
     @if (User.IsInRole("gsr"))
     {
