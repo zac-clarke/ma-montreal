@@ -48,7 +48,7 @@ V AzureBlob -> File Validation (size 250kb, ...)
 
 1.User Story or Task:                        #######    ZAK    #########
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-- Finish emial integration
+V Finish emial integration
 - navbar and footer
 - Fix Tags Titles look like (Language and Users)
 - Meeting types like (Language and Users)
