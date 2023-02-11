@@ -136,19 +136,21 @@ namespace MaMontreal.Controllers.Manage
                 await _languagesService.UpdateAsync(id, language);
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage($"New language Updated: {language.Title} ", "success"));
                 _logger?.LogInformation($"New language Updated: {language.Title} ");
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Edit", new { id = language.Id });
             }
             catch (SystemException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
                 _logger?.LogError(ex.Message);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Edit", new { id = language.Id });
+
             }
             catch (DbUpdateConcurrencyException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
                 _logger?.LogError(ex.Message);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Edit", new { id = language.Id });
+
             }
         }
 

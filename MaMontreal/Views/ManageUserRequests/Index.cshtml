@@ -17,12 +17,14 @@
         <thead>
             <tr>
                 <th>Actions</th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Requestee)
-                </th>
-                <th> Role requested </th>
-                <th> Note </th>
-                <th> Submited </th>
+                @if (User.IsInRole("admin"))
+                {
+                    <th>
+                        User
+                    </th>
+                }
+                <th> Requested role </th>
+                <th> Submited on </th>
                 <th> Status </th>
             </tr>
         </thead>
@@ -32,6 +34,12 @@
                 <tr>
                     <td>
                         <a asp-action="Details" asp-route-id="@item.Id" title="View"><i class="fa-solid fa-eye"></i></a>
+                        @if (item.Note != null)
+                        {
+                            <a tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="focus" title="Note" data-bs-content="@item.Note">
+                                <i class="fa-solid fa-note-sticky text-primary"></i>
+                            </a>
+                        }
 
                         @if (User.IsInRole("admin"))
                         {
@@ -46,7 +54,6 @@
                                     <a asp-action="Unarchive" asp-route-id="@item.Id" title="Unarchive"><i class="fa-solid fa-archive text-success"></i></a>
                                     <a asp-action="Delete" asp-route-id="@item.Id" title="Delete"><i class="fa-solid fa-trash text-danger"></i></a>
                                 }
-
                             }
                             else
                             {
@@ -56,17 +63,24 @@
                         }
 
                     </td>
-                    <td>
-                        @{
-                            <span class="fw-bold">@item.Requestee?.FullName</span>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <td>
+                            @{
+                                var requestee = item.Requestee;
+                                <span class="fw-bold">@requestee?.FullName</span>
 
-                            <br>
-                            <span class="fst-italic">@item.Requestee?.Email</span>
+                                <a target="_blank" asp-controller="ManageUsers" asp-action="Details" asp-route-id="@requestee?.Id"><i class="fa-solid fa-address-card me-1 text-primary btn"></i></a>
 
-                            <br>
-                            <span class="fst-italic">@(item.Requestee != null ? @String.Join(", ", UserManager.GetRolesAsync(item.Requestee).Result.ToList()) : "")</span>
-                        }
-                    </td>
+
+                                <br>
+                                <span class="fst-italic">@requestee?.Email</span>
+
+                                <br>
+                                <span class="fst-italic">@(requestee != null ? @String.Join(", ", UserManager.GetRolesAsync(requestee).Result.ToList()) : "")</span>
+                            }
+                        </td>
+                    }
                     <td>
                         @if (item.RoleRequested != null)
                         {
@@ -77,36 +91,32 @@
                         }
                     </td>
                     <td>
-                        @if (item.Note != null)
-                        {
-                            <a tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="focus" title="Note" data-bs-content="@item.Note">
-                                <i class="fa-solid fa-note-sticky btn text-primary"></i>
-                            </a>
-
-                        }
-                    </td>
-                    <td>
                         @item.CreatedAt?.ToString().Substring(0, 10)<br>
                         @item.CreatedAt?.ToString().Substring(11)
                     </td>
                     <td>
                         <p>@if (item.IsApproved == true)
                             {
-                                <span> <i class="fa-solid fa-circle-check text-success" title="approved"></i> Approved</span>
+                                <span class="text-success"> <i class="fa-solid fa-check" title="approved"></i> Approved</span>
+                            <p class="bg-warning badge text-dark"> 
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                                Logout and Signin to apply changes</p>
                             }
                             else if (item.IsApproved == false)
                             {
-                                <span> <i class="fa-solid fa-circle-xmark text-danger" title="rejected"></i> Rejected</span>
+                            <span class="text-danger"> <i class="fa-solid fa-xmark" title="rejected"></i> Rejected</span>
                             }
                             else
                             {
-                                <span> <i class="fa-solid fa-clock-rotate-left text-warning" title="pending"></i> Pending</span>
+                            <span class="text-warning"> <i class="fa-solid fa-clock-rotate-left" title="pending"></i> Pending</span>
                             }
 
                         </p>
-                        handled by <span class="fw-bold">@item.RequestHandler?.FullName</span>
-
-                        <p>at @Html.DisplayFor(modelItem => item.ProcessedDate)</p>
+                        @if (item.IsApproved != null)
+                        {
+                            <span>handled by <span class="fw-bold">@item.RequestHandler?.FullName</span></span>
+                            <p>on @Html.DisplayFor(modelItem => item.ProcessedDate)</p>
+                        }
                     </td>
                 </tr>
             }

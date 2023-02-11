@@ -13,6 +13,9 @@ namespace MaMontreal.Services
         private readonly MamDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
+
+
+
         public UsersService(MamDbContext context,
         UserManager<ApplicationUser> userManager)
         {
@@ -21,12 +24,10 @@ namespace MaMontreal.Services
             if (context.Users == null)
                 throw new NullReferenceException("No Users table in database!");
             _context = context;
-
             if (userManager == null)
                 throw new NullReferenceException("userManager is null!");
             _userManager = userManager;
         }
-
 
         public async Task<ApplicationUser?> GetCurUserAsync(ClaimsPrincipal User)
         {

@@ -37,7 +37,7 @@ namespace MaMontreal.Services
 
 
 
-        public async Task CreateAsync(ClaimsPrincipal User, UserRequest request, string? role)
+        public async Task<int> CreateAsync(ClaimsPrincipal User, UserRequest request, string? role)
         {
 
             ApplicationUser? currUser = await _userManager.GetUserAsync(User);
@@ -64,6 +64,7 @@ namespace MaMontreal.Services
             UserRequest userRequest = new UserRequest(_roleManager, currUser, role, request.Note);
             _context.Add(userRequest);
             await _context.SaveChangesAsync();
+            return userRequest.Id;
         }
 
 

@@ -2,53 +2,127 @@
 
 @{
     ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_DashLayout.cshtml";
 }
 
-<h1>Details</h1>
-
 <div>
-    <h4>UserRequest</h4>
+    <h4>User Request Details</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsApproved)
+        <dt class="col-sm-2">
+            Status
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsApproved)
+        <dd class="col-sm-10">
+            <p>@if (Model.IsApproved == true)
+                {
+                    <span> <i class="fa-solid fa-circle-check text-success" title="approved"></i> Approved</span>
+                }
+                else if (Model.IsApproved == false)
+                {
+                    <span> <i class="fa-solid fa-circle-xmark text-danger" title="rejected"></i> Rejected</span>
+                }
+                else
+                {
+                    <span> <i class="fa-solid fa-clock-rotate-left text-warning" title="pending"></i> Pending</span>
+                }
+
+            </p>
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProcessedDate)
+        @if (User.IsInRole("admin"))
+        {
+            <dt class="col-sm-2">
+                Submitted by
+            </dt>
+            <dd class="col-sm-10">
+                @{
+                    var requestee = Model.Requestee;
+                    <span class="fw-bold">@requestee?.FullName</span>
+                    <a target="_blank" asp-controller="ManageUsers" asp-action="Details" asp-route-id="@requestee?.Id"><i class="fa-solid fa-address-card me-1 text-primary btn"></i></a>
+
+                    <br>
+                    <span class="fst-italic">@requestee?.Email</span>
+
+                    <br>
+                    <span class="fst-italic">@(requestee != null ? @String.Join(", ", UserManager.GetRolesAsync(requestee).Result.ToList()) : "")</span>
+                }
+            </dd>
+        }
+
+        <dt class="col-sm-2">
+            <p>Submitted on</p>
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProcessedDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Note)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Note)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CreatedAt)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UpdatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UpdatedAt)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DeletedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DeletedAt)
-        </dd>
+
+
+        @if (Model.ProcessedDate != null)
+        {
+            <dt class="col-sm-2">
+                <p>Processed on</p>
+            </dt>
+
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ProcessedDate)
+            </dd>
+        }
+
+        @if (Model.RequestHandler != null)
+        {
+
+            <dt class="col-sm-2">
+                <p>Handled by</p>
+            </dt>
+
+            <dd class="col-sm-10">
+                @Model.RequestHandler?.FullName
+            </dd>
+        }
+
+        @if (Model.UpdatedAt != null)
+        {
+            <dt class="col-sm-2">
+                <p>Updated on</p>
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UpdatedAt)
+            </dd>
+        }
+        @if (Model.DeletedAt != null)
+        {
+            <dt class="col-sm-2">
+                Archived on
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.DeletedAt)
+            </dd>
+        }
+        @if (Model.Note != null)
+        {
+            <dt class="col-sm-12 pb-3">
+                Note
+            </dt>
+            <dd class="col-sm-12">
+                <p class="card card-body"> @Html.DisplayFor(model => model.Note)</p>
+            </dd>
+        }
+
+
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-dark"><i class="fa-solid fa-arrow-left me-1"></i>Back</a>
+    @if (Model.DeletedAt == null && Model.IsApproved == null)
+    {
+        @if (User.IsInRole("admin"))
+        {
+            <a asp-action="Approve" asp-route-id="@Model?.Id" class="btn btn-success"><i class="fa-solid fa-check me-1"></i>Approve</a>
+            <a asp-action="Reject" asp-route-id="@Model?.Id" class="btn btn-danger"><i class="fa-solid fa-xmark me-1"></i>Reject</a>
+        }
+        else
+        {
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary"><i class="fa-solid fa-edit me-1"></i>Edit</a>
+        }
+
+    }
 </div>

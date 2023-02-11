@@ -92,8 +92,8 @@ namespace MaMontreal.Controllers_Manage
             {
                 try
                 {
-                    await _requestsService.CreateAsync(User, userRequest, role);
-                    return RedirectToAction("Index", "Home");
+                    int id = await _requestsService.CreateAsync(User, userRequest, role);
+                    return RedirectToAction("Details", new { id = id });
                 }
                 catch (SystemException ex)
                 {
@@ -113,13 +113,14 @@ namespace MaMontreal.Controllers_Manage
             {
                 await _requestsService.HandleAsync(id, User, true);
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Request Approved and Role updated.", "success"));
+                return RedirectToAction("Details", new { id = id });
             }
             catch (SystemException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "warning"));
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", new { id = id });
             }
-            return RedirectToAction(nameof(Index));
+
         }
 
 
@@ -132,17 +133,17 @@ namespace MaMontreal.Controllers_Manage
             {
                 await _requestsService.HandleAsync(id, User, false);
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Request Rejected", "success"));
+                return RedirectToAction("Details", new { id = id });
             }
             catch (SystemException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "warning"));
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", new { id = id });
             }
-            return RedirectToAction(nameof(Index));
         }
 
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "member")]
         [Route("Edit")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -160,7 +161,7 @@ namespace MaMontreal.Controllers_Manage
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "member")]
         [Route("Edit")]
         public async Task<IActionResult> Edit(int id, [Bind("Note")] UserRequest userRequest)
         {
@@ -240,18 +241,16 @@ namespace MaMontreal.Controllers_Manage
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.UserRequests == null)
+            try
             {
-                return Problem("Entity set 'MamDbContext.UserRequests'  is null.");
+                await _requestsService.DeleteAsync(id, User);
+                return RedirectToAction("Index", new { archived = true });
             }
-            var userRequest = await _context.UserRequests.FindAsync(id);
-            if (userRequest != null)
+            catch (SystemException ex)
             {
-                _context.UserRequests.Remove(userRequest);
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                return RedirectToAction("Details", new { id = id });
             }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool UserRequestExists(int id)

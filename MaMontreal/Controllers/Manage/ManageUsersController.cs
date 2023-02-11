@@ -26,6 +26,7 @@ namespace MaMontreal.Controllers.Manage
         public ManageUsersController(
             MamDbContext context,
             UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signinManager,
             ILogger<ManageUsersController> logger)
         {
             try
