@@ -5,93 +5,108 @@
     Layout = "~/Views/Shared/_DashLayout.cshtml";
 }
 
-<h1>User Role requests</h1>
 
-<p>
-    <a asp-action="Create" asp-route-role="gsr">Create New</a>
-</p>
-if(@Model != null){
-<table class="table">
-    <thead>
-        <tr>
-            <th></th>
-            <th>
-                @Html.DisplayNameFor(model => model.Requestee)
-            </th>
-            <th> Role requested </th>
-            <th> Note </th>
-            <th> Submited </th>
-            <th> Status </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+
+@if (Model.ElementAt<UserRequest>(0).DeletedAt != null)
+{
+    <h2 class="pb-3">User Role Requests (Archived)</h2>
+    <a asp-action="Index" class="me-3">Show Active</a>
+}
+else
+{
+    <h2 class="pb-3">User Role Requests</h2>
+    <a asp-action="Index" asp-route-archived="true">Show Archived</a>
+}
+
+
+
+
+@if (Model != null)
+{
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-eye"></i></a>
-                    @if (item.IsApproved != null)
-                    {
-                        <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash text-danger"></i></a>
-                    }
-                    else
-                    {
-                        <a asp-action="Approve" asp-route-id="@item.Id"><i class="fa-solid fa-circle-check text-success" title="Approve Request"></i></a>
-                        <a asp-action="Reject" asp-route-id="@item.Id"><i class="fa-solid fa-circle-xmark text-danger" title="Reject request"></i></a>
-                    }
-                </td>
-                <td>
-                    @{
-                        <span class="fw-bold">@item.Requestee?.FullName</span>
-
-                        <br>
-                        <span class="fst-italic">@item.Requestee?.Email</span>
-
-                        <br>
-                        <span class="fst-italic">@(item.Requestee != null ? @String.Join(", ", UserManager.GetRolesAsync(item.Requestee).Result.ToList()) : "")</span>
-                    }
-                </td>
-                <td>
-                    @if (item.RoleRequested != null)
-                    {
-                        <i class="fa-solid fa-user"></i>
-
-                        <br>
-                        @item.RoleRequested.Name
-                    }
-                </td>
-                <td>
-                    @if (item.Note != null)
-                    {
-                        <i class="fa-solid fa-note-sticky"></i>
-                    }
-                </td>
-                <td>
-                    @item.CreatedAt?.ToString().Substring(0, 10)<br>
-                    @item.CreatedAt?.ToString().Substring(11)
-                </td>
-                <td>
-                    <p>@if (item.IsApproved == true)
+                <th>Actions</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Requestee)
+                </th>
+                <th> Role requested </th>
+                <th> Note </th>
+                <th> Submited </th>
+                <th> Status </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-eye"></i></a>
+                        @if (item.IsApproved != null)
                         {
-                            <i class="fa-solid fa-circle-check text-success" title="approved"></i>
-                        }
-                        else if (item.IsApproved == false)
-                        {
-                            <i class="fa-solid fa-circle-xmark text-danger" title="rejected"></i>
+                            <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash text-danger"></i></a>
                         }
                         else
                         {
-                            <i class="fa-solid fa-clock-rotate-left text-warning" title="pending"></i>
+                            <a asp-action="Approve" asp-route-id="@item.Id"><i class="fa-solid fa-circle-check text-success" title="Approve Request"></i></a>
+                            <a asp-action="Reject" asp-route-id="@item.Id"><i class="fa-solid fa-circle-xmark text-danger" title="Reject request"></i></a>
                         }
+                    </td>
+                    <td>
+                        @{
+                            <span class="fw-bold">@item.Requestee?.FullName</span>
 
-                    </p>
-                    @Html.DisplayFor(modelItem => item.ProcessedDate)
-                    <p>@item.RequestHandler?.FullName</p>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-} else {
-<p> No requests found </p>
+                            <br>
+                            <span class="fst-italic">@item.Requestee?.Email</span>
+
+                            <br>
+                            <span class="fst-italic">@(item.Requestee != null ? @String.Join(", ", UserManager.GetRolesAsync(item.Requestee).Result.ToList()) : "")</span>
+                        }
+                    </td>
+                    <td>
+                        @if (item.RoleRequested != null)
+                        {
+                            <i class="fa-solid fa-user"></i>
+
+                            <br>
+                            @item.RoleRequested.Name
+                        }
+                    </td>
+                    <td>
+                        @if (item.Note != null)
+                        {
+                            <i class="fa-solid fa-note-sticky"></i>
+                        }
+                    </td>
+                    <td>
+                        @item.CreatedAt?.ToString().Substring(0, 10)<br>
+                        @item.CreatedAt?.ToString().Substring(11)
+                    </td>
+                    <td>
+                        <p>@if (item.IsApproved == true)
+                            {
+                                <span> <i class="fa-solid fa-circle-check text-success" title="approved"></i> Approved</span>
+                            }
+                            else if (item.IsApproved == false)
+                            {
+                                <span> <i class="fa-solid fa-circle-xmark text-danger" title="rejected"></i> Rejected</span>
+                            }
+                            else
+                            {
+                                <span> <i class="fa-solid fa-clock-rotate-left text-warning" title="pending"></i> Pending</span>
+                            }
+
+                        </p>
+                        handled by <span class="fw-bold">@item.RequestHandler?.FullName</span>
+
+                        <p>at @Html.DisplayFor(modelItem => item.ProcessedDate)</p>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p> No requests found </p>
 }
