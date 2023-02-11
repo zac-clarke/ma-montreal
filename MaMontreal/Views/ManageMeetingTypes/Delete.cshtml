@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Delete";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_DashLayout.cshtml";
 }
 
 <h1>Delete</h1>
@@ -12,19 +12,19 @@
     <h4>MeetingType</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Title)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Title)
         </dd>
     </dl>
 
-    @if(ViewBag.error != null)
+    @if (ViewBag.error != null)
     {
         <p class="alert alert-danger">@ViewBag.error</p>
     }
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |

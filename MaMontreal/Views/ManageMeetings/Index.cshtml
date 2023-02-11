@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Meetings";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_DashLayout.cshtml";
 }
 
 <h1>Meetings</h1>
@@ -59,8 +59,8 @@
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> <br />
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> <br />
-                    
-                    @if(item.DeletedAt == null)
+
+                    @if (item.DeletedAt == null)
                     {
                         <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                     }
@@ -80,12 +80,12 @@
                     @Html.DisplayFor(modelItem => item.EventName)
                 </td>
                 <td>
-                     @item.Gsr?.UserName
+                    @item.Gsr?.UserName
                     @* @Html.DisplayFor(modelItem => item.Gsr.UserName) *@
                 </td>
                 <td>
                     @item.MeetingType?.Title
-                    @* @Html.DisplayFor(modelItem =>  item.MeetingType.Title) *@
+                    @* @Html.DisplayFor(modelItem => item.MeetingType.Title) *@
                 </td>
                 <td>
                     @item.Language?.Title
@@ -107,7 +107,7 @@
                     @Html.DisplayFor(modelItem => item.Status)
                 </td>
                 <td class="text-center">
-                    @if(item.DeletedAt != null) 
+                    @if (item.DeletedAt != null)
                     {
                         <i class="fa-sharp fa-solid fa-xmark text-danger"></i>
                     }

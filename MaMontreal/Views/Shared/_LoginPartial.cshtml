@@ -3,28 +3,16 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        @if (User.IsInRole("admin") || User.IsInRole("gsr"))
+        @if (User.Identity.IsAuthenticated)
         {
             <li class="nav-item">
-                <a class="btn btn-primary" asp-area="" asp-controller="Manage" asp-action="Index">Manage</a>
+                <a class="btn btn-primary" asp-area="" asp-controller="Manage" asp-action="Index">Dashboard</a>
             </li>
         }
-        @if (User.IsInRole("member") && !User.IsInRole("gsr") && !User.IsInRole("admin"))
-        {
-            <li class="nav-item">
-                <a class="btn btn-primary" asp-area="" asp-controller="ManageUserRequests" asp-action="Index" asp-route-role="gsr">Requests</a>
-            </li>
-        }
-
-        <li class="nav-item">
-            <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello
-                @(User.Identity?.Name)
-                !</a>
-        </li>
 
         <li class="nav-item">
             <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl='@Url.Action("Index", "Home", new { area = "" })'>
-                <button id="logout" type="submit" class="nav-link btn btn-link text-dark border-0">Logout</button>
+                <button id="logout" type="submit" class="nav-link btn btn-link text-danger border-0">Logout</button>
             </form>
         </li>
     }

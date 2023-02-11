@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Manage Users";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_DashLayout.cshtml";
 }
 
 <h2>Users</h2>
@@ -21,7 +21,7 @@
         {
             <tr>
                 <td>
-                    <div class="d-flex gap-2">    
+                    <div class="d-flex gap-2">
                         <a asp-action="EditRoles" asp-route-id="@item.Id"><i class="fa-solid fa-user-pen"></i></a>
                         <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-eye"></i></a>
                         <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash text-danger"></i></a>
