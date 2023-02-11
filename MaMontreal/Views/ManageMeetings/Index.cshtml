@@ -6,113 +6,129 @@
 }
 
 <h1>Meetings</h1>
+<div class="row">
+    <a asp-action="Create" class="col">Create New</a>
+    <input type="text" id="search" placeholder="Search" class="col"/>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th></th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageUrl)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.District)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EventName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gsr)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MeetingType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Language)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DayOfWeek)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                Deleted
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<div class="w-100 overflow-x-hidden">
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> <br />
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> <br />
-
-                    @if (item.DeletedAt == null)
-                    {
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    }
-                    else
-                    {
-                        <a asp-action="Restore" asp-route-id="@item.Id">Restore</a>
-                    }
-                </td>
-                <td>
-                    <img src="@item.ImageUrl" alt="Image" style="width: 100px; height: 100px;" />
-                    @* @Html.DisplayFor(modelItem => item.ImageUrl) *@
-                </td>
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => item.District)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EventName)
-                </td>
-                <td>
-                    @item.Gsr?.UserName
-                    @* @Html.DisplayFor(modelItem => item.Gsr.UserName) *@
-                </td>
-                <td>
-                    @item.MeetingType?.Title
-                    @* @Html.DisplayFor(modelItem => item.MeetingType.Title) *@
-                </td>
-                <td>
-                    @item.Language?.Title
-                    @* @Html.DisplayFor(modelItem => item.Language.Title) *@
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DayOfWeek)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StartTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td class="text-center">
-                    @if (item.DeletedAt != null)
-                    {
-                        <i class="fa-sharp fa-solid fa-xmark text-danger"></i>
-                    }
-                </td>
+                <th></th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ImageUrl)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.District)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EventName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Gsr)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MeetingType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Language)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DayOfWeek)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StartTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EndTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    Deleted
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> <br />
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> <br />
+
+                        @if (item.DeletedAt == null)
+                        {
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        }
+                        else
+                        {
+                            <a asp-action="Restore" asp-route-id="@item.Id">Restore</a>
+                        }
+                    </td>
+                    <td>
+                        <img src="@item.ImageUrl" alt="Image" style="width: 100px; height: 100px;" />
+                        @* @Html.DisplayFor(modelItem => item.ImageUrl) *@
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.District)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EventName)
+                    </td>
+                    <td>
+                        @item.Gsr?.UserName
+                        @* @Html.DisplayFor(modelItem => item.Gsr.UserName) *@
+                    </td>
+                    <td>
+                        @item.MeetingType?.Title
+                        @* @Html.DisplayFor(modelItem => item.MeetingType.Title) *@
+                    </td>
+                    <td>
+                        @item.Language?.Title
+                        @* @Html.DisplayFor(modelItem => item.Language.Title) *@
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DayOfWeek)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td class="text-center">
+                        @if (item.DeletedAt != null)
+                        {
+                            <i class="fa-sharp fa-solid fa-xmark text-danger"></i>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#search").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("table tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}

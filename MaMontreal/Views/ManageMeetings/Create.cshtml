@@ -44,14 +44,10 @@
     }
 }
 
-
-
-<h1>Create</h1>
-
-<h4>Meeting</h4>
+<h4>New Meeting</h4>
 <hr />
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @if (User.IsInRole("admin"))
@@ -162,15 +158,12 @@
             </div>
             <input asp-for="ImageUrl" type="hidden" />
 
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="form-group mt-4">
+                <a asp-action="Index" class="btn btn-dark"><i class="fa-solid fa-arrow-left me-1"></i>Back</a>
+                <button class="btn btn-primary"><i class="fa-solid fa-save me-1"></i>Create</button>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
