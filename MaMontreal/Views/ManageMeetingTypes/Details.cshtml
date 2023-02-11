@@ -2,24 +2,21 @@
 
 @{
     ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_DashLayout.cshtml";
 }
-
-<h1>Details</h1>
-
 <div>
-    <h4>MeetingType</h4>
+    <h4>Meeting Type Details</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Title)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Title)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-dark"><i class="fa-solid fa-arrow-left me-1"></i>Back</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary"><i class="fa-solid fa-edit me-1"></i>Edit</a>
 </div>

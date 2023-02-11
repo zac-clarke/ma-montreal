@@ -1,27 +1,16 @@
 ﻿@{
-    ViewData["Title"] = "Manage Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var loggedInUser = UserManager.GetUserAsync(User).Result;
-
-    @if (User.IsInRole("gsr"))
-    {
-        ViewData["Title"] = "GSR Dashboard"; 
-    }
-     @if (User.IsInRole("admin"))
-    {
-        ViewData["Title"] = "Admin Dashboard";
-    }
 }
 
 <div class="text-center">
     <h1 class="display-4">
         @ViewData["Title"]
     </h1>
-<partial name="~/Views/Shared/_FlashMessagePartial.cshtml" model='@TempData["flashMessage"]'/>
     <div class="row py-5">
-        
+
         <div class="col-12 col-md-3">
-            <partial name="~/Views/Shared/_AdminSidebarPartial.cshtml" />
+            <partial name="~/Views/Shared/_DashSidebarPartial.cshtml" />
         </div>
         <div class="col-12 col-md-9 text-start">
             @RenderBody()

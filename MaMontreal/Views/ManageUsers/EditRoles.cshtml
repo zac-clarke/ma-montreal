@@ -1,7 +1,7 @@
 @model MaMontreal.Models.NotMapped.UserWithRoles
 @{
     ViewData["Title"] = "Edit Roles";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_DashLayout.cshtml";
     var user = UserManager.FindByIdAsync(Model._userId).Result;
 }
 
@@ -17,17 +17,17 @@
             <div class="form-group mt-2 d-flex gap-3 my-5">
                 @for (int i = 0; i < Model._selectedRoles.Count; i++)
                 {
-                            <div>
+                    <div>
                         @Html.CheckBoxFor(m => m._selectedRoles[i]._roleSelected)
                         @Html.HiddenFor(m => m._selectedRoles[i]._roleName)
-                        @Html.LabelFor(m => m._selectedRoles[i]._roleSelected,  Model._selectedRoles[i]._roleName)
-                            </div>
+                        @Html.LabelFor(m => m._selectedRoles[i]._roleSelected, Model._selectedRoles[i]._roleName)
+                    </div>
                 }
             </div>
             <div class="form-group mt-2">
                 <a asp-action="Index" class="btn btn-dark"><i class="fa-solid fa-arrow-left me-1"></i>Back</a>
                 <button class="btn btn-primary"><i class="fa-solid fa-save me-1"></i>Save</button>
-            </div> 
+            </div>
         </form>
     </div>
 </div>

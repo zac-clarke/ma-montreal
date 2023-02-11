@@ -2,12 +2,12 @@
 
 @{
     ViewData["Title"] = "Manage " + Model.UserName;
-     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_DashLayout.cshtml";
     @if (Model.FullName?.Trim() != "")
     {
-         ViewData["Title"] ="Manage " + Model.FullName;
+        ViewData["Title"] = "Manage " + Model.FullName;
     }
-    var roles = await UserManager.GetRolesAsync(Model); 
+    var roles = await UserManager.GetRolesAsync(Model);
 }
 
 <div>
@@ -15,68 +15,70 @@
     <hr />
     <div class="row">
         <dl class="col row">
-            <dt class = "col-sm-4">
-            <p>@Html.DisplayNameFor(model => model.UserName)</p> 
+            <dt class="col-sm-4">
+                <p>@Html.DisplayNameFor(model => model.UserName)</p>
             </dt>
-            <dd class = "col-sm-8">
-                <p>@Html.DisplayFor(model => model.UserName)</p>         
+            <dd class="col-sm-8">
+                <p>@Html.DisplayFor(model => model.UserName)</p>
             </dd>
-            <dt class = "col-sm-4">
-            <p>@Html.DisplayNameFor(model => model.Email)</p> 
+            <dt class="col-sm-4">
+                <p>@Html.DisplayNameFor(model => model.Email)</p>
             </dt>
-            <dd class = "col-sm-8">
-            <p>@Html.DisplayFor(model => model.Email) 
-                @if (Model.EmailConfirmed)
-                {
-                    <span class="text-success badge bg-dark ms-2"><i class="fa-solid fa-check me-1"> </i>Confirmed</span>
-                }
-                else
-                {
-                    <span class="text-warning badge bg-dark ms-2">Not Confirmed</span>
-                }</p>
-            </dd>
-        
-            <dt class = "col-sm-4">
-            <p>User Roles</p> 
-            </dt>
-            <dd class = "col-sm-8">
-                <p>@String.Join(", ", roles)</p>         
-            </dd>
-        </dl>
-        <dl class="col row">
-            <dt class = "col-sm-4">
-            <p>@Html.DisplayNameFor(model => model.FirstName)</p> 
-            </dt>
-            <dd class = "col-sm-8">
-                <p>@Html.DisplayFor(model => model.FirstName)</p>         
-            </dd>
-            <dt class = "col-sm-4">
-            <p>@Html.DisplayNameFor(model => model.LastName)</p> 
-            </dt>
-            <dd class = "col-sm-8">
-                <p>@Html.DisplayFor(model => model.LastName)</p>         
-            </dd>
-            <dt class = "col-sm-4">
-            <p> @Html.DisplayNameFor(model => model.PhoneNumber)</p>
-            </dt>
-            <dd class = "col-sm-8">
-            <p> @Html.DisplayFor(model => model.PhoneNumber)
-                @if (Model.PhoneNumber != null)
-                {
-                    @if (Model.PhoneNumberConfirmed)
+            <dd class="col-sm-8">
+                <p>@Html.DisplayFor(model => model.Email)
+                    @if (Model.EmailConfirmed)
                     {
-                        <span class="text-success badge bg-black ms-2"><i class="fa-solid fa-check me-1"> </i>Confirmed</span>
+                        <span class="text-success badge bg-dark ms-2"><i class="fa-solid fa-check me-1"> </i>Confirmed</span>
                     }
                     else
                     {
                         <span class="text-warning badge bg-dark ms-2">Not Confirmed</span>
                     }
-                }  </p>
+                </p>
             </dd>
-            <dt class = "col-sm-4">
+
+            <dt class="col-sm-4">
+                <p>User Roles</p>
+            </dt>
+            <dd class="col-sm-8">
+                <p>@String.Join(", ", roles)</p>
+            </dd>
+        </dl>
+        <dl class="col row">
+            <dt class="col-sm-4">
+                <p>@Html.DisplayNameFor(model => model.FirstName)</p>
+            </dt>
+            <dd class="col-sm-8">
+                <p>@Html.DisplayFor(model => model.FirstName)</p>
+            </dd>
+            <dt class="col-sm-4">
+                <p>@Html.DisplayNameFor(model => model.LastName)</p>
+            </dt>
+            <dd class="col-sm-8">
+                <p>@Html.DisplayFor(model => model.LastName)</p>
+            </dd>
+            <dt class="col-sm-4">
+                <p> @Html.DisplayNameFor(model => model.PhoneNumber)</p>
+            </dt>
+            <dd class="col-sm-8">
+                <p> @Html.DisplayFor(model => model.PhoneNumber)
+                    @if (Model.PhoneNumber != null)
+                    {
+                        @if (Model.PhoneNumberConfirmed)
+                        {
+                            <span class="text-success badge bg-black ms-2"><i class="fa-solid fa-check me-1"> </i>Confirmed</span>
+                        }
+                        else
+                        {
+                            <span class="text-warning badge bg-dark ms-2">Not Confirmed</span>
+                        }
+                    }
+                </p>
+            </dd>
+            <dt class="col-sm-4">
                 <p>@Html.DisplayNameFor(model => model.SobrietyDate)</p>
             </dt>
-            <dd class = "col-sm-8">
+            <dd class="col-sm-8">
                 <p>@Model.SobrietyDate?.ToString().Substring(0,10)</p>
             </dd>
         </dl>
@@ -89,38 +91,39 @@
     <hr />
     <div class="row">
         <dl class="col row">
-            <dt class = "col-sm-4">
-            <p>Two Factor Authentication</p> 
+            <dt class="col-sm-4">
+                <p>Two Factor Authentication</p>
             </dt>
-            <dd class = "col-sm-8">
-                <p>@(Model.TwoFactorEnabled ? "yes" : "no")</p>         
+            <dd class="col-sm-8">
+                <p>@(Model.TwoFactorEnabled ? "yes" : "no")</p>
             </dd>
-            <dt class = "col-sm-4">
-            <p>Lockout Enabled</p> 
+            <dt class="col-sm-4">
+                <p>Lockout Enabled</p>
             </dt>
-            <dd class = "col-sm-8">
-                <p>@(Model.LockoutEnabled ? "yes" : "no")</p>         
+            <dd class="col-sm-8">
+                <p>@(Model.LockoutEnabled ? "yes" : "no")</p>
             </dd>
-        </dl>  
-          <dl class="col row">
+        </dl>
+        <dl class="col row">
 
-            @if(Model.LockoutEnd != null ){    
-                <dt class = "col-sm-4">
-                    <p>Lockout End</p> 
+            @if (Model.LockoutEnd != null)
+            {
+                <dt class="col-sm-4">
+                    <p>Lockout End</p>
                 </dt>
-                <dd class = "col-sm-8">
-                    <p>Model.LockoutEnd</p> 
+                <dd class="col-sm-8">
+                    <p>Model.LockoutEnd</p>
                 </dd>
-            } 
+            }
 
-            
-            <dt class = "col-sm-4">
-                <p>Failed logins</p>         
+
+            <dt class="col-sm-4">
+                <p>Failed logins</p>
             </dt>
-            <dd class = "col-sm-8">
-                <p>@Model.AccessFailedCount</p>         
+            <dd class="col-sm-8">
+                <p>@Model.AccessFailedCount</p>
             </dd>
-        </dl>    
+        </dl>
     </div>
 </div>
 <div>

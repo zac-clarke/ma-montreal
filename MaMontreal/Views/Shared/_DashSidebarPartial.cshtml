@@ -1,0 +1,29 @@
+@using MaMontreal.Models
+
+
+<div class="d-flex gap-1 flex-column">
+
+
+    <a asp-controller="Manage" asp-action="Index" class="btn btn-outline-primary btn-sm">Dashboard</a>
+    @if ((!User.IsInRole("gsr") && !User.IsInRole("admin")) || User.IsInRole("admin"))
+    {
+        <a asp-controller="ManageUserRequests" asp-action="Index" class="btn btn-outline-primary btn-sm">Requests</a>
+    }
+
+    @if (User.IsInRole("gsr"))
+    {
+        <a asp-controller="ManageMeetings" asp-action="Index" class="btn btn-outline-primary btn-sm">Meetings</a>
+    }
+
+    @if (User.IsInRole("admin"))
+    {
+        <a asp-controller="ManageUsers" asp-action="Index" class="btn btn-outline-primary btn-sm">Users</a>
+        <a asp-controller="ManageTags" asp-action="Index" class="btn btn-outline-primary btn-sm">Tags</a>
+        <a asp-controller="ManageLanguages" asp-action="Index" class="btn btn-outline-primary btn-sm">Languages</a>
+        <a asp-controller="ManageMeetingTypes" asp-action="Index" class="btn btn-outline-primary btn-sm">Meeting Types</a>
+    }
+
+    <a id="manage" class="btn btn-outline-primary btn-sm" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account</a>
+</div>
+
+

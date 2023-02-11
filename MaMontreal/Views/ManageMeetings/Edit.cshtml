@@ -5,48 +5,50 @@
 
 @{
     ViewData["Title"] = "Edit";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_DashLayout.cshtml";
 
     List<MeetingType>? mtList = ViewBag.MeetingTypes as List<MeetingType>;
     List<SelectListItem> mtSelectList = new List<SelectListItem>();
-    if(mtList == null) mtList = new List<MeetingType>();
-    foreach(MeetingType mt in mtList)
+    if (mtList == null) mtList = new List<MeetingType>();
+    foreach (MeetingType mt in mtList)
     {
-        mtSelectList.Add(new SelectListItem(){
-            Value = mt.Id.ToString(),
-            Text = mt.Title
-        });
+        mtSelectList.Add(new SelectListItem()
+                {
+                    Value = mt.Id.ToString(),
+                    Text = mt.Title
+                });
     }
 
     List<Language>? langList = ViewBag.Languages as List<Language>;
     List<SelectListItem> langSelectList = new List<SelectListItem>();
-    if(langList == null) langList = new List<Language>();
-    foreach(Language lang in langList)
+    if (langList == null) langList = new List<Language>();
+    foreach (Language lang in langList)
     {
-        langSelectList.Add(new SelectListItem(){
-            Value = lang.Id.ToString(),
-            Text = lang.Title
-        });
+        langSelectList.Add(new SelectListItem()
+                {
+                    Value = lang.Id.ToString(),
+                    Text = lang.Title
+                });
     }
 
     List<ApplicationUser>? gsrList = ViewData["Gsrs"] as List<ApplicationUser>;
     List<SelectListItem> gsrSelectList = new List<SelectListItem>();
-    if(gsrList == null) gsrList = new List<ApplicationUser>();
-    foreach(ApplicationUser gsr in gsrList)
+    if (gsrList == null) gsrList = new List<ApplicationUser>();
+    foreach (ApplicationUser gsr in gsrList)
     {
-        gsrSelectList.Add(new SelectListItem(){
-            Value = gsr.Id.ToString(),
-            Text = gsr.FullName != null && !gsr.FullName.Trim().Equals("") ? gsr.FullName : gsr.UserName?.Substring(0, gsr.UserName.IndexOf("@"))
-        });
+        gsrSelectList.Add(new SelectListItem()
+                {
+                    Value = gsr.Id.ToString(),
+                    Text = gsr.FullName != null && !gsr.FullName.Trim().Equals("") ? gsr.FullName : gsr.UserName?.Substring(0, gsr.UserName.IndexOf("@"))
+                });
     }
 }
 
-<h1>Edit</h1>
 
-<h4>Meeting</h4>
-<hr />
+<h4>Update Meeting</h4>
+<hr class="col-md-8" />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-8">
         <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -54,7 +56,7 @@
                 <input asp-for="Id" type="hidden" class="form-control d-none" />
                 <span asp-validation-for="Id" class="text-danger"></span>
             </div>
-            @if(User.IsInRole("admin"))
+            @if (User.IsInRole("admin"))
             {
                 <div class="form-group">
                     <label asp-for="District" class="control-label"></label>
@@ -75,7 +77,7 @@
             <div class="form-group">
                 <label asp-for="_MeetingTypeId" class="control-label"></label>
                 @Html.DropDownList("_MeetingTypeId", mtSelectList, new {@class = "form-control"})
-            <span asp-validation-for="_MeetingTypeId" class="text-danger"></span>
+                <span asp-validation-for="_MeetingTypeId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="_LanguageId" class="control-label"></label>
@@ -109,7 +111,7 @@
             </div>
             <div class="form-group form-check form-switch">
                 <label class="form-check-label" for="sIsRecurring">Is this meeting Recurring?</label>
-                <input id="sIsRecurring"  class="form-check-input" type="checkbox" role="switch">
+                <input id="sIsRecurring" class="form-check-input" type="checkbox" role="switch">
             </div>
             <div id="divDaysOfWeek" class="form-group d-none">
                 <label asp-for="DayOfWeek" class="control-label"></label>
@@ -128,8 +130,8 @@
                 <input asp-for="EndTime" class="form-control" />
                 <span asp-validation-for="EndTime" class="text-danger"></span>
             </div>
-            
-            @if(User.IsInRole("admin") || User.IsInRole("gsr"))
+
+            @if (User.IsInRole("admin") || User.IsInRole("gsr"))
             {
                 <div class="form-group">
                     <label asp-for="_GsrAssignedId" class="control-label"></label>
@@ -137,8 +139,8 @@
                     <span asp-validation-for="_GsrAssignedId" class="text-danger"></span>
                 </div>
             }
-            
-            @if(User.IsInRole("admin"))
+
+            @if (User.IsInRole("admin"))
             {
                 <div class="form-group">
                     <label asp-for="Status" class="control-label"></label>
@@ -151,25 +153,25 @@
                 <label asp-for="_ImageFile" class="control-label"></label>
                 <input asp-for="_ImageFile" type='file' class="form-control" accept="image/*" />
                 <span asp-validation-for="_ImageFile" class="text-danger"></span>
-                <img id="image_upload_preview" alt="Select the Image for this meeting" width="256px" height="256px" />
+                <img id="image_upload_preview" alt="Select the Image for this meeting" width="256px" height="256px" src="@Model.ImageUrl"/>
             </div>
-            <input asp-for="ImageUrl" type="hidden"/>
+            <input asp-for="ImageUrl" type="hidden" />
 
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="form-group mt-4">
+                <a asp-action="Index" class="btn btn-dark"><i class="fa-solid fa-arrow-left me-1"></i>Back</a>
+                <button class="btn btn-primary"><i class="fa-solid fa-save me-1"></i>Save</button>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script src="~/js/imagePreview.js" ></script>
-    <script src="~/js/manageMeetingRecurring.js" ></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/js/imagePreview.js"></script>
+    <script src="~/js/manageMeetingRecurring.js"></script>
     <script>
         console.log('here')
         if (@((Model.DayOfWeek != null).ToString().ToLower())) {
@@ -177,7 +179,7 @@
             $('#divDaysOfWeek').removeClass('d-none')
         }
         $('#sIsRecurring').change(function () {
-        console.log('here2')
+            console.log('here2')
             if (this.checked) {
                 $('#divDaysOfWeek').removeClass('d-none')
             } else {

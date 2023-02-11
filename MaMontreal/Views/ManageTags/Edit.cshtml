@@ -1,5 +1,7 @@
-@model MaMontreal.Models.Tag 
-@{ ViewData["Title"] = "Edit"; Layout = "~/Views/Shared/_AdminLayout.cshtml"; }
+@model MaMontreal.Models.Tag
+@{
+  ViewData["Title"] = "Edit"; Layout = "~/Views/Shared/_DashLayout.cshtml";
+}
 
 <h1>Edit</h1>
 
@@ -23,4 +25,8 @@
   </div>
 </div>
 
-@section Scripts { @{await Html.RenderPartialAsync("_ValidationScriptsPartial");} }
+@section Scripts {
+  @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+  }
+ }

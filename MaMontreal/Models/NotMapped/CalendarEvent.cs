@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MaMontreal.Models.Enums;
 using MaMontreal.Services;
 
 namespace MaMontreal.Models.NotMapped
 {
     public static class CalendarEvent
     {
-        //FIXME: Meetings with the same name break the code
         public static string filePath = @"./wwwroot/data/event_data.dat";
 
         public static void DeleteEventsFile()
@@ -21,7 +21,10 @@ namespace MaMontreal.Models.NotMapped
         public static void UpdateEventsFile(IEnumerable<Meeting> meetings)
         {
             Console.WriteLine("CalanderEvent.cs: Updating Events Data File");
-            string data = ConvertToString(meetings.ToList<Meeting>());
+            string data = ConvertToString(
+                meetings.Where(m => m.Status == Statuses.Approved && m.DeletedAt == null)
+                                        .ToList<Meeting>()
+                );
             (new FileInfo(filePath)).Directory?.Create();
             File.WriteAllText(filePath, data);
         }
