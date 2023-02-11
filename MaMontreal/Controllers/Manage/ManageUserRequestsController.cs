@@ -21,16 +21,19 @@ namespace MaMontreal.Controllers_Manage
     {
         private readonly MamDbContext _context;
         private readonly RequestsService _requestsService;
+        private object _logger;
 
         public ManageUserRequestsController(
             MamDbContext context,
             RoleManager<IdentityRole> roleManager,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            ILogger<ManageUserRequestsController> logger)
         {
             try
             {
                 _context = context;
                 _requestsService = new RequestsService(context, roleManager, userManager);
+                _logger = logger;
 
             }
             catch (Exception e)
@@ -42,11 +45,12 @@ namespace MaMontreal.Controllers_Manage
 
         [Route("")]
         // GET: ManageUserRequests
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(bool? archived)
         {
             try
             {
-                return View(await _requestsService.GetAllAsync());
+                return View(await _requestsService.GetAllAsync(archived));
+
             }
             catch (NullReferenceException ex)
             {
@@ -78,7 +82,7 @@ namespace MaMontreal.Controllers_Manage
 
         // GET: ManageUserRequests/Create
         [Route("Create")]
-        [Authorize(Roles = "member,admin")]
+        [Authorize(Roles = "member")]
         public IActionResult Create()
         {
             return View();
@@ -89,7 +93,7 @@ namespace MaMontreal.Controllers_Manage
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "member,admin")]
+        [Authorize(Roles = "member")]
         [Route("Create")]
         public async Task<IActionResult> Create(string? role, [Bind("Note")] UserRequest userRequest)
         {
@@ -111,7 +115,7 @@ namespace MaMontreal.Controllers_Manage
 
         // [HttpPost]
         // [ValidateAntiForgeryToken]
-
+        [Authorize(Roles = "admin")]
         [Route("Approve")]
         public async Task<IActionResult> Approve(int? id)
         {
@@ -131,7 +135,7 @@ namespace MaMontreal.Controllers_Manage
 
         // [HttpPost]
         // [ValidateAntiForgeryToken]
-
+        [Authorize(Roles = "admin")]
         [Route("Reject")]
         public async Task<IActionResult> Reject(int? id)
         {
@@ -149,7 +153,7 @@ namespace MaMontreal.Controllers_Manage
         }
 
         // GET: ManageUserRequests/Edit/5
-
+        [Authorize(Roles = "admin")]
         [Route("Edit")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -171,7 +175,7 @@ namespace MaMontreal.Controllers_Manage
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-
+        [Authorize(Roles = "admin")]
         [Route("Edit")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,IsApproved,ProcessedDate,Note,CreatedAt,UpdatedAt,DeletedAt")] UserRequest userRequest)
         {
@@ -203,24 +207,40 @@ namespace MaMontreal.Controllers_Manage
             return View(userRequest);
         }
 
-        // GET: ManageUserRequests/Delete/5
-        [Route("Delete")]
+        [Authorize(Roles = "admin")]
+        // GET: Manage/Userreqests/Archive/5
+        [Route("Archive")]
+        public async Task<IActionResult> Archive(int? id)
+        {
+            try
+            {
+                await _requestsService.ArchiveAsync(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (SystemException ex)
+            {
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                // _logger.LogError(ex.Message);
+                return RedirectToAction(nameof(Index));
+            }
+        }
 
+        [Authorize(Roles = "admin")]
+        // GET: ManageTags/Delete/5
+        [Route("Delete")]
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.UserRequests == null)
+            try
             {
-                return NotFound();
+                var request = await _requestsService.GetAsync(id);
+                return View(request);
             }
-
-            var userRequest = await _context.UserRequests
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (userRequest == null)
+            catch (SystemException ex)
             {
-                return NotFound();
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                // _logger.LogError(ex.Message);
+                return RedirectToAction(nameof(Index));
             }
-
-            return View(userRequest);
         }
 
         // POST: ManageUserRequests/Delete/5

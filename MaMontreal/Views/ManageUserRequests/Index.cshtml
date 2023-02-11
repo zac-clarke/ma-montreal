@@ -41,10 +41,19 @@ else
             {
                 <tr>
                     <td>
-                        <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-eye"></i></a>
+                        <a asp-action="Details" asp-route-id="@item.Id" title="View"><i class="fa-solid fa-eye"></i></a>
                         @if (item.IsApproved != null)
                         {
-                            <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash text-danger"></i></a>
+                            @if (item.DeletedAt == null)
+                            {
+                                <a asp-action="Archive" asp-route-id="@item.Id" title="Archive"><i class="fa-solid fa-archive text-warning"></i></a>
+                            }
+                            else
+                            {
+                                <a asp-action="Unarchive" asp-route-id="@item.Id" title="Unarchive"><i class="fa-solid fa-archive text-success"></i></a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" title="Delete"><i class="fa-solid fa-trash text-danger"></i></a>
+                            }
+
                         }
                         else
                         {
