@@ -49,6 +49,10 @@ namespace MaMontreal.Controllers_Manage
         {
             try
             {
+                if (User.IsInRole("admin") == false)
+                {
+                    return View(await _requestsService.GetAllByUserIdAsync(archived, User));
+                }
                 return View(await _requestsService.GetAllAsync(archived));
 
             }
@@ -105,6 +109,11 @@ namespace MaMontreal.Controllers_Manage
                     return RedirectToAction("Index", "Home");
                 }
                 catch (NullReferenceException ex)
+                {
+                    TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "warning"));
+                    return View(userRequest);
+                }
+                catch (SystemException ex)
                 {
                     TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "warning"));
                     return View(userRequest);
@@ -214,7 +223,26 @@ namespace MaMontreal.Controllers_Manage
         {
             try
             {
-                await _requestsService.ArchiveAsync(id);
+                await _requestsService.ToggleArchiveAsync(id, true);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (SystemException ex)
+            {
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
+                // _logger.LogError(ex.Message);
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+
+        [Authorize(Roles = "admin")]
+        // GET: Manage/Userreqests/Archive/5
+        [Route("Unarchive")]
+        public async Task<IActionResult> Unarchive(int? id)
+        {
+            try
+            {
+                await _requestsService.ToggleArchiveAsync(id, false);
                 return RedirectToAction(nameof(Index));
             }
             catch (SystemException ex)
@@ -244,8 +272,9 @@ namespace MaMontreal.Controllers_Manage
         }
 
         // POST: ManageUserRequests/Delete/5
+        [Route("Delete")]
         [HttpPost, ActionName("Delete")]
-
+        [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

@@ -5,9 +5,7 @@
     Layout = "~/Views/Shared/_DashLayout.cshtml";
 }
 
-
-
-@if (Model.ElementAt<UserRequest>(0).DeletedAt != null)
+@if (Model.Count() > 0 && Model.ElementAt<UserRequest>(0).DeletedAt != null)
 {
     <h2 class="pb-3">User Role Requests (Archived)</h2>
     <a asp-action="Index" class="me-3">Show Active</a>
@@ -17,6 +15,8 @@ else
     <h2 class="pb-3">User Role Requests</h2>
     <a asp-action="Index" asp-route-archived="true">Show Archived</a>
 }
+
+
 
 
 
