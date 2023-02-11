@@ -106,56 +106,49 @@ namespace MaMontreal.Services
         }
 
 
-        public async Task<List<UserRequest>> GetAllAsync(bool? archived)
+        public async Task<List<UserRequest>> GetAllAsync(bool? archived, ClaimsPrincipal User)
         {
-            return await _context.UserRequests.Where(r => archived == null ? r.DeletedAt == null : r.DeletedAt != null)
-            .Include("Requestee").Include("RequestHandler").Include("RoleRequested").OrderByDescending(r => r.CreatedAt).ToListAsync();
-        }
+            if (User.IsInRole("admin"))
+            {
+                return await _context.UserRequests
+                           .Where(r => archived == null ? r.DeletedAt == null : r.DeletedAt != null)
+                           .Include("Requestee").Include("RequestHandler").Include("RoleRequested").OrderByDescending(r => r.CreatedAt).ToListAsync();
+            }
 
-        public async Task<List<UserRequest>> GetAllByUserIdAsync(bool? archived, ClaimsPrincipal User)
-        {
-            // string? userId = _userManager.GetUserId(User);
-            // if (userId == null)
-            //     throw new NullReferenceException("User not found.");
-            // return await _context.UserRequests.Where(r => (archived == null ? r.DeletedAt == null : r.DeletedAt != null) && r.Requestee!.Id == userId)
             return await _context.UserRequests
-            .Where(r => r.Requestee!.Id == _userManager.GetUserId(User))
-            .Where(r => (archived == null ? r.DeletedAt == null : r.DeletedAt != null))
-            .Include("Requestee").Include("RequestHandler").Include("RoleRequested").OrderByDescending(r => r.CreatedAt).ToListAsync();
+           .Where(r => r.Requestee!.Id == _userManager.GetUserId(User))
+           .Where(r => (archived == null ? r.DeletedAt == null : r.DeletedAt != null))
+           .Include("Requestee").Include("RequestHandler").Include("RoleRequested").OrderByDescending(r => r.CreatedAt).ToListAsync();
+
         }
 
-
-        public async Task<UserRequest> GetAsync(int? id)
+        public async Task<UserRequest> GetAsync(int? id, ClaimsPrincipal User)
         {
             if (id == null)
-            {
-                throw new NullReferenceException("Parameter 'id' is null.");
-            }
-            var request = await _context.UserRequests.FindAsync(id);
+                throw new NullReferenceException("No Id provided.");
+
+            var request = await _context.UserRequests.Where(r => r.Id == id)
+            .Include("Requestee").Include("RequestHandler").Include("RoleRequested")
+            .FirstOrDefaultAsync();
+
             if (request == null)
-            {
                 throw new NullReferenceException("request not found.");
-            }
+
+            if (!User.IsInRole("admin") && request.Requestee!.Id != _userManager.GetUserId(User))
+                throw new NullReferenceException("You don't have permission to view this request.");
             return request;
         }
 
-        public async Task DeleteAsync(int? id)
+        public async Task DeleteAsync(int? id, ClaimsPrincipal User)
         {
-            if (id == null)
-            {
-                throw new NullReferenceException("Parameter 'id' is null.");
-            }
-            var request = await this.GetAsync(id);
+            var request = await this.GetAsync(id, User);
             _context.UserRequests.Remove(request);
             await _context.SaveChangesAsync();
         }
 
-        public async Task ToggleArchiveAsync(int? id, bool archive)
+        public async Task ToggleArchiveAsync(int? id, bool archive, ClaimsPrincipal User)
         {
-            if (id == null)
-                throw new NullReferenceException("Parameter 'id' is null.");
-
-            var request = await this.GetAsync(id);
+            var request = await this.GetAsync(id, User);
             if (request.IsApproved == null)
                 throw new InvalidOperationException("The request must be handled before it can be archived");
             if (request.DeletedAt != null && archive == true)
@@ -168,21 +161,12 @@ namespace MaMontreal.Services
             await _context.SaveChangesAsync();
         }
 
-        // public async Task ArchiveAsync(int? id)
-        // {
-        //     if (id == null)
-        //         throw new NullReferenceException("Parameter 'id' is null.");
-
-        //     var request = await this.GetAsync(id);
-        //     if (request.IsApproved == null)
-        //         throw new InvalidOperationException("The request must be handled before it can be archived");
-        //     if (request.DeletedAt != null)
-        //         throw new InvalidOperationException("The request is already archived");
-
-        //     request.DeletedAt = DateTime.Now;
-        //     request.UpdatedAt = DateTime.Now;
-        //     _context.UserRequests.Update(request);
-        //     await _context.SaveChangesAsync();
-        // }
+        public async Task UpdateAsync(int? id, UserRequest updatedRequest, ClaimsPrincipal User)
+        {
+            var request = await this.GetAsync(id, User);
+            request.Note = updatedRequest.Note;
+            _context.Update(request);
+            await _context.SaveChangesAsync();
+        }
     }
 }

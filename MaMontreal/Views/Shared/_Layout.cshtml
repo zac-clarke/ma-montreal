@@ -49,18 +49,21 @@
               </li>
             </ul>
           @if (User.Identity.IsAuthenticated)
+
           {
-                                                <partial name="_LoginPartial" />
+                                                  <partial name="_LoginPartial" />
           }
+
           else
+
           {
-                                <div class="dropdown">
-                                  <button class="btn btn-success dropdown-toggle" id="appDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Download MA App</button>
-                                  <div class="dropdown-menu" aria-labelledby="appDropdown">
-                                    <a class="dropdown-item" target="_blank" href="https://apps.apple.com/us/app/marijuana-anonymous-mobile/id874705440">Apple</a>
-                                    <a class="dropdown-item" target="_blank" href="https://play.google.com/store/apps/details?id=org.marijuana_anonymous.MA_Mobile&hl=en_US">Android</a>
+                                  <div class="dropdown">
+                                    <button class="btn btn-success dropdown-toggle" id="appDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Download MA App</button>
+                                    <div class="dropdown-menu" aria-labelledby="appDropdown">
+                                      <a class="dropdown-item" target="_blank" href="https://apps.apple.com/us/app/marijuana-anonymous-mobile/id874705440">Apple</a>
+                                      <a class="dropdown-item" target="_blank" href="https://play.google.com/store/apps/details?id=org.marijuana_anonymous.MA_Mobile&hl=en_US">Android</a>
+                                    </div>
                                   </div>
-                                </div>
           }
             </ul>
           </div>
@@ -99,6 +102,20 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  @await RenderSectionAsync("Scripts", required: false)
-  </body>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+<script>
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl)
+    })
+    var popover = new bootstrap.Popover(document.querySelector('.example-popover'), {
+        container: 'body'
+    })
+    var popover = new bootstrap.Popover(document.querySelector('.popover-dismiss'), {
+        trigger: 'focus'
+    })
+</script>
+
+
 </html>
