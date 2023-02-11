@@ -110,15 +110,21 @@ namespace MaMontreal.Controllers_Manage
             ViewBag.Languages = _context.Languages.ToList<Language>();
             ViewData["Gsrs"] = _userService?.GetUsersWithRole("gsr").Result;
 
-            if (meeting._ImageFile?.Length > 250000)
+            if (meeting._ImageFile != null && meeting._ImageFile?.Length > 250000)
             {
                 ModelState.AddModelError("_ImageFile", "Image file size cannot exceed 250KB");
                 return View(meeting);
             }
-            else if (meeting._ImageFile?.ContentType != "image/*")
+            else if (meeting._ImageFile?.ContentType.ToLower().Substring(0, 5).Equals("image") == false)
             {
                 ModelState.AddModelError("_ImageFile", "The file you uploaded is not an image file");
                 return View(meeting);
+            }
+
+            if (User.IsInRole("gsr"))
+            {
+                meeting._GsrAssignedId = _userService?.GetCurUserAsync(User).Result?.Id;
+                ModelState.Remove("_GsrAssignedId");
             }
 
             try
@@ -203,12 +209,12 @@ namespace MaMontreal.Controllers_Manage
             ViewBag.Languages = _context.Languages.ToList<Language>();
             ViewData["Gsrs"] = _userService?.GetUsersWithRole("gsr").Result;
 
-            if (meeting._ImageFile?.Length > 250000)
+            if (meeting._ImageFile != null && meeting._ImageFile?.Length > 250000)
             {
                 ModelState.AddModelError("_ImageFile", "Image file size cannot exceed 250KB");
                 return View(meeting);
             }
-            else if (meeting._ImageFile?.ContentType != "image/*")
+            else if (meeting._ImageFile?.ContentType.ToLower().Substring(0, 5).Equals("image") == false)
             {
                 ModelState.AddModelError("_ImageFile", "The file you uploaded is not an image file");
                 return View(meeting);

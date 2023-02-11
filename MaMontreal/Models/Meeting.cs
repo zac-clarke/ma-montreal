@@ -20,13 +20,6 @@ namespace MaMontreal.Models
         [MaxLength(3000, ErrorMessage = "Description cannot be longer than 3000 characters")]
         public string Description { get; set; } = null!;
 
-        [NotMapped]
-        [Display(Name = "Image")]
-        public IFormFile? _ImageFile { get; set; }
-
-        [Display(Name = "Image Url")]
-        public string? ImageUrl { get; set; }
-
         [Required]
         [MaxLength(255, ErrorMessage = "Address cannot be longer than 255 characters")]
         public string Address { get; set; } = null!;
@@ -64,9 +57,6 @@ namespace MaMontreal.Models
         [DataType(DataType.Time)]
         public DateTime EndTime { get; set; }
 
-        // [Required]
-        public Statuses? Status { get; set; } = Statuses.Pending;
-
         [NotMapped]
         [Display(Name = "Language")]
         public int? _LanguageId { get; set; }
@@ -92,6 +82,16 @@ namespace MaMontreal.Models
         [Display(Name = "Updated By")]
         [ForeignKey("UpdatedById")]
         public ApplicationUser? UpdatedBy { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Image")]
+        public IFormFile? _ImageFile { get; set; }
+
+        [Display(Name = "Image Url")]
+        public string? ImageUrl { get; set; }
+
+        // [Required]
+        public Statuses? Status { get; set; } = Statuses.Pending;
 
         public bool IsOwnedBy(ApplicationUser? user)
         {
