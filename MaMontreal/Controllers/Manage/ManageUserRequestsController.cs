@@ -44,47 +44,37 @@ namespace MaMontreal.Controllers_Manage
 
 
         [Route("")]
-        // GET: ManageUserRequests
         public async Task<IActionResult> Index(bool? archived)
         {
             try
             {
-                if (User.IsInRole("admin") == false)
-                {
-                    return View(await _requestsService.GetAllByUserIdAsync(archived, User));
-                }
-                return View(await _requestsService.GetAllAsync(archived));
-
+                return View(await _requestsService.GetAllAsync(archived, User));
             }
-            catch (NullReferenceException ex)
+            catch (SystemException ex)
             {
-                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
-                return View();
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "warning"));
+                return RedirectToAction(nameof(Index));
             }
         }
 
 
         [Route("Details")]
-        // GET: ManageUserRequests/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.UserRequests == null)
+            try
             {
-                return NotFound();
+                var userRequest = await _requestsService.GetAsync(id, User);
+                return View(userRequest);
             }
-
-            var userRequest = await _context.UserRequests
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (userRequest == null)
+            catch (SystemException ex)
             {
-                return NotFound();
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "warning"));
+                return RedirectToAction(nameof(Index));
             }
-
-            return View(userRequest);
         }
 
 
-        // GET: ManageUserRequests/Create
+
         [Route("Create")]
         [Authorize(Roles = "member")]
         public IActionResult Create()
@@ -92,9 +82,6 @@ namespace MaMontreal.Controllers_Manage
             return View();
         }
 
-        // POST: ManageUserRequests/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "member")]
@@ -108,11 +95,6 @@ namespace MaMontreal.Controllers_Manage
                     await _requestsService.CreateAsync(User, userRequest, role);
                     return RedirectToAction("Index", "Home");
                 }
-                catch (NullReferenceException ex)
-                {
-                    TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "warning"));
-                    return View(userRequest);
-                }
                 catch (SystemException ex)
                 {
                     TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "warning"));
@@ -122,8 +104,7 @@ namespace MaMontreal.Controllers_Manage
             return View(userRequest);
         }
 
-        // [HttpPost]
-        // [ValidateAntiForgeryToken]
+
         [Authorize(Roles = "admin")]
         [Route("Approve")]
         public async Task<IActionResult> Approve(int? id)
@@ -133,7 +114,7 @@ namespace MaMontreal.Controllers_Manage
                 await _requestsService.HandleAsync(id, User, true);
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Request Approved and Role updated.", "success"));
             }
-            catch (Exception ex)
+            catch (SystemException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "warning"));
                 return RedirectToAction(nameof(Index));
@@ -142,8 +123,7 @@ namespace MaMontreal.Controllers_Manage
         }
 
 
-        // [HttpPost]
-        // [ValidateAntiForgeryToken]
+
         [Authorize(Roles = "admin")]
         [Route("Reject")]
         public async Task<IActionResult> Reject(int? id)
@@ -153,7 +133,7 @@ namespace MaMontreal.Controllers_Manage
                 await _requestsService.HandleAsync(id, User, false);
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Request Rejected", "success"));
             }
-            catch (Exception ex)
+            catch (SystemException ex)
             {
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "warning"));
                 return RedirectToAction(nameof(Index));
@@ -161,69 +141,54 @@ namespace MaMontreal.Controllers_Manage
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: ManageUserRequests/Edit/5
+
         [Authorize(Roles = "admin")]
         [Route("Edit")]
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.UserRequests == null)
+            try
             {
-                return NotFound();
+                var userRequest = await _requestsService.GetAsync(id, User);
+                return View(userRequest);
             }
-
-            var userRequest = await _context.UserRequests.FindAsync(id);
-            if (userRequest == null)
+            catch (SystemException ex)
             {
-                return NotFound();
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "warning"));
+                return RedirectToAction(nameof(Index));
             }
-            return View(userRequest);
         }
 
-        // POST: ManageUserRequests/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
         [Route("Edit")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,IsApproved,ProcessedDate,Note,CreatedAt,UpdatedAt,DeletedAt")] UserRequest userRequest)
+        public async Task<IActionResult> Edit(int id, [Bind("Note")] UserRequest userRequest)
         {
-            if (id != userRequest.Id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(userRequest);
-                    await _context.SaveChangesAsync();
+                    await _requestsService.UpdateAsync(id, userRequest, User);
+                    TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Note Updated", "success"));
+                    // return View(await _requestsService.GetAsync(id, User));
+                    return RedirectToAction("Details", new { id = id });
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException ex)
                 {
-                    if (!UserRequestExists(userRequest.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "warning"));
+                    return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction(nameof(Index));
             }
             return View(userRequest);
         }
 
         [Authorize(Roles = "admin")]
-        // GET: Manage/Userreqests/Archive/5
         [Route("Archive")]
         public async Task<IActionResult> Archive(int? id)
         {
             try
             {
-                await _requestsService.ToggleArchiveAsync(id, true);
+                await _requestsService.ToggleArchiveAsync(id, true, User);
                 return RedirectToAction(nameof(Index));
             }
             catch (SystemException ex)
@@ -236,13 +201,12 @@ namespace MaMontreal.Controllers_Manage
 
 
         [Authorize(Roles = "admin")]
-        // GET: Manage/Userreqests/Archive/5
         [Route("Unarchive")]
         public async Task<IActionResult> Unarchive(int? id)
         {
             try
             {
-                await _requestsService.ToggleArchiveAsync(id, false);
+                await _requestsService.ToggleArchiveAsync(id, false, User);
                 return RedirectToAction(nameof(Index));
             }
             catch (SystemException ex)
@@ -254,13 +218,12 @@ namespace MaMontreal.Controllers_Manage
         }
 
         [Authorize(Roles = "admin")]
-        // GET: ManageTags/Delete/5
         [Route("Delete")]
         public async Task<IActionResult> Delete(int? id)
         {
             try
             {
-                var request = await _requestsService.GetAsync(id);
+                var request = await _requestsService.GetAsync(id, User);
                 return View(request);
             }
             catch (SystemException ex)
@@ -271,7 +234,6 @@ namespace MaMontreal.Controllers_Manage
             }
         }
 
-        // POST: ManageUserRequests/Delete/5
         [Route("Delete")]
         [HttpPost, ActionName("Delete")]
         [Authorize(Roles = "admin")]

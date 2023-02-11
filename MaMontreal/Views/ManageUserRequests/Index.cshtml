@@ -5,20 +5,10 @@
     Layout = "~/Views/Shared/_DashLayout.cshtml";
 }
 
-@if (Model.Count() > 0 && Model.ElementAt<UserRequest>(0).DeletedAt != null)
-{
-    <h2 class="pb-3">User Role Requests (Archived)</h2>
-    <a asp-action="Index" class="me-3">Show Active</a>
-}
-else
-{
-    <h2 class="pb-3">User Role Requests</h2>
-    <a asp-action="Index" asp-route-archived="true">Show Archived</a>
-}
 
-
-
-
+<h2 class="pb-3">User Role Requests</h2>
+<a asp-action="Index" class="me-3">Show Active</a>
+<a asp-action="Index" asp-route-archived="true">Show Archived</a>
 
 
 @if (Model != null)
@@ -42,24 +32,29 @@ else
                 <tr>
                     <td>
                         <a asp-action="Details" asp-route-id="@item.Id" title="View"><i class="fa-solid fa-eye"></i></a>
-                        @if (item.IsApproved != null)
+
+                        @if (User.IsInRole("admin"))
                         {
-                            @if (item.DeletedAt == null)
+                            @if (item.IsApproved != null)
                             {
-                                <a asp-action="Archive" asp-route-id="@item.Id" title="Archive"><i class="fa-solid fa-archive text-warning"></i></a>
+                                @if (item.DeletedAt == null)
+                                {
+                                    <a asp-action="Archive" asp-route-id="@item.Id" title="Archive"><i class="fa-solid fa-archive text-warning"></i></a>
+                                }
+                                else
+                                {
+                                    <a asp-action="Unarchive" asp-route-id="@item.Id" title="Unarchive"><i class="fa-solid fa-archive text-success"></i></a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" title="Delete"><i class="fa-solid fa-trash text-danger"></i></a>
+                                }
+
                             }
                             else
                             {
-                                <a asp-action="Unarchive" asp-route-id="@item.Id" title="Unarchive"><i class="fa-solid fa-archive text-success"></i></a>
-                                <a asp-action="Delete" asp-route-id="@item.Id" title="Delete"><i class="fa-solid fa-trash text-danger"></i></a>
+                                <a asp-action="Approve" asp-route-id="@item.Id"><i class="fa-solid fa-circle-check text-success" title="Approve Request"></i></a>
+                                <a asp-action="Reject" asp-route-id="@item.Id"><i class="fa-solid fa-circle-xmark text-danger" title="Reject request"></i></a>
                             }
+                        }
 
-                        }
-                        else
-                        {
-                            <a asp-action="Approve" asp-route-id="@item.Id"><i class="fa-solid fa-circle-check text-success" title="Approve Request"></i></a>
-                            <a asp-action="Reject" asp-route-id="@item.Id"><i class="fa-solid fa-circle-xmark text-danger" title="Reject request"></i></a>
-                        }
                     </td>
                     <td>
                         @{
@@ -84,7 +79,10 @@ else
                     <td>
                         @if (item.Note != null)
                         {
-                            <i class="fa-solid fa-note-sticky"></i>
+                            <a tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="focus" title="Note" data-bs-content="@item.Note">
+                                <i class="fa-solid fa-note-sticky btn text-primary"></i>
+                            </a>
+
                         }
                     </td>
                     <td>
@@ -119,3 +117,4 @@ else
 {
     <p> No requests found </p>
 }
+
