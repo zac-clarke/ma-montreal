@@ -42,7 +42,7 @@ namespace MaMontreal.Controllers_Manage
 
         // GET: ManageMeetings
         [Route("")]
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index()
         {
             try
             {
@@ -50,22 +50,6 @@ namespace MaMontreal.Controllers_Manage
                                 User.IsInRole("gsr") ? await _service.GetAllMeetingsByGsrId(_userService.GetCurUserAsync(User).Result?.Id) : null;
                 if (meetings == null)
                     return RedirectToPage("/");
-
-
-                // if (!String.IsNullOrEmpty(searchString))
-                // {
-                //     meetings = meetings.Where(m =>
-                //                         m.EventName.ToLower().Contains(searchString.ToLower()) ||
-                //                         m.Description.ToLower().Contains(searchString.ToLower()) ||
-                //                         m.City.ToLower().Contains(searchString.ToLower()) ||
-                //                         m.PostalCode.ToLower().Contains(searchString.ToLower()) ||
-                //                         m.DayOfWeek!.ToString()!.ToLower().Contains(searchString.ToLower()) ||
-                //                         m.Language!.Title.ToLower().Contains(searchString.ToLower()) ||
-                //                         m.MeetingType!.Title.ToLower().Contains(searchString.ToLower()) ||
-                //                         m.Gsr!.UserName!.ToLower().Contains(searchString.ToLower()) ||
-                //                         m.Gsr.FullName!.ToLower().Contains(searchString.ToLower())
-                //     );
-                // }
 
                 return View(meetings);
             }
