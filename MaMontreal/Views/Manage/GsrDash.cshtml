@@ -6,27 +6,29 @@
 <div>
     <div class="row">
         <div class="col-12 col-md-6">
-            <div class="card text-center ">
+            <div class="card text-center h-100">
                 <div class="card-header">
-                    <h4>Become GSR?</h4>
+                    <h4>New Meeting?</h4>
                 </div>
                 <div class="card-body">
-                    <p>As a GSR you will be able to submit meetings and events to be published on the website</p>
+                    <i class="fa-solid fa-calendar-plus fa-4x p-4"></i>
+                    <p>You can submit a new meeting to be published</p>
                     <div>
-                        <a asp-controller="ManageUserRequests" asp-action="Create" class="btn btn-primary btn-sm">Apply for GSR</a>
+                        <a asp-controller="ManageMeetings" asp-action="Create" class="btn btn-primary btn-sm">Create Meeting</a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-12 col-md-6">
-            <div class="card text-center ">
+            <div class="card text-center h-100">
                 <div class="card-header">
-                    <h4>Account</h4>
+                    <h4>Meetings Status</h4>
                 </div>
                 <div class="card-body">
-                    <p>If you would like to submit a GSR application you will need to complete your information.</p>
+                    <i class="fa-solid fa-calendar-check fa-4x p-4"></i>
+                    <p>Once your meetings are approved they will be automatically publihed</p>
                     <div>
-                        <a asp-controller="ManageUserRequests" asp-action="Create" class="btn btn-primary btn-sm">Account</a>
+                        <a asp-controller="ManageMeetings" asp-action="Index" class="btn btn-primary btn-sm">Check Meetings</a>
                     </div>
                 </div>
             </div>

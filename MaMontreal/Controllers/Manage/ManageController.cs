@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MaMontreal.Data;
+using MaMontreal.Models;
 using MaMontreal.Models.NotMapped;
+using MaMontreal.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using static MaMontreal.Services.AdminDashService;
 
 namespace MaMontreal.Controllers.Manage
 {
@@ -16,11 +20,11 @@ namespace MaMontreal.Controllers.Manage
     [Route("/Manage")]
     public class ManageController : Controller
     {
-        private readonly MamDbContext _context;
+        private readonly AdminDashService _adminDashService;
 
-        public ManageController(MamDbContext context)
+        public ManageController(MamDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            _context = context;
+            _adminDashService = new AdminDashService(context, userManager, roleManager);
         }
 
 
@@ -34,14 +38,15 @@ namespace MaMontreal.Controllers.Manage
             return RedirectToAction("MemberDash");
         }
 
-        [Route("Member")]
-        public IActionResult MemberDash()
+        [Route("Admin")]
+        public async Task<IActionResult> AdminDash()
         {
-            return View();
+            AdminDashData data = await _adminDashService.GetAdminDashDataAsync();
+            return View(data);
         }
 
-        [Route("Admin")]
-        public IActionResult AdminDash()
+        [Route("Member")]
+        public IActionResult MemberDash()
         {
             return View();
         }

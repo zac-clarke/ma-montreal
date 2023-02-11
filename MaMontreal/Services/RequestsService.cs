@@ -96,9 +96,56 @@ namespace MaMontreal.Services
         }
 
 
-        public async Task<List<UserRequest>> GetAllAsync()
+        public async Task<List<UserRequest>> GetAllAsync(bool? archived)
         {
-            return await _context.UserRequests.Include("Requestee").Include("RequestHandler").Include("RoleRequested").OrderByDescending(r => r.CreatedAt).ToListAsync();
+            if (archived == null)
+            {
+                return await _context.UserRequests.Where(r => r.DeletedAt == null).Include("Requestee").Include("RequestHandler").Include("RoleRequested").OrderByDescending(r => r.CreatedAt).ToListAsync();
+            }
+            return await _context.UserRequests.Where(r => r.DeletedAt != null).Include("Requestee").Include("RequestHandler").Include("RoleRequested").OrderByDescending(r => r.CreatedAt).ToListAsync();
+        }
+
+
+        public async Task<UserRequest> GetAsync(int? id)
+        {
+            if (id == null)
+            {
+                throw new NullReferenceException("Parameter 'id' is null.");
+            }
+            var request = await _context.UserRequests.FindAsync(id);
+            if (request == null)
+            {
+                throw new NullReferenceException("request not found.");
+            }
+            return request;
+        }
+
+        public async Task DeleteAsync(int? id)
+        {
+            if (id == null)
+            {
+                throw new NullReferenceException("Parameter 'id' is null.");
+            }
+            var request = await this.GetAsync(id);
+            _context.UserRequests.Remove(request);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task ArchiveAsync(int? id)
+        {
+            if (id == null)
+                throw new NullReferenceException("Parameter 'id' is null.");
+
+            var request = await this.GetAsync(id);
+            if (request.IsApproved == null)
+                throw new InvalidOperationException("The request must be handled before it can be archived");
+            if (request.DeletedAt != null)
+                throw new InvalidOperationException("The request is already archived");
+
+            request.DeletedAt = DateTime.Now;
+            request.UpdatedAt = DateTime.Now;
+            _context.UserRequests.Update(request);
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -4,29 +4,57 @@
 }
 
 <div>
+    nitifications here
     <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
             <div class="card text-center ">
                 <div class="card-header">
-                    <h4>Become GSR?</h4>
+                    <h4>Users Overview</h4>
                 </div>
                 <div class="card-body">
-                    <p>As a GSR you will be able to submit meetings and events to be published on the website</p>
+                    @foreach (var roleCount in Model.roleCountList)
+                    {
+                        <p class="text-start">
+                            <span class="fw-bold">@roleCount.count</span>
+                            x
+                            <i class="fa-solid fa-user p-1"></i>
+                            @roleCount.role
+                        </p>
+                    }
                     <div>
-                        <a asp-controller="ManageUserRequests" asp-action="Create" class="btn btn-primary btn-sm">Apply for GSR</a>
+                        <a asp-controller="ManageUsers" asp-action="Index" class="btn btn-primary btn-sm">Manage</a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
             <div class="card text-center ">
                 <div class="card-header">
-                    <h4>Account</h4>
+                    <h4>Requests</h4>
                 </div>
                 <div class="card-body">
-                    <p>If you would like to submit a GSR application you will need to complete your information.</p>
+                    @foreach (var requestCount in Model.requestCountList)
+                    {
+                        <p class="text-start">
+                            <span class="fw-bold">@requestCount.count</span>
+                            x
+                            @if (requestCount.status == true)
+                            {
+                                <i class="fa-solid fa-circle-check p-1 text-success"></i>
+                            }
+                            else if (requestCount.status == false)
+                            {
+                                <i class="fa-solid fa-circle-xmark p-1 text-danger"></i>
+                            }
+                            else
+                            {
+                                <i class="fa-solid fa-clock-rotate-left p-1 text-warning"></i>
+                            }
+                            @(requestCount.status == true ? "Approved" : requestCount.status == false ? "Rejected" : "Pending")
+                        </p>
+                    }
                     <div>
-                        <a asp-controller="ManageUserRequests" asp-action="Create" class="btn btn-primary btn-sm">Account</a>
+                        <a asp-controller="ManageUserRequests" asp-action="Index" class="btn btn-primary btn-sm">Manage</a>
                     </div>
                 </div>
             </div>
