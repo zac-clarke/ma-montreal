@@ -19,9 +19,9 @@ namespace MaMontreal.Controllers_Manage
     [Route("Manage/Requests/")]
     public class ManageUserRequestsController : Controller
     {
-        private readonly MamDbContext _context;
-        private readonly RequestsService _requestsService;
-        private object _logger;
+        private readonly MamDbContext _context = null!;
+        private readonly RequestsService _requestsService = null!;
+        private object _logger = null!;
 
         public ManageUserRequestsController(
             MamDbContext context,

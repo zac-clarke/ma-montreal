@@ -43,7 +43,7 @@ namespace MaMontreal.Services
 
             foreach (var role in RolesList)
             {
-                var RolesUserlist = await _userManager.GetUsersInRoleAsync(role.Name);
+                var RolesUserlist = await _userManager.GetUsersInRoleAsync(role.Name?.ToString() ?? "NoRole");
                 RoleCount roleCount = new RoleCount();
                 roleCount.role = role.Name;
                 roleCount.count = RolesUserlist.Count();

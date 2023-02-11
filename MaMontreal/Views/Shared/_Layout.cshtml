@@ -1,120 +1,121 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MaMontreal</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/MaMontreal.styles.css" asp-append-version="true" />
-  </head>
 
-  <body>
-    <header>
-      <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container-fluid">
-          <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MaMontreal</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-            <ul class="navbar-nav flex-grow-1 justify-content-center">
-              <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-              </li>
-              <li>
-                <div class="dropdown">
-                  <a class="nav-link text-dark" y asp-controller="Meetings" asp-action="Calendar"> Meetings</a>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@ViewData["Title"] - MaMontreal</title>
+  <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+  <link rel="stylesheet" href="~/MaMontreal.styles.css" asp-append-version="true" />
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+      <div class="container-fluid">
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MaMontreal</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+          <ul class="navbar-nav flex-grow-1 justify-content-center">
+            <li class="nav-item">
+              <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </li>
+            <li>
+              <div class="dropdown">
+                <a class="nav-link text-dark" y asp-controller="Meetings" asp-action="Calendar"> Meetings</a>
+              </div>
+            </li>
+            <li>
+              <div class="dropdown">
+                <a class="nav-link text-dark dropdown-toggle" asp-controller="#" id="solutionDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> A Solution</a>
+                <div class="dropdown-menu" aria-labelledby="solutionDropdown">
+                  <a class="dropdown-item" asp-controller="Solution" asp-action="HowItWorks">How it works</a>
+                  <a class="dropdown-item" asp-controller="Solution" asp-action="TwelvePromises">Twelve Promises</a>
+                  <a class="dropdown-item" asp-controller="Solution" asp-action="TwelveQuestions">Twelve Questions</a>
+                  <a class="dropdown-item" asp-controller="Solution" asp-action="TwelveTraditions">Twelve Traditions</a>
                 </div>
-              </li>
-              <li>
-                <div class="dropdown">
-                  <a class="nav-link text-dark dropdown-toggle" asp-controller="#" id="solutionDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> A Solution</a>
-                  <div class="dropdown-menu" aria-labelledby="solutionDropdown">
-                    <a class="dropdown-item" asp-controller="Solution" asp-action="HowItWorks">How it works</a>
-                    <a class="dropdown-item" asp-controller="Solution" asp-action="TwelvePromises">Twelve Promises</a>
-                    <a class="dropdown-item" asp-controller="Solution" asp-action="TwelveQuestions">Twelve Questions</a>
-                    <a class="dropdown-item" asp-controller="Solution" asp-action="TwelveTraditions">Twelve Traditions</a>
-                  </div>
-                </div>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Literature">Literature</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="SeekHelp">Seek Help</a>
-              </li>
-            </ul>
-          @if (User.Identity.IsAuthenticated)
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Literature">Literature</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="SeekHelp">Seek Help</a>
+            </li>
+          </ul>
+          @if (User.Identity != null && User.Identity.IsAuthenticated)
 
           {
-                                                  <partial name="_LoginPartial" />
+            <partial name="_LoginPartial" />
           }
 
           else
 
           {
-                                  <div class="dropdown">
-                                    <button class="btn btn-success dropdown-toggle" id="appDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Download MA App</button>
-                                    <div class="dropdown-menu" aria-labelledby="appDropdown">
-                                      <a class="dropdown-item" target="_blank" href="https://apps.apple.com/us/app/marijuana-anonymous-mobile/id874705440">Apple</a>
-                                      <a class="dropdown-item" target="_blank" href="https://play.google.com/store/apps/details?id=org.marijuana_anonymous.MA_Mobile&hl=en_US">Android</a>
-                                    </div>
-                                  </div>
+            <div class="dropdown">
+              <button class="btn btn-success dropdown-toggle" id="appDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Download MA App</button>
+              <div class="dropdown-menu" aria-labelledby="appDropdown">
+                <a class="dropdown-item" target="_blank" href="https://apps.apple.com/us/app/marijuana-anonymous-mobile/id874705440">Apple</a>
+                <a class="dropdown-item" target="_blank" href="https://play.google.com/store/apps/details?id=org.marijuana_anonymous.MA_Mobile&hl=en_US">Android</a>
+              </div>
+            </div>
           }
-            </ul>
-          </div>
+          </ul>
         </div>
-      </nav>
-    </header>
-    <div class="container">
-      <main role="main" class="pb-3">
-        <partial name="~/Views/Shared/_FlashMessagePartial.cshtml" model='@TempData["flashMessage"]' />
-      @RenderBody()
-      </main>
-    </div>
-
-    <footer class="border-top footer ">
-      <div class="navbar navbar-expand navbar-light bg-light">
-        <ul class="navbar-nav flex-grow-1  ">
-          <li class="nav-item">
-           <p class="nav-link text-dark"> &copy; 2023 - MaMontreal </p>
-          </li>
-
-        </ul>
-        <ul class="navbar-nav flex-grow-1 justify-content-end mb-3 mr-5">
-
-
-          <li class="nav-item">
-            <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
-          </li>
-
-        </ul>
       </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    @await RenderSectionAsync("Scripts", required: false)
+    </nav>
+  </header>
+  <div class="container">
+    <main role="main" class="pb-3">
+      <partial name="~/Views/Shared/_FlashMessagePartial.cshtml" model='@TempData["flashMessage"]' />
+      @RenderBody()
+    </main>
+  </div>
+
+  <footer class="border-top footer ">
+    <div class="navbar navbar-expand navbar-light bg-light">
+      <ul class="navbar-nav flex-grow-1  ">
+        <li class="nav-item">
+          <p class="nav-link text-dark"> &copy; 2023 - MaMontreal </p>
+        </li>
+
+      </ul>
+      <ul class="navbar-nav flex-grow-1 justify-content-end mb-3 mr-5">
+
+
+        <li class="nav-item">
+          <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </li>
+
+      </ul>
+    </div>
+  </footer>
+  <script src="~/lib/jquery/dist/jquery.min.js"></script>
+  <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="~/js/site.js" asp-append-version="true"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  @await RenderSectionAsync("Scripts", required: false)
 </body>
 <script>
-    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-        return new bootstrap.Popover(popoverTriggerEl)
-    })
-    var popover = new bootstrap.Popover(document.querySelector('.example-popover'), {
-        container: 'body'
-    })
-    var popover = new bootstrap.Popover(document.querySelector('.popover-dismiss'), {
-        trigger: 'focus'
-    })
+  var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+  var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl)
+  })
+  var popover = new bootstrap.Popover(document.querySelector('.example-popover'), {
+    container: 'body'
+  })
+  var popover = new bootstrap.Popover(document.querySelector('.popover-dismiss'), {
+    trigger: 'focus'
+  })
 </script>
 
 
