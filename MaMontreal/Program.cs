@@ -1,8 +1,10 @@
+using MaMontreal;
 using MaMontreal.Data;
 using MaMontreal.Models;
 using MaMontreal.Repositories;
 using MaMontreal.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,9 @@ builder.Services
 .AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
 .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<MamDbContext>();
+
+//Add email services
+builder.Services.AddTransient<IEmailSender, SendGridEmailSender>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

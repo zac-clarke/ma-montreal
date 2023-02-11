@@ -1,124 +1,83 @@
 @model IEnumerable<MaMontreal.Models.Meeting>
 
+
 @{
     ViewData["Title"] = "Meetings";
     Layout = "~/Views/Shared/_DashLayout.cshtml";
 }
 
-<h1>Meetings</h1>
-<div class="row">
-    <a asp-action="Create" class="col">Create New</a>
-    <input type="text" id="search" placeholder="Search" class="col"/>
+<div class="d-flex justify-content-between">
+    <h2>Meetings</h2>
+    <div> 
+        <input type="text" id="search" placeholder="Search" class="col"/>
+        <a asp-action="Create" class="btn btn-primary"><i class="fa-solid fa-plus me-1"></i>Add New</a>
+    </div>
 </div>
+<table class="table table-hover" id="mytable">
+    <thead>
+        <tr>
+            <th></th>
 
-<div class="w-100 overflow-x-hidden">
-    <table class="table">
-        <thead>
+            <th onclick="sortTable(1)">
+                @Html.DisplayNameFor(model => model.EventName) <i class="fa-solid fa-sort text-primary"></i>
+            </th>
+
+            <th onclick="sortTable(2)">
+                Location <i class="fa-solid fa-sort text-primary"></i>
+            </th>
+
+            <th onclick="sortTable(3)">
+                Date <i class="fa-solid fa-sort text-primary"></i>
+            </th>
+
+            <th onclick="sortTable(4)">
+                Gsr <i class="fa-solid fa-sort text-primary"></i>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
             <tr>
-                <th></th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ImageUrl)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.District)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.EventName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Gsr)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MeetingType)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Language)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DayOfWeek)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Date)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.StartTime)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.EndTime)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Status)
-                </th>
-                <th>
-                    Deleted
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> <br />
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> <br />
-
+                <td>
+                    <div class="d-flex gap-2">
+                        <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-eye"></i></a>
                         @if (item.DeletedAt == null)
                         {
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-box-archive text-warning"></i></a>
                         }
                         else
                         {
-                            <a asp-action="Restore" asp-route-id="@item.Id">Restore</a>
+                            <a asp-action="Restore" asp-route-id="@item.Id"><i class="fa-solid fa-box-open"></i></a>
                         }
-                    </td>
-                    <td>
-                        <img src="@item.ImageUrl" alt="Image" style="width: 100px; height: 100px;" />
-                        @* @Html.DisplayFor(modelItem => item.ImageUrl) *@
-                    </td>
-                    <td class="text-center">
-                        @Html.DisplayFor(modelItem => item.District)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EventName)
-                    </td>
-                    <td>
-                        @item.Gsr?.UserName
-                        @* @Html.DisplayFor(modelItem => item.Gsr.UserName) *@
-                    </td>
-                    <td>
-                        @item.MeetingType?.Title
-                        @* @Html.DisplayFor(modelItem => item.MeetingType.Title) *@
-                    </td>
-                    <td>
-                        @item.Language?.Title
-                        @* @Html.DisplayFor(modelItem => item.Language.Title) *@
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DayOfWeek)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Date)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StartTime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EndTime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Status)
-                    </td>
-                    <td class="text-center">
-                        @if (item.DeletedAt != null)
-                        {
-                            <i class="fa-sharp fa-solid fa-xmark text-danger"></i>
-                        }
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+                    </div>
+                </td>
+
+                <td>
+                    <span>@item.EventName</span>
+                </td>
+
+                <td>
+                    <div class="d-flex flex-column">
+                        <span><i class="fa-solid fa-building-circle-arrow-right"></i> @item.District</span>
+                        <span><i class="fa-solid fa-location-dot"></i> &nbsp; @item.City, @item.ProvinceCode</span>
+                    </div>
+                </td>
+
+                <td class="d-flex flex-column">
+                    @if(item.Date != null) { <span><i class="fa-regular fa-calendar-days"></i> @item.Date?.ToShortDateString()</span> }
+                    <span><i class="fa-solid fa-repeat"></i> @item.DayOfWeek</span>
+                    <span><i class="fa-regular fa-clock"></i> @item.StartTime.ToShortTimeString() - @item.EndTime.ToShortTimeString()</span>
+                </td>
+                <td>
+                    <span><i class="fa-solid fa-user"></i> @(item.Gsr?.FullName ?? item.Gsr?.UserName)</span>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
 
 @section Scripts {
     <script>
@@ -130,5 +89,60 @@
                 });
             });
         });
+
+        function sortTable(n) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.getElementById("mytable");
+            switching = true;
+            // Set the sorting direction to ascending:
+            dir = "asc";
+            /* Make a loop that will continue until
+            no switching has been done: */
+            while (switching) {
+                // Start by saying: no switching is done:
+                switching = false;
+                rows = table.rows;
+                /* Loop through all table rows (except the
+                first, which contains table headers): */
+                for (i = 1; i < (rows.length - 1); i++) {
+                // Start by saying there should be no switching:
+                shouldSwitch = false;
+                /* Get the two elements you want to compare,
+                one from current row and one from the next: */
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                /* Check if the two rows should switch place,
+                based on the direction, asc or desc: */
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    // If so, mark as a switch and break the loop:
+                    shouldSwitch = true;
+                    break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    // If so, mark as a switch and break the loop:
+                    shouldSwitch = true;
+                    break;
+                    }
+                }
+                }
+                if (shouldSwitch) {
+                /* If a switch has been marked, make the switch
+                and mark that a switch has been done: */
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                // Each time a switch is done, increase this count by 1:
+                switchcount ++;
+                } else {
+                /* If no switching has been done AND the direction is "asc",
+                set the direction to "desc" and run the while loop again. */
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+        }
     </script>
 }
