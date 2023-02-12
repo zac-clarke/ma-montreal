@@ -52,19 +52,19 @@
           @if (User.Identity != null && User.Identity.IsAuthenticated)
 
           {
-            <partial name="_LoginPartial" />
+                                <partial name="_LoginPartial" />
           }
 
           else
 
           {
-            <div class="dropdown">
-              <button class="btn btn-success dropdown-toggle" id="appDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Download MA App</button>
-              <div class="dropdown-menu" aria-labelledby="appDropdown">
-                <a class="dropdown-item" target="_blank" href="https://apps.apple.com/us/app/marijuana-anonymous-mobile/id874705440">Apple</a>
-                <a class="dropdown-item" target="_blank" href="https://play.google.com/store/apps/details?id=org.marijuana_anonymous.MA_Mobile&hl=en_US">Android</a>
-              </div>
-            </div>
+                                <div class="dropdown">
+                                  <button class="btn btn-success dropdown-toggle" id="appDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Download MA App</button>
+                                  <div class="dropdown-menu" aria-labelledby="appDropdown">
+                                    <a class="dropdown-item" target="_blank" href="https://apps.apple.com/us/app/marijuana-anonymous-mobile/id874705440">Apple</a>
+                                    <a class="dropdown-item" target="_blank" href="https://play.google.com/store/apps/details?id=org.marijuana_anonymous.MA_Mobile&hl=en_US">Android</a>
+                                  </div>
+                                </div>
           }
           </ul>
         </div>
@@ -78,8 +78,8 @@
     </main>
   </div>
 
-  <footer class="border-top footer ">
-    <div class="navbar navbar-expand navbar-light bg-light">
+  <footer class="border-top footer">
+    <div class="navbar navbar-fixed-bottom navbar-expand navbar-light bg-light">
       <ul class="navbar-nav flex-grow-1  ">
         <li class="nav-item">
           <p class="nav-link text-dark"> &copy; 2023 - MaMontreal </p>
@@ -98,7 +98,10 @@
 
       </ul>
     </div>
+
   </footer>
+
+
   <script src="~/lib/jquery/dist/jquery.min.js"></script>
   <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="~/js/site.js" asp-append-version="true"></script>
