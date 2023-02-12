@@ -1,4 +1,75 @@
 =============================================================================
+                                 Saturday - 2023-02-11
+=============================================================================
+
+
+1.User Story or Task:                        ######   JULIETA   #######
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+- Testing
+
+2.Result:
+▔▔▔▔▔▔
+
+V Dasboard-> make member Dashboard
+V requests -> Add the submit request functioality to Member Dashboard
+V requests -> display the request status
+V requests -> limit 1 request per user
+V make sure all pages work and navigate properly and have proper permissions
+V - Restructured Dashboards
+V- Adim + added user and request stats
+V- Member + added gsr request button
+v- GSR
+
+
+3.Help:
+▔▔▔▔▔
+
+
+1.User Story or Task:                        ########   AFTAB   ####### 
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+- Testing
+- Fix Error under calendar
+- Implement Localization
+
+
+
+2.Result:
+▔▔▔▔▔▔
+V MeetingsCalendar -> Fixed bug where disabled/unapproved meetings were showing
+V MeetingsCreateEdit -> Fixed - Meeting can be created without adding an image
+V MeetingsCreateEdit -> Fixed bug where image files weren't recognized as images
+V MeetingsCreate -> GSR wasn't being detected as a GSR when creating a meeting
+V MeetingsCreate -> Applicant now get a flash message for image validation
+V ManageMeetings -> Search box
+V ManageMeetings ManageMeetingTypes -> Styling to match user layout
+V Deployment with Zac
+
+3.Help:
+▔▔▔▔▔
+
+
+1.User Story or Task:                        #######    ZAK    #########
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+- Testing
+- Fix Tags Titles look like (Language and Users)
+- Meeting types like (Language and Users)
+- display request notifications on admin dashboard
+
+
+2.Result:
+▔▔▔▔▔▔
+V Finish emial integration
+V navbar and footer
+V Deployed website
+
+3.Help:
+
+
+
+
+
+
+=============================================================================
                                  Friday - 2023-02-10
 =============================================================================
 
