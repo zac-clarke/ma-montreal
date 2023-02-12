@@ -49,19 +49,17 @@
           @if (User.Identity != null && User.Identity.IsAuthenticated)
 
           {
-                                <partial name="_LoginPartial" />
+                                               <partial name="_LoginPartial" />
           }
-
           else
-
           {
-                                <div class="dropdown">
-                                  <button class="btn btn-success dropdown-toggle" id="appDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Download MA App</button>
-                                  <div class="dropdown-menu" aria-labelledby="appDropdown">
-                                    <a class="dropdown-item" target="_blank" href="https://apps.apple.com/us/app/marijuana-anonymous-mobile/id874705440">Apple</a>
-                                    <a class="dropdown-item" target="_blank" href="https://play.google.com/store/apps/details?id=org.marijuana_anonymous.MA_Mobile&hl=en_US">Android</a>
-                                  </div>
-                                </div>
+                                               <div class="dropdown">
+                                                 <button class="btn btn-success dropdown-toggle" id="appDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Download MA App</button>
+                                                 <div class="dropdown-menu" aria-labelledby="appDropdown">
+                                                   <a class="dropdown-item" target="_blank" href="https://apps.apple.com/us/app/marijuana-anonymous-mobile/id874705440">Apple</a>
+                                                   <a class="dropdown-item" target="_blank" href="https://play.google.com/store/apps/details?id=org.marijuana_anonymous.MA_Mobile&hl=en_US">Android</a>
+                                                 </div>
+                                               </div>
           }
           </ul>
         </div>
@@ -77,25 +75,19 @@
 
   <footer class="border-top footer">
     <div class="navbar navbar-fixed-bottom navbar-expand navbar-light bg-light">
-      <ul class="navbar-nav flex-grow-1  ">
-        <li class="nav-item">
-          <p class="nav-link text-dark"> &copy; 2023 - MaMontreal </p>
-        </li>
+        <div class="container">
 
-      </ul>
-      <ul class="navbar-nav flex-grow-1 justify-content-end mb-3 mr-5">
+              <div class="mb-0 text-dark fst-italic"> Created by: Julieta G. | Aftab S. | Zac C. </div>
+              <p class="mb-0 text-dark"> &copy; 2023 - MaMontreal </p>
+            <div class="d-flex justify-content-center"> 
+              <a class=" nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
 
+              <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            </div>
 
-        <li class="nav-item">
-          <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
-        </li>
-        <li class="nav-item ">
-          <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
-        </li>
+        </div>
 
-      </ul>
     </div>
-
   </footer>
 
 
