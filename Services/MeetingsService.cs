@@ -11,6 +11,7 @@ namespace MaMontreal.Services
     public class MeetingsService
     {
         private readonly MamDbContext _context;
+        private UserManager<ApplicationUser> _userManager = null!;
 
         ///<exception cref="NullReferenceException"/>
         ///<exception cref="ArgumentException"/>
@@ -278,6 +279,23 @@ namespace MaMontreal.Services
             {
                 return true;
             }
+        }
+
+        internal async Task HandleAsync(int? id, Statuses status, ClaimsPrincipal User, UserManager<ApplicationUser> userManager)
+        {
+            Meeting? meeting = await _context.Meetings.Where(r => r.Id == id).FirstOrDefaultAsync();
+            if (meeting == null)
+                throw new NullReferenceException("No meeting Found");
+
+            ApplicationUser? reqHandler = await userManager.GetUserAsync(User);
+            if (reqHandler == null || userManager.IsInRoleAsync(reqHandler, "admin").Result == false)
+                throw new NullReferenceException("You don't have permission to approve this Meeting");
+            meeting.Status = status;
+            meeting.UpdatedAt = DateTime.Now;
+            meeting.UpdatedBy = reqHandler;
+
+            _context.Update(meeting);
+            await _context.SaveChangesAsync();
         }
     }
 }

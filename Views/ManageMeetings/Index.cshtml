@@ -5,7 +5,9 @@
     ViewData["Title"] = "Meetings";
     Layout = "~/Views/Shared/_DashLayout.cshtml";
 }
+ @if (User.IsInRole("admin")){
 <partial name="~/Views/Shared/_FlashMessagePartial.cshtml" model='@TempData["meetingFlashMessage"]' />
+ }
 <div class="d-flex justify-content-between">
     <h2>Meetings</h2>
     <div> 
@@ -51,6 +53,22 @@
                         {
                             <a asp-action="Restore" asp-route-id="@item.Id"><i class="fa-solid fa-box-open"></i></a>
                         }
+                    </div>
+                    <div >
+                    @if (User.IsInRole("admin")){
+                        if(item.Status == MaMontreal.Models.Enums.Statuses.Pending){
+                        <a asp-action="Approve" asp-route-id="@item.Id"><i class="fa-solid fa-circle-check text-success" title="Approve Request"></i></a>
+                        <span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+                        <a asp-action="Reject" asp-route-id="@item.Id"><i class="fa-solid fa-circle-xmark text-danger" title="Reject request"></i></a>
+                        <div>
+                        <span class="badge bg-warning">Pending</span>
+                        </div>
+                        }else if(item.Status == MaMontreal.Models.Enums.Statuses.Approved){
+                            <span class="badge bg-success">Approved</span>
+                        }else{
+                            <span class="badge bg-danger">Declined</span>
+                        }
+                    }
                     </div>
                 </td>
 

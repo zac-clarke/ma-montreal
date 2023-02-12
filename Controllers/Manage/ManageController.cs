@@ -49,11 +49,11 @@ namespace MaMontreal.Controllers.Manage
             AdminDashData data = await _adminDashService.GetAdminDashDataAsync();
             if (await _adminDashService.GetAnyPendingAsync())
             {
-                TempData["dashFlashMessage"] = JsonConvert.SerializeObject(new FlashMessage("You have a pending GSR request!", "warning"));
+                TempData["dashFlashMessage"] = JsonConvert.SerializeObject(new FlashMessage("You have pending GSR requests!", "warning"));
             }
             if (await _meetingsService.GetAnyPendingAsync())
             {
-                TempData["meetingFlashMessage"] = JsonConvert.SerializeObject(new FlashMessage("You have an unapproved meeting!", "warning"));
+                TempData["meetingFlashMessage"] = JsonConvert.SerializeObject(new FlashMessage("You have an unapproved meetings!", "warning"));
             }
             return View(data);
         }
