@@ -51,9 +51,10 @@ V Deployment with Zac
 1.User Story or Task:                        #######    ZAK    #########
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 - Testing
-- Fix Tags Titles look like (Language and Users)
-- Meeting types like (Language and Users)
+V Fix Tags Titles look like (Language and Users)
+V Meeting types like (Language and Users) (was already done lol)
 - display request notifications on admin dashboard
+- fix footer
 
 
 2.Result:

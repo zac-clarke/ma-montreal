@@ -4,7 +4,8 @@
 }
 
 <div>
-    nitifications here
+  <partial name="~/Views/Shared/_FlashMessagePartial.cshtml" model='@TempData["dashFlashMessage"]' />
+  <partial name="~/Views/Shared/_FlashMessagePartial.cshtml" model='@TempData["meetingFlashMessage"]' />
     <div class="row">
         <div class="col-12 col-md-4">
             <div class="card text-center ">

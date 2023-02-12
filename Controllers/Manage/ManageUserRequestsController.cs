@@ -48,7 +48,12 @@ namespace MaMontreal.Controllers_Manage
         {
             try
             {
+                if (await _requestsService.GetAnyPendingAsync())
+                {
+                    TempData["dashFlashMessage"] = JsonConvert.SerializeObject(new FlashMessage("You have a pending GSR request!", "warning"));
+                }
                 return View(await _requestsService.GetAllAsync(archived, User));
+
             }
             catch (SystemException ex)
             {

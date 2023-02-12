@@ -22,9 +22,14 @@ namespace MaMontreal.Controllers.Manage
     {
         private readonly AdminDashService _adminDashService;
 
+        private readonly MeetingsService _meetingsService;
+
+
         public ManageController(MamDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _adminDashService = new AdminDashService(context, userManager, roleManager);
+            _meetingsService = new MeetingsService(context);
+
         }
 
 
@@ -42,6 +47,14 @@ namespace MaMontreal.Controllers.Manage
         public async Task<IActionResult> AdminDash()
         {
             AdminDashData data = await _adminDashService.GetAdminDashDataAsync();
+            if (await _adminDashService.GetAnyPendingAsync())
+            {
+                TempData["dashFlashMessage"] = JsonConvert.SerializeObject(new FlashMessage("You have a pending GSR request!", "warning"));
+            }
+            if (await _meetingsService.GetAnyPendingAsync())
+            {
+                TempData["meetingFlashMessage"] = JsonConvert.SerializeObject(new FlashMessage("You have an unapproved meeting!", "warning"));
+            }
             return View(data);
         }
 

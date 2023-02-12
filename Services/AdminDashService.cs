@@ -70,6 +70,20 @@ namespace MaMontreal.Services
             return requestCountList;
         }
 
+        public async Task<bool> GetAnyPendingAsync()
+        {
+            var requestList = await _context.UserRequests.Where(x => x.IsApproved == null).ToListAsync();
+            if (requestList.Count == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+
         public class AdminDashData
         {
             public List<RoleCount>? roleCountList { get; set; } = new List<RoleCount>();

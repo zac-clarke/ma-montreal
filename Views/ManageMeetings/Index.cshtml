@@ -5,7 +5,7 @@
     ViewData["Title"] = "Meetings";
     Layout = "~/Views/Shared/_DashLayout.cshtml";
 }
-
+<partial name="~/Views/Shared/_FlashMessagePartial.cshtml" model='@TempData["meetingFlashMessage"]' />
 <div class="d-flex justify-content-between">
     <h2>Meetings</h2>
     <div> 

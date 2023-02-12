@@ -266,5 +266,18 @@ namespace MaMontreal.Services
                                     .Where(m => m.Gsr != null && m.Gsr.Id == userId)
                                     .ToListAsync<Meeting>();
         }
+
+        public async Task<bool> GetAnyPendingAsync()
+        {
+            var pendingMeetingList = await _context.Meetings.Where(x => x.Status == Statuses.Pending).ToListAsync();
+            if (pendingMeetingList.Count == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
 }

@@ -46,6 +46,10 @@ namespace MaMontreal.Controllers_Manage
         {
             try
             {
+                if (await _service.GetAnyPendingAsync())
+                {
+                    TempData["meetingFlashMessage"] = JsonConvert.SerializeObject(new FlashMessage("You have an unapproved meeting!", "warning"));
+                }
                 var meetings = User.IsInRole("admin") ? await _service.GetAllMeetings() :
                                 User.IsInRole("gsr") ? await _service.GetAllMeetingsByGsrId(_userService.GetCurUserAsync(User).Result?.Id) : null;
                 if (meetings == null)
