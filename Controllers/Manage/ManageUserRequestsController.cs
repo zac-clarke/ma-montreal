@@ -98,6 +98,7 @@ namespace MaMontreal.Controllers_Manage
                 try
                 {
                     int id = await _requestsService.CreateAsync(User, userRequest, role);
+                    TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Thank you for your interest in becomming a GSR. Your request will be handled shortly. Click on 'Requests' to monitor your status.", "success"));
                     return RedirectToAction("Details", new { id = id });
                 }
                 catch (SystemException ex)

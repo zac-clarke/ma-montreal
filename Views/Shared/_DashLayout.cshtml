@@ -1,7 +1,15 @@
 ﻿@{
+    ViewData["Title"] = (
+        User.IsInRole("admin") ? "Admin" : 
+        User.IsInRole("gsr") ? "GSR": 
+        User.IsInRole("member") ? "Member":
+        ""
+        ) + " Dashboard";
+
     Layout = "~/Views/Shared/_Layout.cshtml";
     var loggedInUser = UserManager.GetUserAsync(User).Result;
 }
+
 
 <div class="text-center">
     <h1 class="display-4">
