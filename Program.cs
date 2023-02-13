@@ -71,7 +71,7 @@ var app = builder.Build();
 
 // var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
 var locOptions = app.Services.GetService<IOptions<RequestLocalizationOptions>>();
-app.UseRequestLocalization(locOptions.Value);
+app.UseRequestLocalization(locOptions!.Value);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

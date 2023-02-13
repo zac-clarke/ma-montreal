@@ -20,7 +20,7 @@ namespace MaMontreal
         }
         public async Task SendEmailAsync(string toEmail, string subject, string message)
         {
-            string sendGridApiKey = configuration["SendGridApiKey"];
+            string sendGridApiKey = configuration["SendGridApiKey"]!;
             // configuration["SendGridApiKey"];
             if (string.IsNullOrEmpty(sendGridApiKey))
             {
