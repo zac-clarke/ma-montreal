@@ -5,7 +5,9 @@
     ViewData["Title"] = "Meetings";
     Layout = "~/Views/Shared/_DashLayout.cshtml";
 }
-
+ @if (User.IsInRole("admin")){
+<partial name="~/Views/Shared/_FlashMessagePartial.cshtml" model='@TempData["meetingFlashMessage"]' />
+ }
 <div class="d-flex justify-content-between">
     <h2>Meetings</h2>
     <div> 
@@ -16,22 +18,26 @@
 <table class="table table-hover" id="mytable">
     <thead>
         <tr>
-            <th></th>
+            <th>Status</th>
 
-            <th onclick="sortTable(1)">
+            <th role="button" onclick="sortTable(1)">
                 @Html.DisplayNameFor(model => model.EventName) <i class="fa-solid fa-sort text-primary"></i>
             </th>
 
-            <th onclick="sortTable(2)">
+            <th role="button" onclick="sortTable(2)">
                 Location <i class="fa-solid fa-sort text-primary"></i>
             </th>
 
-            <th onclick="sortTable(3)">
+            <th role="button" onclick="sortTable(3)">
                 Date <i class="fa-solid fa-sort text-primary"></i>
             </th>
-
-            <th onclick="sortTable(4)">
+@* 
+            <th role="button" onclick="sortTable(4)">
                 Gsr <i class="fa-solid fa-sort text-primary"></i>
+            </th> *@
+            
+            <th role="button" onclick="sortTable(4)">
+                Status <i class="fa-solid fa-sort text-primary"></i>
             </th>
         </tr>
     </thead>
@@ -40,38 +46,65 @@
         {
             <tr>
                 <td>
+                    <div >
+                    @if (User.IsInRole("admin")){
+                        if(item.Status == MaMontreal.Models.Enums.Statuses.Pending){
+                            <div class="d-flex gap-2">
+                                <a asp-action="Approve" asp-route-id="@item.Id"><i class="fa-solid fa-circle-check text-success" title="Approve Request"></i></a>
+                                <a asp-action="Reject" asp-route-id="@item.Id"><i class="fa-solid fa-circle-xmark text-danger" title="Reject request"></i></a>
+                            </div>
+                        }
+                    }
+                    </div>
                     <div class="d-flex gap-2">
                         <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
                         <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-eye"></i></a>
-                        @if (item.DeletedAt == null)
+                        @if (item.DeletedAt == null && !item.Status.Equals(MaMontreal.Models.Enums.Statuses.Pending))
                         {
                             <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-box-archive text-warning"></i></a>
                         }
-                        else
+                        else if(!item.Status.Equals(MaMontreal.Models.Enums.Statuses.Pending))
                         {
                             <a asp-action="Restore" asp-route-id="@item.Id"><i class="fa-solid fa-box-open"></i></a>
                         }
-                    </div>
-                </td>
-
+                    </div>    
+                </td>     
                 <td>
-                    <span>@item.EventName</span>
+                    <span>@item.EventName</span><br>
+                    @if(User.IsInRole("admin")){
+                        <a class="fst-italic" asp-controller="ManageUsers" asp-action="Details" asp-route-id="@item.Gsr?.Id" target="_blank">
+                            <i class="fa-solid fa-user me-1"></i> 
+                            @(item.Gsr?.FullName?.Trim() != "" ? item.Gsr?.FullName : item.Gsr?.Email)
+                        </a>
+                    }
                 </td>
-
                 <td>
                     <div class="d-flex flex-column">
-                        <span><i class="fa-solid fa-building-circle-arrow-right"></i> @item.District</span>
                         <span><i class="fa-solid fa-location-dot"></i> &nbsp; @item.City, @item.ProvinceCode</span>
+                        <span><i class="fa-solid fa-building-circle-arrow-right"></i> @item.District</span>
                     </div>
                 </td>
 
-                <td class="d-flex flex-column">
+                <td >
+                    <div class="d-flex flex-column">
                     @if(item.Date != null) { <span><i class="fa-regular fa-calendar-days"></i> @item.Date?.ToShortDateString()</span> }
                     <span><i class="fa-solid fa-repeat"></i> @item.DayOfWeek</span>
                     <span><i class="fa-regular fa-clock"></i> @item.StartTime.ToShortTimeString() - @item.EndTime.ToShortTimeString()</span>
+                    </div>
                 </td>
-                <td>
-                    <span><i class="fa-solid fa-user"></i> @(item.Gsr?.FullName ?? item.Gsr?.UserName)</span>
+                @* <td>
+                    <span><i class="fa-solid fa-user me-1"></i> @(item.Gsr?.FullName ?? item.Gsr?.UserName)</span>
+                </td> *@
+                 <td>
+                    <div>
+                        @if(item.Status == MaMontreal.Models.Enums.Statuses.Pending){
+                                <span class="badge bg-warning">Pending</span>
+                        }else if(item.Status == MaMontreal.Models.Enums.Statuses.Approved){
+                            <span class="badge bg-success">Approved</span>
+                        }else{
+                            <span class="badge bg-danger">Declined</span>
+                        }
+                    </div>   
                 </td>
             </tr>
         }
@@ -80,69 +113,5 @@
 
 
 @section Scripts {
-    <script>
-        $(document).ready(function () {
-            $("#search").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("table tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-
-        function sortTable(n) {
-            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-            table = document.getElementById("mytable");
-            switching = true;
-            // Set the sorting direction to ascending:
-            dir = "asc";
-            /* Make a loop that will continue until
-            no switching has been done: */
-            while (switching) {
-                // Start by saying: no switching is done:
-                switching = false;
-                rows = table.rows;
-                /* Loop through all table rows (except the
-                first, which contains table headers): */
-                for (i = 1; i < (rows.length - 1); i++) {
-                // Start by saying there should be no switching:
-                shouldSwitch = false;
-                /* Get the two elements you want to compare,
-                one from current row and one from the next: */
-                x = rows[i].getElementsByTagName("TD")[n];
-                y = rows[i + 1].getElementsByTagName("TD")[n];
-                /* Check if the two rows should switch place,
-                based on the direction, asc or desc: */
-                if (dir == "asc") {
-                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                    // If so, mark as a switch and break the loop:
-                    shouldSwitch = true;
-                    break;
-                    }
-                } else if (dir == "desc") {
-                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                    // If so, mark as a switch and break the loop:
-                    shouldSwitch = true;
-                    break;
-                    }
-                }
-                }
-                if (shouldSwitch) {
-                /* If a switch has been marked, make the switch
-                and mark that a switch has been done: */
-                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                switching = true;
-                // Each time a switch is done, increase this count by 1:
-                switchcount ++;
-                } else {
-                /* If no switching has been done AND the direction is "asc",
-                set the direction to "desc" and run the while loop again. */
-                if (switchcount == 0 && dir == "asc") {
-                    dir = "desc";
-                    switching = true;
-                }
-            }
-        }
-        }
-    </script>
+      <script src="~/js/sortAndSearchTable.js"></script>
 }

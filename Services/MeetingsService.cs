@@ -12,6 +12,7 @@ namespace MaMontreal.Services
     {
         private readonly MamDbContext _context;
 
+
         ///<exception cref="NullReferenceException"/>
         ///<exception cref="ArgumentException"/>
         public MeetingsService(MamDbContext context)
@@ -35,6 +36,7 @@ namespace MaMontreal.Services
                                 .Include(m => m.UpdatedBy)
                                 .Include(m => m.Language)
                                 .Include(m => m.MeetingType)
+                                .OrderBy(m => m.Status)
                                 .ToListAsync<Meeting>();
         }
 
@@ -109,9 +111,6 @@ namespace MaMontreal.Services
             meeting.UpdatedAt = DateTime.Now;
             meeting.UpdatedBy = curUser;
 
-            if (User.IsInRole("admin"))
-                meeting.Status = Statuses.Approved;
-
             _context.Meetings.Add(meeting);
             await _context.SaveChangesAsync();
 
@@ -145,7 +144,6 @@ namespace MaMontreal.Services
             //     throw new NullReferenceException("No Meeting Type found with id " + id.Value);
 
             meeting.Id = id.Value;
-
             // _context.Meetings.Add(meeting);
             return await EditMeeting(meeting, userManager, User);
         }
@@ -265,6 +263,43 @@ namespace MaMontreal.Services
                                     .Include(m => m.MeetingType)
                                     .Where(m => m.Gsr != null && m.Gsr.Id == userId)
                                     .ToListAsync<Meeting>();
+        }
+
+        public async Task<bool> GetAnyPendingAsync()
+        {
+            var pendingMeetingList = await _context.Meetings.Where(x => x.Status == Statuses.Pending).ToListAsync();
+            if (pendingMeetingList.Count == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        internal async Task HandleAsync(int? id, Statuses status, ClaimsPrincipal User, UserManager<ApplicationUser> userManager)
+        {
+            Meeting? meeting = await _context.Meetings.Where(r => r.Id == id).FirstOrDefaultAsync();
+            if (meeting == null)
+                throw new NullReferenceException("No meeting Found");
+
+            ApplicationUser? reqHandler = await userManager.GetUserAsync(User);
+            if (reqHandler == null || userManager.IsInRoleAsync(reqHandler, "admin").Result == false)
+                throw new NullReferenceException("You don't have permission to approve this Meeting");
+            meeting.Status = status;
+            meeting.UpdatedAt = DateTime.Now;
+            meeting.UpdatedBy = reqHandler;
+
+            _context.Update(meeting);
+            await _context.SaveChangesAsync();
+
+            if (status.Equals(Statuses.Approved))
+                CalendarEvent.UpdateEventsFile(_context.Meetings.ToList<Meeting>());
+            {
+                //Update data file
+                CalendarEvent.UpdateEventsFile(_context.Meetings.ToList<Meeting>());
+            }
         }
     }
 }

@@ -5,15 +5,23 @@
     Layout = "~/Views/Shared/_DashLayout.cshtml";
 }
 
-<h2>Users</h2>
-<table class="table table-hover">
+<div class="d-flex justify-content-between">
+    <h2>Users</h2>
+    <div> 
+        <input type="text" id="search" placeholder="Search" class="col"/>
+    </div>
+</div>
+<table class="table table-hover" id="mytable">
 
     <thead>
         <tr>
             <th scope="col">Actions</th>
-            <th scope="col">User</th>
-            <th scope="col">Role</th>
-            <th class="d-none d-lg-table-cell" scope="col">@Html.DisplayNameFor(model => model.SobrietyDate)</th>
+            <th role="button" scope="col" onclick="sortTable(1)">User  <i class="fa-solid fa-sort text-primary"></i></th>
+            <th role="button" scope="col" onclick="sortTable(2)">Role  <i class="fa-solid fa-sort text-primary"></i></th>
+            <th role="button" class="d-none d-lg-table-cell" scope="col" onclick="sortTable(3)">
+                @Html.DisplayNameFor(model => model.SobrietyDate) 
+                <i class="fa-solid fa-sort text-primary"></i>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -64,3 +72,7 @@
         }
     </tbody>
 </table>
+
+@section Scripts {
+      <script src="~/js/sortAndSearchTable.js"></script>
+}

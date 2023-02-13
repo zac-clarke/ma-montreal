@@ -46,6 +46,10 @@ namespace MaMontreal.Controllers_Manage
         {
             try
             {
+                if (await _service.GetAnyPendingAsync())
+                {
+                    TempData["meetingFlashMessage"] = JsonConvert.SerializeObject(new FlashMessage("You have an unapproved meetings!", "warning"));
+                }
                 var meetings = User.IsInRole("admin") ? await _service.GetAllMeetings() :
                                 User.IsInRole("gsr") ? await _service.GetAllMeetingsByGsrId(_userService.GetCurUserAsync(User).Result?.Id) : null;
                 if (meetings == null)
@@ -113,7 +117,7 @@ namespace MaMontreal.Controllers_Manage
 
             if (meeting._ImageFile != null && meeting._ImageFile?.Length > 250000)
             {
-                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Image file size cannot exceed 250KB", "danger"));
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Image file size cannot exceed 250KB. You do not have to upload one now! You can always create the meeting without one and upload a compressed or smaller image whenever you want!", "danger"));
                 ModelState.AddModelError("_ImageFile", "Image file size cannot exceed 250KB");
                 return View(meeting);
             }
@@ -346,6 +350,40 @@ namespace MaMontreal.Controllers_Manage
                 TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "danger"));
                 _logger.LogError(ex.Message);
                 return RedirectToAction(nameof(Index));
+            }
+        }
+
+        [Authorize(Roles = "admin")]
+        [Route("Approve")]
+        public async Task<IActionResult> Approve(int? id)
+        {
+            try
+            {
+                await _service.HandleAsync(id, Models.Enums.Statuses.Approved, User, _userManager);
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Meeting Approved!", "success"));
+                return RedirectToAction("Details", new { id = id });
+            }
+            catch (SystemException ex)
+            {
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "warning"));
+                return RedirectToAction("Details", new { id = id });
+            }
+
+        }
+        [Authorize(Roles = "admin")]
+        [Route("Reject")]
+        public async Task<IActionResult> Reject(int? id)
+        {
+            try
+            {
+                await _service.HandleAsync(id, Models.Enums.Statuses.Declined, User, _userManager);
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Meeting Declined", "success"));
+                return RedirectToAction("Details", new { id = id });
+            }
+            catch (SystemException ex)
+            {
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage(ex.Message, "warning"));
+                return RedirectToAction("Details", new { id = id });
             }
         }
 
