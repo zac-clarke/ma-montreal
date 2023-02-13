@@ -144,9 +144,6 @@ namespace MaMontreal.Services
             //     throw new NullReferenceException("No Meeting Type found with id " + id.Value);
 
             meeting.Id = id.Value;
-
-            Console.WriteLine(meeting.DayOfWeek);
-            return null;
             // _context.Meetings.Add(meeting);
             return await EditMeeting(meeting, userManager, User);
         }
