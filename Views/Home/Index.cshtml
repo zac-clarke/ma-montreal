@@ -1,4 +1,5 @@
-﻿@{ ViewData["Title"] = "Home Page"; }
+﻿@inject IConfiguration configuration
+@{ ViewData["Title"] = "Home Page"; }
 
 <div class="">
   <div class="d-flex justify-content-center mt-4">
@@ -29,7 +30,7 @@
     <div class="row">
       <div class="col m-5">
         <div class="d-flex justify-content-center">
-          <iframe width="350" height="350" style="border: 0" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB3r_BZwT-zIXZc7KCAl4onrAVBZNVHZv4&q=chabbadlifeline,Montreal+Qc+">@*TODO:add second location *@ </iframe>
+          <iframe width="350" height="350" style="border: 0" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src='https://www.google.com/maps/embed/v1/place?key=@configuration["MaGoogleMapsApiKey"]&q=chabbadlifeline,Montreal+Qc+'>@*TODO:add second location *@ </iframe>
         </div>
       </div>
       <div class="col m-5 justify-content-center">

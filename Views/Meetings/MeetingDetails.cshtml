@@ -1,4 +1,5 @@
-﻿@model MaMontreal.Models.Meeting
+﻿@inject IConfiguration configuration
+@model MaMontreal.Models.Meeting
 @{
   ViewData["Title"] = "MeetingDetails";
 }
@@ -8,7 +9,8 @@
       <div class="card">
         <div class="card-header">
           <h4>@Html.DisplayFor(model => model.EventName)</h4>
-          <h6 class="fst-italic">@Model.MeetingType?.Title | @Model.Language?.Title</h6>
+          <h6 class="fst-italic"
+          >@Model.MeetingType?.Title | @Model.Language?.Title</h6>
           
         </div>
         <div class="card-body">
@@ -32,7 +34,7 @@
     </div>
   </div>
   <div class="row">
-    <iframe width="350" height="350" style="border: 0" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB3r_BZwT-zIXZc7KCAl4onrAVBZNVHZv4&q=@Html.DisplayFor(model => model.Address),@Html.DisplayFor(model => model.PostalCode),@Html.DisplayFor(model => model.City)+@Html.DisplayFor(model => model.ProvinceCode)+">@*TODO:add second location *@
+    <iframe width="350" height="350" style="border: 0" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src='https://www.google.com/maps/embed/v1/place?key=@configuration["MaGoogleMapsApiKey"]&q=@Html.DisplayFor(model => model.Address),@Html.DisplayFor(model => model.PostalCode),@Html.DisplayFor(model => model.City)+@Html.DisplayFor(model => model.ProvinceCode)+'>@*TODO:add second location *@
     </iframe>
   </div>
 </div>
