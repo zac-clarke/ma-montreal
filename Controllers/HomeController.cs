@@ -1,8 +1,12 @@
 ﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using MaMontreal.Models;
 using Azure.Storage.Blobs;
+using MaMontreal;
+using MaMontreal.Models;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Localization;
+
 
 namespace MaMontreal.Controllers;
 
@@ -11,11 +15,13 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly IConfiguration _configuration;
+    private readonly IStringLocalizer<SharedResource> _sharedLocalizer;
 
-    public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
+    public HomeController(ILogger<HomeController> logger, IConfiguration configuration, IStringLocalizer<SharedResource> sharedLocalizer)
     {
         _configuration = configuration;
         _logger = logger;
+        _sharedLocalizer = sharedLocalizer;
     }
 
     // public string connString = _configuration.GetConnectionString("MamBlobStorage") GetConnectionString; //TODO: GetConnectionString from appsettings.json
@@ -44,6 +50,18 @@ public class HomeController : Controller
     public IActionResult SeekHelp()
     {
         return View();
+    }
+
+    [HttpPost]
+    public IActionResult SetLanguage(string culture, string returnUrl)
+    {
+        Response.Cookies.Append(
+            CookieRequestCultureProvider.DefaultCookieName,
+            CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+            new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+        );
+
+        return LocalRedirect(returnUrl);
     }
 
     [Route("Error")]
