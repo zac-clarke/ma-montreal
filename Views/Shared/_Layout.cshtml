@@ -47,21 +47,19 @@
             </li>
           </ul>
           @if (User.Identity != null && User.Identity.IsAuthenticated)
-
           {
-                                               <partial name="_LoginPartial" />
+            <partial name="_LoginPartial" />
           }
           else
           {
-                                               <div class="dropdown">
-                                                 <button class="btn btn-success dropdown-toggle" id="appDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Download MA App</button>
-                                                 <div class="dropdown-menu" aria-labelledby="appDropdown">
-                                                   <a class="dropdown-item" target="_blank" href="https://apps.apple.com/us/app/marijuana-anonymous-mobile/id874705440">Apple</a>
-                                                   <a class="dropdown-item" target="_blank" href="https://play.google.com/store/apps/details?id=org.marijuana_anonymous.MA_Mobile&hl=en_US">Android</a>
-                                                 </div>
-                                               </div>
+            <div class="dropdown">
+              <button class="btn btn-success dropdown-toggle" id="appDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Download MA App</button>
+              <div class="dropdown-menu" aria-labelledby="appDropdown">
+                <a class="dropdown-item" target="_blank" href="https://apps.apple.com/us/app/marijuana-anonymous-mobile/id874705440">Apple</a>
+                <a class="dropdown-item" target="_blank" href="https://play.google.com/store/apps/details?id=org.marijuana_anonymous.MA_Mobile&hl=en_US">Android</a>
+              </div>
+            </div>
           }
-          </ul>
         </div>
       </div>
     </nav>

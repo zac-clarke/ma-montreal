@@ -117,7 +117,7 @@ namespace MaMontreal.Controllers_Manage
 
             if (meeting._ImageFile != null && meeting._ImageFile?.Length > 250000)
             {
-                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Image file size cannot exceed 250KB", "danger"));
+                TempData["flashMessage"] = JsonConvert.SerializeObject(new FlashMessage("Image file size cannot exceed 250KB. You do not have to upload one now! You can always create the meeting without one and upload a compressed or smaller image whenever you want!", "danger"));
                 ModelState.AddModelError("_ImageFile", "Image file size cannot exceed 250KB");
                 return View(meeting);
             }

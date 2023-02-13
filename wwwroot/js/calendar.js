@@ -1,5 +1,5 @@
 // In case there's an error when reading from the file, we will delete the file. Forcing it to recreate it
-window.addEventListener("error", function (e) {
+document.addEventListener("error", function (e) {
   document.getElementById("errorBox").classList.remove("d-none");
   $.ajax({
     type: "DELETE",
@@ -7,8 +7,8 @@ window.addEventListener("error", function (e) {
   });
 });
 
+
 const loadCalender = (data) => {
-  console.log("here");
   const calendarEl = document.getElementById("calendar");
   const events = data;
   //const events = [
