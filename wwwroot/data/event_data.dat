@@ -6,4 +6,6 @@
 	{id: 25, title: 'Hopeful Life', start: '2023-02-17T00:00:00', end: '2023-02-17T01:00:00', },
 	{id: 26, title: 'Solidarity', start: '2023-02-17T13:00:00', end: '2023-02-17T15:00:00', },
 	{id: 27, title: 'Bowling Event', start: '2023-02-13T14:30:00', end: '2023-02-13T17:00:00', },
+	{id: 29, title: 'i am a god', daysOfWeek: '[2]', startTime: '22:00:00', endTime: '23:00:00', startRecur: '2023-02-12', },
+	{id: 30, title: 'gooble gobble', daysOfWeek: '[3]', startTime: '00:00:00', endTime: '00:00:00', startRecur: '2023-02-21', },
 ]
