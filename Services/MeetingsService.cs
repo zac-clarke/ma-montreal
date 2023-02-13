@@ -11,7 +11,7 @@ namespace MaMontreal.Services
     public class MeetingsService
     {
         private readonly MamDbContext _context;
-        private UserManager<ApplicationUser> _userManager = null!;
+
 
         ///<exception cref="NullReferenceException"/>
         ///<exception cref="ArgumentException"/>

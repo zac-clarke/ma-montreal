@@ -11,7 +11,7 @@ using Azure.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
 // string connectionString = builder.Configuration.GetConnectionString("AppConfig");
-// builder.Configuration.AddAzureAppConfiguration("Endpoint=https://mamontrealappconfig.azconfig.io;Id=/Fpl-l0-s0:ND3ee5JETSPr3CHzbp7I;Secret=cQ3t9J90DD0Dp+AeEsIOrV5h15XJ91IFpFHnl+5ukck=");
+// builder.Configuration.AddAzureAppConfiguration(connectionString);
 
 builder.Services.AddDbContext<MamDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MamDbContext") ?? throw new InvalidOperationException("Connection string 'MamDbContext' not found.")));
