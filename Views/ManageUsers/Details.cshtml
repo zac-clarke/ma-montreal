@@ -25,7 +25,8 @@
                 <p>@Html.DisplayNameFor(model => model.Email)</p>
             </dt>
             <dd class="col-sm-8">
-                <p>@Html.DisplayFor(model => model.Email)
+                <div>
+                <a href="mailto:@Html.DisplayNameFor(model => model.Email)">@Html.DisplayFor(model => model.Email)  </a>
                     @if (Model.EmailConfirmed)
                     {
                         <span class="text-success badge bg-dark ms-2"><i class="fa-solid fa-check me-1"> </i>Confirmed</span>
@@ -34,7 +35,8 @@
                     {
                         <span class="text-warning badge bg-dark ms-2">Not Confirmed</span>
                     }
-                </p>
+              
+                </div>
             </dd>
 
             <dt class="col-sm-4">
@@ -61,7 +63,7 @@
                 <p> @Html.DisplayNameFor(model => model.PhoneNumber)</p>
             </dt>
             <dd class="col-sm-8">
-                <p> @Html.DisplayFor(model => model.PhoneNumber)
+                <p> <a href="tel:@Model.PhoneNumber">@Html.DisplayFor(model => model.PhoneNumber)</a>
                     @if (Model.PhoneNumber != null)
                     {
                         @if (Model.PhoneNumberConfirmed)
