@@ -13,6 +13,14 @@ var builder = WebApplication.CreateBuilder(args);
 // string connectionString = builder.Configuration.GetConnectionString("AppConfig");
 // builder.Configuration.AddAzureAppConfiguration(connectionString);
 
+
+if (builder.Environment.IsProduction())
+{
+    builder.Configuration.AddAzureKeyVault(
+        new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"),
+        new DefaultAzureCredential());
+}
+
 builder.Services.AddDbContext<MamDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MamDbContext") ?? throw new InvalidOperationException("Connection string 'MamDbContext' not found.")));
 

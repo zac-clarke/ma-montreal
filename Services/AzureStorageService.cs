@@ -21,8 +21,8 @@ namespace MaMontreal.Services
 
         public AzureStorageService(IConfiguration configuration, ILogger<AzureStorageService> logger)
         {
-            _storageConnectionString = configuration?.GetValue<string>("BlobConnectionString");
-            _storageContainerName = configuration?.GetValue<string>("BlobNameMeetingImages");
+            _storageConnectionString = configuration["MaBlobConnectionString"];
+            _storageContainerName = "meeting-images";
             if (_storageConnectionString == null || _storageContainerName == null)
             {
                 logger.LogError("BlobConnectionString or BlobNameMeetingImages is null");
