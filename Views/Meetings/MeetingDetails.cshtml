@@ -8,8 +8,8 @@
       <div class="card">
         <div class="card-header">
           <h4>@Html.DisplayFor(model => model.EventName)</h4>
-          <h5>@Model.MeetingType?.Title</h5>
-          @Model.Language?.Title
+          <h6 class="fst-italic">@Model.MeetingType?.Title | @Model.Language?.Title</h6>
+          
         </div>
         <div class="card-body">
           <h5 class="card-title">@Html.DisplayNameFor(model => model.Description)</h5>
@@ -20,8 +20,8 @@
           <h5 class="card-title mb-3">@Html.DisplayFor(model => model.DayOfWeek) @Html.DisplayFor(model => model.StartTime) - @Html.DisplayFor(model => model.EndTime)</h5>
           @if (Model.DayOfWeek == null)
           {
-            <h5 class="card-title">@Html.DisplayNameFor(model => model.Date)</h5>
-            <p class="card-text">@Html.DisplayFor(model => model.Date)</p>
+              <h5 class="card-title">@Html.DisplayNameFor(model => model.Date)</h5>
+              <p class="card-text">@Html.DisplayFor(model => model.Date)</p>
           }
           <a asp-controller="Meetings" asp-action="Calendar" class="btn btn-dark mt-3"><i class="fa-solid fa-arrow-left me-1"></i>Back To Meetings List</a>
         </div>
