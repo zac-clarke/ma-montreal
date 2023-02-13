@@ -1,4 +1,9 @@
 @using MaMontreal.Models
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+
+@inject IHtmlLocalizer<SharedResource> SharedHtmlLocalizer
+@inject IViewLocalizer Localizer
 
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
@@ -6,13 +11,13 @@
         @if (User.Identity != null && User.Identity.IsAuthenticated)
         {
             <li class="nav-item ml-auto">
-                <a class="btn btn-primary" asp-area="" asp-controller="Manage" asp-action="Index">Dashboard</a>
+                <a class="btn btn-primary" asp-area="" asp-controller="Manage" asp-action="Index">@SharedHtmlLocalizer["nav_dashboard"]</a>
             </li>
         }
 
         <li class="nav-item">
             <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl='@Url.Action("Index", "Home", new { area = "" })'>
-                <button id="logout" type="submit" class="nav-link btn btn-link text-danger border-0">Logout</button>
+                <button id="logout" type="submit" class="nav-link btn btn-link text-danger border-0">@SharedHtmlLocalizer["nav_logout"]</button>
             </form>
         </li>
     }

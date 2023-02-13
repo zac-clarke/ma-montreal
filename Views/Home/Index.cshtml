@@ -1,5 +1,12 @@
-﻿@inject IConfiguration configuration
-@{ ViewData["Title"] = "Home Page"; }
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+
+@inject IHtmlLocalizer<SharedResource> SharedHtmlLocalizer
+@inject IConfiguration configuration
+
+@{
+   ViewData["Title"] = "Home Page";  
+}
 
 <div class="">
   <div class="d-flex justify-content-center mt-4">
@@ -9,13 +16,12 @@
     <div class="container mt-3">
       <div class="row">
         <div class="col m-5 justify-content-center">
-          <h2>There is a Solution</h2>
+          <h2>@SharedHtmlLocalizer["home_howitworks_title"]</h2>
           <p>
-            The solution for addiction over many substances has been found for many through the <a>12 steps</a> of alcoholics anonymous. With the help of the steps we have found not only freedom from addictions that make our existence unbearable, but a sense of comfort inside of our own skin. We say
-            the program is simple, but it isnt necesarily easy. We are NOT religious. We do not support ANY causes. We simply want to help each other recover from the strong grip of addiction!
+            @SharedHtmlLocalizer["home_howitworks_body"]
           </p>
           <div class="d-flex justify-content-center">
-            <a asp-controller="Solution" asp-action="HowItWorks"><button class="btn btn-primary">How It Works</button></a>
+            <a asp-controller="Solution" asp-action="HowItWorks"><button class="btn btn-primary">@SharedHtmlLocalizer["how_it_works"]</button></a>
           </div>
         </div>
         <div class="col m-5">
@@ -34,14 +40,12 @@
         </div>
       </div>
       <div class="col m-5 justify-content-center">
-        <h2>Find a meeting near you</h2>
+        <h2>@SharedHtmlLocalizer["home_meetings_title"]</h2>
         <p>
-          One of the most important components to staying sober is going to meetings and connecting with other addictions who are trying to stay sober as well. As a young fellowhip in Montreal we only have a few meetings, but what we lack in quantity we make up for in quality. Many people have come
-          through the rooms of MA in Montreal who are sober today. Going to meetings helps you escape the isolation that often accompanies addiction. It is also a way of deciding for yourself whether or not this program could work for you. Do yourself a favor if you think you have a problem with
-          marijuana and join us <3!
+          @SharedHtmlLocalizer["home_meetings_body"]
         </p>
         <div class="d-flex justify-content-center">
-          <a asp-controller="Meetings" asp-action="Calendar"><button class="btn btn-primary">Meetings</button></a>
+          <a asp-controller="Meetings" asp-action="Calendar"><button class="btn btn-primary">@SharedHtmlLocalizer["meetings"]</button></a>
         </div>
       </div>
     </div>
@@ -51,13 +55,12 @@
     <div class="container">
       <div class="row">
         <div class="col m-5 justify-content-center">
-          <h2>Reach out to us</h2>
+          <h2>@SharedHtmlLocalizer["home_seekhelp_title"]</h2>
           <p>
-            Our program teaches us that the only way we can stay sober is to help the still suffering marijuana addict. By contacting us you give us the opertunity to stay clean. This can be a difficult step to take, but it may be the most important first step to getting your life back on track. Be
-            strong, but do not do it alone
+            @SharedHtmlLocalizer["home_seekhelp_body"]
           </p>
           <div class="d-flex justify-content-center">
-            <a asp-controller="Home" asp-action="SeekHelp"><button class="btn btn-primary">Seek Help</button></a>
+            <a asp-controller="Home" asp-action="SeekHelp"><button class="btn btn-primary">@SharedHtmlLocalizer["home_seekhelp_button"]</button></a>
           </div>
         </div>
         <div class="col mb-5 mt-5">
@@ -76,10 +79,10 @@
         </div>
       </div>
       <div class="col m-5 justify-content-center">
-        <h2>There is plenty to read to get started</h2>
-        <p>Written by marijuana addicts and for marijuana addicts, download pdfs of our literature for free directly off the site.</p>
+        <h2>@SharedHtmlLocalizer["home_literature_title"]</h2>
+        <p>@SharedHtmlLocalizer["home_literature_body"]</p>
         <div class="d-flex justify-content-center">
-          <a asp-controller="Home" asp-action="Literature"><button class="btn btn-primary">Literature</button></a>
+          <a asp-controller="Home" asp-action="Literature"><button class="btn btn-primary">@SharedHtmlLocalizer["home_literature_button"]</button></a>
         </div>
       </div>
     </div>
