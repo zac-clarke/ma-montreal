@@ -18,7 +18,7 @@
 <table class="table table-hover" id="mytable">
     <thead>
         <tr>
-            <th></th>
+            <th>Status</th>
 
             <th role="button" onclick="sortTable(1)">
                 @Html.DisplayNameFor(model => model.EventName) <i class="fa-solid fa-sort text-primary"></i>
@@ -42,6 +42,23 @@
         {
             <tr>
                 <td>
+                    <div >
+                    @if (User.IsInRole("admin")){
+                        if(item.Status == MaMontreal.Models.Enums.Statuses.Pending){
+                            <div>
+                                <span class="badge bg-warning">Pending</span>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a asp-action="Approve" asp-route-id="@item.Id"><i class="fa-solid fa-circle-check text-success" title="Approve Request"></i></a>
+                                <a asp-action="Reject" asp-route-id="@item.Id"><i class="fa-solid fa-circle-xmark text-danger" title="Reject request"></i></a>
+                            </div>
+                        }else if(item.Status == MaMontreal.Models.Enums.Statuses.Approved){
+                            <span class="badge bg-success">Approved</span>
+                        }else{
+                            <span class="badge bg-danger">Declined</span>
+                        }
+                    }
+                    </div>
                     <div class="d-flex gap-2">
                         <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
                         <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-eye"></i></a>
@@ -54,22 +71,7 @@
                             <a asp-action="Restore" asp-route-id="@item.Id"><i class="fa-solid fa-box-open"></i></a>
                         }
                     </div>
-                    <div >
-                    @if (User.IsInRole("admin")){
-                        if(item.Status == MaMontreal.Models.Enums.Statuses.Pending){
-                        <a asp-action="Approve" asp-route-id="@item.Id"><i class="fa-solid fa-circle-check text-success" title="Approve Request"></i></a>
-                        <span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-                        <a asp-action="Reject" asp-route-id="@item.Id"><i class="fa-solid fa-circle-xmark text-danger" title="Reject request"></i></a>
-                        <div>
-                        <span class="badge bg-warning">Pending</span>
-                        </div>
-                        }else if(item.Status == MaMontreal.Models.Enums.Statuses.Approved){
-                            <span class="badge bg-success">Approved</span>
-                        }else{
-                            <span class="badge bg-danger">Declined</span>
-                        }
-                    }
-                    </div>
+                    
                 </td>
 
                 <td>
@@ -78,18 +80,20 @@
 
                 <td>
                     <div class="d-flex flex-column">
-                        <span><i class="fa-solid fa-building-circle-arrow-right"></i> @item.District</span>
                         <span><i class="fa-solid fa-location-dot"></i> &nbsp; @item.City, @item.ProvinceCode</span>
+                        <span><i class="fa-solid fa-building-circle-arrow-right"></i> @item.District</span>
                     </div>
                 </td>
 
-                <td class="d-flex flex-column">
+                <td >
+                    <div class="d-flex flex-column">
                     @if(item.Date != null) { <span><i class="fa-regular fa-calendar-days"></i> @item.Date?.ToShortDateString()</span> }
                     <span><i class="fa-solid fa-repeat"></i> @item.DayOfWeek</span>
                     <span><i class="fa-regular fa-clock"></i> @item.StartTime.ToShortTimeString() - @item.EndTime.ToShortTimeString()</span>
+                    </div>
                 </td>
                 <td>
-                    <span><i class="fa-solid fa-user"></i> @(item.Gsr?.FullName ?? item.Gsr?.UserName)</span>
+                    <span><i class="fa-solid fa-user me-1"></i> @(item.Gsr?.FullName ?? item.Gsr?.UserName)</span>
                 </td>
             </tr>
         }
