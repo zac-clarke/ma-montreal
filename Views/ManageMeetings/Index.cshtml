@@ -45,11 +45,11 @@
                     <div class="d-flex gap-2">
                         <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
                         <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-eye"></i></a>
-                        @if (item.DeletedAt == null)
+                        @if (item.DeletedAt == null && !item.Status.Equals(MaMontreal.Models.Enums.Statuses.Pending))
                         {
                             <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-box-archive text-warning"></i></a>
                         }
-                        else
+                        else if(!item.Status.Equals(MaMontreal.Models.Enums.Statuses.Pending))
                         {
                             <a asp-action="Restore" asp-route-id="@item.Id"><i class="fa-solid fa-box-open"></i></a>
                         }

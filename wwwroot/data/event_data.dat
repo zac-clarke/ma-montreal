@@ -1,7 +1,11 @@
 [
+	{id: 14, title: 'EventName', daysOfWeek: '[2]', startTime: '17:08:02', endTime: '18:38:02', startRecur: '2023-02-12', },
+	{id: 15, title: 'life with hope', daysOfWeek: '[2]', startTime: '17:15:34', endTime: '18:45:34', startRecur: '2023-02-07', },
 	{id: 17, title: 'EventName4', daysOfWeek: '[4]', startTime: '17:40:28', endTime: '19:10:28', startRecur: '2023-02-12', },
 	{id: 20, title: 'Jesus is King', start: '2023-02-16T17:22:00', end: '2023-02-16T19:23:00', },
 	{id: 25, title: 'Hopeful Life', start: '2023-02-17T00:00:00', end: '2023-02-17T01:00:00', },
 	{id: 26, title: 'Solidarity', start: '2023-02-17T13:00:00', end: '2023-02-17T15:00:00', },
 	{id: 27, title: 'Bowling Event', start: '2023-02-13T14:30:00', end: '2023-02-13T17:00:00', },
+	{id: 29, title: 'i am a god', daysOfWeek: '[2]', startTime: '22:00:00', endTime: '23:00:00', startRecur: '2023-02-12', },
+	{id: 30, title: 'gooble gobble', daysOfWeek: '[3]', startTime: '00:00:00', endTime: '00:00:00', startRecur: '2023-02-21', },
 ]

@@ -36,6 +36,7 @@ namespace MaMontreal.Services
                                 .Include(m => m.UpdatedBy)
                                 .Include(m => m.Language)
                                 .Include(m => m.MeetingType)
+                                .OrderBy(m => m.Status)
                                 .ToListAsync<Meeting>();
         }
 
@@ -110,9 +111,6 @@ namespace MaMontreal.Services
             meeting.UpdatedAt = DateTime.Now;
             meeting.UpdatedBy = curUser;
 
-            if (User.IsInRole("admin"))
-                meeting.Status = Statuses.Approved;
-
             _context.Meetings.Add(meeting);
             await _context.SaveChangesAsync();
 
@@ -147,6 +145,8 @@ namespace MaMontreal.Services
 
             meeting.Id = id.Value;
 
+            Console.WriteLine(meeting.DayOfWeek);
+            return null;
             // _context.Meetings.Add(meeting);
             return await EditMeeting(meeting, userManager, User);
         }
@@ -296,6 +296,13 @@ namespace MaMontreal.Services
 
             _context.Update(meeting);
             await _context.SaveChangesAsync();
+
+            if (status.Equals(Statuses.Approved))
+                CalendarEvent.UpdateEventsFile(_context.Meetings.ToList<Meeting>());
+            {
+                //Update data file
+                CalendarEvent.UpdateEventsFile(_context.Meetings.ToList<Meeting>());
+            }
         }
     }
 }
