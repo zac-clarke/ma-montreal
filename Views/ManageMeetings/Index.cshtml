@@ -20,19 +20,19 @@
         <tr>
             <th></th>
 
-            <th onclick="sortTable(1)">
+            <th role="button" onclick="sortTable(1)">
                 @Html.DisplayNameFor(model => model.EventName) <i class="fa-solid fa-sort text-primary"></i>
             </th>
 
-            <th onclick="sortTable(2)">
+            <th role="button" onclick="sortTable(2)">
                 Location <i class="fa-solid fa-sort text-primary"></i>
             </th>
 
-            <th onclick="sortTable(3)">
+            <th role="button" onclick="sortTable(3)">
                 Date <i class="fa-solid fa-sort text-primary"></i>
             </th>
 
-            <th onclick="sortTable(4)">
+            <th role="button" onclick="sortTable(4)">
                 Gsr <i class="fa-solid fa-sort text-primary"></i>
             </th>
         </tr>
@@ -102,7 +102,7 @@
         $(document).ready(function () {
             $("#search").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
-                $("table tr").filter(function () {
+                $("table tbody tr").filter(function () {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
