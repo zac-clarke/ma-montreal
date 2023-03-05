@@ -1,14 +1,17 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> SharedHtmlLocalizer
+@inject IConfiguration configuration
 @{ ViewData["Title"] = "Literature"; }
 
-<h1>Literature</h1>
+<h1>@SharedHtmlLocalizer["nav_literature"]</h1>
 
 <div class="container">
   <div class="row">
   <div class="col">
     <div class="card border-3 shadow m-4 text-center">
       <div class="card-body">
-        <h4 class="card-title">Doctors Opinion</h4>
-        <p class="card-text">A <b>MUST</b> read to start this journey</p>
+        <h4 class="card-title">@SharedHtmlLocalizer["lit_doctors_opinion"]</h4>
+        <p class="card-text">@SharedHtmlLocalizer["lit_doctors_opinion_body"]</p>
         <div class="d-flex justify-content-center">
           <a href="https://mamontreal.blob.core.windows.net/literature/Doctors_Opinion.pdf" target="_blank"> <button class="btn btn-primary" action="submit">Download</button> </a>
         </div>
@@ -18,8 +21,8 @@
   <div class="col">
     <div class="card border-3 shadow m-4 text-center">
       <div class="card-body">
-        <h4 class="card-title">About Sponsorship</h4>
-        <p class="card-text">Answers questions about sponsorship</p>
+        <h4 class="card-title">@SharedHtmlLocalizer["lit_about_sponsorship"]</h4>
+        <p class="card-text">@SharedHtmlLocalizer["lit_about_sponsorship_body"]</p>
         <div class="d-flex justify-content-center">
           <a href="https://mamontreal.blob.core.windows.net/literature/About_Sponsorship.pdf" target="_blank"> <button class="btn btn-primary" action="submit">Download</button> </a>
         </div>
@@ -31,8 +34,8 @@
     <div class="col">
       <div class="card border-3 shadow m-4 text-center">
         <div class="card-body">
-          <h4 class="card-title">Life With Hope</h4>
-          <p class="card-text">This book is our main text</p>
+          <h4 class="card-title">@SharedHtmlLocalizer["lit_lwp"]</h4>
+          <p class="card-text">@SharedHtmlLocalizer["lit_lwp_body"]</p>
           <div class="d-flex justify-content-center">
             <a href="https://mamontreal.blob.core.windows.net/literature/Life_With_Hope.pdf" target="_blank"> <button class="btn btn-primary" action="submit">Download</button> </a>
           </div>
@@ -42,8 +45,8 @@
     <div class="col">
       <div class="card border-3 shadow m-4 text-center">
         <div class="card-body">
-          <h4 class="card-title">Detoxing from marijuana</h4>
-          <p class="card-text">About detoxing from grass</p>
+          <h4 class="card-title">@SharedHtmlLocalizer["lit_detox"]</h4>
+          <p class="card-text">@SharedHtmlLocalizer["lit_detox_body"]</p>
           <div class="d-flex justify-content-center">
             <a href="https://mamontreal.blob.core.windows.net/literature/Detoxing_From_marijuana.pdf" target="_blank"> <button class="btn btn-primary" action="submit">Download</button> </a>
           </div>
@@ -55,8 +58,8 @@
   <div class="col">
     <div class="card border-3 shadow m-4 text-center mb-5">
       <div class="card-body">
-        <h4 class="card-title">For the Newcomer</h4>
-        <p class="card-text">Info for new people</p>
+        <h4 class="card-title">@SharedHtmlLocalizer["lit_newcomer"]</h4>
+        <p class="card-text">@SharedHtmlLocalizer["lit_newcomer_body"]</p>
         <div class="d-flex justify-content-center">
           <a href="https://mamontreal.blob.core.windows.net/literature/For_The_Newcomer.pdf" target="_blank"> <button class="btn btn-primary" action="submit">Download</button> </a>
         </div>

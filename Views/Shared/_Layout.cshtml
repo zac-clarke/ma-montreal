@@ -54,10 +54,12 @@
           </ul>
           @if (User.Identity != null && User.Identity.IsAuthenticated)
           {
+             @await Html.PartialAsync("_SelectLanguagePartial")
             <partial name="_LoginPartial" />
           }
           else
           {
+             @await Html.PartialAsync("_SelectLanguagePartial")
             <div class="dropdown">
               <button class="btn btn-success dropdown-toggle" id="appDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@SharedHtmlLocalizer["nav_download_ma_app"]</button>
               <div class="dropdown-menu" aria-labelledby="appDropdown">
@@ -88,7 +90,7 @@
 
               <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">@SharedHtmlLocalizer["login"]</a>
               
-              @await Html.PartialAsync("_SelectLanguagePartial")
+             
             </div>
 
         </div>

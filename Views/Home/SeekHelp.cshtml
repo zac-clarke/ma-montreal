@@ -1,3 +1,6 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> SharedHtmlLocalizer
+@inject IConfiguration configuration
 @{ ViewData["Title"] = "Seek Help"; }
 
 <h1>Seek Help</h1>
@@ -6,16 +9,15 @@
   <div class="container">
     <div class="row">
       <div class="col m-5 justify-content-center">
-        <h2>Reach out to us</h2>
+        <h2>@SharedHtmlLocalizer["seek_help_title"]</h2>
         <p>
-          Our program teaches us that the only way we can stay sober is to help the still suffering marijuana addict. By contacting us you give us the opertunity to stay clean. This can be a difficult step to take, but it may be the most important first step to getting your life back on track. Be
-          strong, but do not do it alone
+          @SharedHtmlLocalizer["seek_help_body"]
         </p>    
         <div class="card border-3 shadow m-5 ">
           <div class="container ">
             <div class="row ">
               <div class="col  p-3 justify-content-center">
-                <h5>Email Us :</h5>
+                <h5>@SharedHtmlLocalizer["email_us"] :</h5>
                 <p><a href="mailto:malifewithhope@gmail.com">malifewithhope@gmail.com</a></p>
               </div>
             </div>
@@ -25,7 +27,7 @@
           <div class="container">
             <div class="row">
               <div class="col p-3 justify-content-center">
-                <h5>Call Us :</h5>
+                <h5>@SharedHtmlLocalizer["call_us"] :</h5>
                 <p><a href="tel:514-677-5108">514-677-5108</a></p>
               </div>
             </div>

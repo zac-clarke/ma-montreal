@@ -1,3 +1,6 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> SharedHtmlLocalizer
+@inject IConfiguration configuration
 @{ ViewData["Title"] = "How It Works"; }
 
 <div class="card mb-5" style="">
