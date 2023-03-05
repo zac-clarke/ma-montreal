@@ -121,13 +121,13 @@
         <value>Developed By</value>
     </data>
     <data name="home_howitworks_body" xml:space="preserve">
-        <value>The solution for addiction over many substances has been found for many through the 12 steps of alcoholics anonymous. With the help of the steps we have found not only freedom from addictions that make our existence unbearable, but a sense of comfort inside of our own skin. We say the program is simple, but it isnt necesarily easy. We are NOT religious. We do not support ANY causes. We simply want to help each other recover from the strong grip of addiction!</value>
+        <value>The solution for addiction to many substances has been found for many through the 12 steps of alcoholics anonymous. With the help of the steps, we have found not only freedom from addictions that make our existence unbearable but a sense of comfort inside our skin. We say the program is simple, but it isn't necessarily easy. We are NOT religious. We do not support ANY causes. We want to help each other recover from the strong grip of addiction!</value>
     </data>
     <data name="home_howitworks_title" xml:space="preserve">
         <value>There is a Solution</value>
     </data>
     <data name="home_literature_body" xml:space="preserve">
-        <value>Written by marijuana addicts and for marijuana addicts, download pdfs of our literature for free directly off the site.</value>
+        <value>Written by marijuana addicts and for marijuana addicts, download pdfs of our literature for free directly from the site.</value>
     </data>
     <data name="home_literature_button" xml:space="preserve">
         <value>Literature</value>
@@ -136,13 +136,13 @@
         <value>There is plenty to read to get started</value>
     </data>
     <data name="home_meetings_body" xml:space="preserve">
-        <value>One of the most important components to staying sober is going to meetings and connecting with other addictions who are trying to stay sober as well. As a young fellowhip in Montreal we only have a few meetings, but what we lack in quantity we make up for in quality. Many people have come through the rooms of MA in Montreal who are sober today. Going to meetings helps you escape the isolation that often accompanies addiction. It is also a way of deciding for yourself whether or not this program could work for you. Do yourself a favor if you think you have a problem with marijuana and join us &lt;3!</value>
+        <value>One of the most important components of staying sober is going to meetings and connecting with other addicts who are also trying to stay sober. As a young fellowship in Montreal, we only have a few meetings, but what we lack in quantity, we make up for in quality. Many people who are sober today have come through the rooms of MA in Montreal. Going to meetings helps you escape the isolation that often accompanies addiction. It is also a way of deciding for yourself whether or not this program could work for you. Do yourself a favor if you think you have a problem with marijuana, and join us &lt;3!</value>
     </data>
     <data name="home_meetings_title" xml:space="preserve">
         <value>Find a meeting near you</value>
     </data>
     <data name="home_seekhelp_body" xml:space="preserve">
-        <value>Our program teaches us that the only way we can stay sober is to help the still suffering marijuana addict. By contacting us you give us the opertunity to stay clean. This can be a difficult step to take, but it may be the most important first step to getting your life back on track. Be strong, but do not do it alone</value>
+        <value>Our program teaches us that the only way we can stay sober is to help the still-suffering marijuana addict. By contacting us, you allow us to stay clean. Even if it might be difficult to admit to marijuana addiction, it may be the most important first step to getting your life back on track. Be strong, but do not do it alone.</value>
     </data>
     <data name="home_seekhelp_button" xml:space="preserve">
         <value>Seek Help</value>
@@ -205,7 +205,7 @@
         <value>About Sponsorhip</value>
     </data>
     <data name="lit_about_sponsorship_body" xml:space="preserve">
-        <value>Answers questions about sponsorship</value>
+        <value>Questions and answers about sponsorship</value>
     </data>
     <data name="lit_lwp" xml:space="preserve">
         <value>Life With Hope</value>
@@ -232,7 +232,7 @@
         <value>Reach out to Us</value>
     </data>
     <data name="seek_help_body" xml:space="preserve">
-        <value>Our program teaches us that the only way we can stay sober is to help the still suffering marijuana addict. By contacting us you give us the opertunity to stay clean. This can be a difficult step to take, but it may be the most important first step to getting your life back on track. Be           strong, but do not do it alone.</value>
+        <value>Our program teaches us that the only way we can stay sober is to help the still-suffering marijuana addict. By contacting us, you allow us to stay clean. Even if it might be difficult to admit to marijuana addiction, it may be the most important first step to getting your life back on track. Be strong, but do not do it alone.</value>
     </data>
     <data name="email_us" xml:space="preserve">
         <value>Email us</value>
