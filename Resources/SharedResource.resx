@@ -420,4 +420,19 @@
     <data name="12_traditions_tradition_12" xml:space="preserve">
         <value>Anonymity is the spiritual foundation of all our traditions, ever reminding us to place principles before personalities.If we are painstaking about this phase of our development, we will be amazed before we are half way through.</value>
     </data>
+    <data name="lit_doctors_opinion_link" xml:space="preserve">
+        <value>https://mamontrealblob.blob.core.windows.net/literature/Doctors_Opinion.pdf</value>
+    </data>
+    <data name="lit_lwp_link" xml:space="preserve">
+        <value>https://mamontrealblob.blob.core.windows.net/literature/Life_With_Hope.pdf</value>
+    </data>
+    <data name="lit_detox_link" xml:space="preserve">
+        <value>https://mamontrealblob.blob.core.windows.net/literature/Detoxing_From_marijuana.pdf</value>
+    </data>
+    <data name="lit_about_sponsorship_link" xml:space="preserve">
+        <value>https://mamontrealblob.blob.core.windows.net/literature/About_Sponsorship.pdf</value>
+    </data>
+    <data name="lit_newcomer_link" xml:space="preserve">
+        <value>https://mamontrealblob.blob.core.windows.net/literature/For_The_Newcomer.pdf</value>
+    </data>
 </root>

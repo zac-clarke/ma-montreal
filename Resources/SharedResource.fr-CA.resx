@@ -118,43 +118,43 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="developed_by" xml:space="preserve">
-        <value>Développé par</value>
+        <value>Développé</value>
     </data>
     <data name="home_howitworks_body" xml:space="preserve">
-        <value>La solution a la dependance e de nombreuses substances a ete trouvee pour beaucoup e travers les 12 etapes des alcooliques anonymes. Avec l'aide des etapes, nous avons trouve non seulement la liberation des dependances qui rendent notre existence insupportable, mais un sentiment de confort e l'interieur de notre propre peau. Nous disons que le programme est simple, mais ce n'est pas necessairement facile. Nous ne sommes PAS religieux. Nous ne soutenons AUCUNE cause. Nous voulons simplement nous aider mutuellement e nous remettre de la forte emprise de la dependance !</value>
+        <value>La solution à la dépendance aux drogues, à l’alcool et autres, a été trouvé par un grand nombre d’individus dans un programme en 12 étapes des alcooliques anonymes. Avec l’aide des étapes, nous avons trouvé non seulement la liberté de ne plus consommer, mais aussi la façon d’être bien dans notre peau. Nous affirmons que notre programme est simple, mais pas qu’il est facile. Nous ne sommes PAS religieux. Nous ne supportons AUCUNE cause. Nous voulons simplement nous entraider à vaincre la forte emprise qu’a la dépendance sur nos vies.</value>
     </data>
     <data name="home_howitworks_title" xml:space="preserve">
         <value>Il existe une solution</value>
     </data>
     <data name="home_literature_body" xml:space="preserve">
-        <value>Écrit par des accros à la marijuana et pour les accros à la marijuana, téléchargez gratuitement des pdf de notre littérature directement sur le site.</value>
+        <value>Ces documents ont été écrits par des dépendants, pour les dépendants. Téléchargez les pdf de notre littérature gratuitement directement de ce site.</value>
     </data>
     <data name="home_literature_button" xml:space="preserve">
-        <value>Littrature</value>
+        <value>Litérature</value>
     </data>
     <data name="home_literature_title" xml:space="preserve">
-        <value>Il y a beaucoup à lire pour commencer</value>
+        <value>Lecture pour commencer</value>
     </data>
     <data name="home_meetings_body" xml:space="preserve">
-        <value>L'un des éléments les plus importants pour rester sobre est d'aller à des réunions et de se connecter avec d'autres toxicomanes qui essaient également de rester sobres. En tant que jeune fraternité à Montréal, nous n'avons que quelques réunions, mais ce qui nous manque en quantité, nous le rattrapons en qualité. Beaucoup de gens sont passés par les salles de MA à Montréal qui sont sobres aujourd'hui. Aller à des réunions vous aide à échapper à l'isolement qui accompagne souvent la dépendance. C'est aussi une façon de décider par vous-même si oui ou non ce programme pourrait fonctionner pour vous. Faites-vous plaisir si vous pensez avoir un problème avec la marijuana et rejoignez-nous &lt;3 !</value>
+        <value>L’une des composantes principales à l’abstinence est la présence aux réunions et la rencontre d’autres dépendants qui essaient de rester abstinents. En tant que groupe relativement récent à Montréal (2008), nous avons seulement quelques réunions, mais ce qui nous manque en quantité nous le compensons en qualité. Beaucoup de personnes sobres aujourd’hui sont passées par les réunions de Marijuana Anonyme à Montréal. Aller aux réunions vous permet de vous évader de l’isolement qui accompagne souvent la dépendance. C’est aussi une façon pour vous de décider si ce programme fonctionnera dans votre vie. Donnez-vous une chance et présentez-vous à une réunion.</value>
     </data>
     <data name="home_meetings_title" xml:space="preserve">
-        <value>Trouvez une réunion proche de vous</value>
+        <value>Trouver une réunion près de chez vous</value>
     </data>
     <data name="home_seekhelp_body" xml:space="preserve">
-        <value>Notre programme nous enseigne que la seule façon de rester sobre est d'aider le toxicomane qui souffre encore. En nous contactant, vous nous donnez la possibilité de rester propre. Cela peut être une étape difficile à franchir, mais c'est peut-être la première étape la plus importante pour remettre votre vie sur les rails. Soyez fort, mais ne le faites pas seul</value>
+        <value>Our program teaches us that the only way we can stay sober is to help the still-suffering marijuana addict. By contacting us, you allow us to stay clean. Even if it might be difficult to admit to marijuana addiction, it may be the most important first step to getting your life back on track. Be strong, but do not do it alone.</value>
     </data>
     <data name="home_seekhelp_button" xml:space="preserve">
-        <value>Demander de l'aide</value>
+        <value>Rechercher de l’aide</value>
     </data>
     <data name="home_seekhelp_title" xml:space="preserve">
-        <value>Contactez-nous</value>
+        <value>Rechercher de l’aide</value>
     </data>
     <data name="how_it_works" xml:space="preserve">
-        <value>Comment ca Fonctionne</value>
+        <value>Notre méthode</value>
     </data>
     <data name="login" xml:space="preserve">
-        <value>Connexion</value>
+        <value>Log In</value>
     </data>
     <data name="meetings" xml:space="preserve">
         <value>Réunions</value>
@@ -163,36 +163,273 @@
         <value>Une Solution</value>
     </data>
     <data name="nav_dashboard" xml:space="preserve">
-        <value>Votre Espace</value>
+        <value>Dashbaord</value>
     </data>
     <data name="nav_download_ma_app" xml:space="preserve">
-        <value>Télécharger l'application MA</value>
+        <value>Téléchargez MA App</value>
     </data>
     <data name="nav_home" xml:space="preserve">
         <value>Accueil</value>
     </data>
     <data name="nav_how_it_works" xml:space="preserve">
-        <value>Comment ca Fonctionne</value>
+        <value>Notre méthode</value>
     </data>
     <data name="nav_literature" xml:space="preserve">
-        <value>Litérature</value>
+        <value>Literature</value>
     </data>
     <data name="nav_logout" xml:space="preserve">
-        <value>Se déconnecter</value>
+        <value>Logout</value>
     </data>
     <data name="nav_seek_help" xml:space="preserve">
-        <value>Demandez de l'aide</value>
+        <value>Rechercher de l’aide</value>
     </data>
     <data name="nav_twelve_promises" xml:space="preserve">
-        <value>Douze Promesses</value>
+        <value>Les douze promesses</value>
     </data>
     <data name="nav_twelve_questions" xml:space="preserve">
-        <value>Douze Questions</value>
+        <value>Les douze questions</value>
     </data>
     <data name="nav_twelve_traditions" xml:space="preserve">
-        <value>Douze Traditions</value>
+        <value>Les douze traditions</value>
     </data>
     <data name="register" xml:space="preserve">
-        <value>Enregistrer</value>
+        <value>Registre</value>
+    </data>
+    <data name="lit_doctors_opinion" xml:space="preserve">
+        <value>L’opinion d’un médecin</value>
+    </data>
+    <data name="lit_doctors_opinion_body" xml:space="preserve">
+        <value>Une lecture &lt;b&gt;ESSENTIELLE&lt;/b&gt; pour débuter votre parcours</value>
+    </data>
+    <data name="lit_about_sponsorship" xml:space="preserve">
+        <value>Au sujet du parrainage</value>
+    </data>
+    <data name="lit_about_sponsorship_body" xml:space="preserve">
+        <value>Pour répondre aux questions sur le parrainage</value>
+    </data>
+    <data name="lit_lwp" xml:space="preserve">
+        <value>Vivre avec l’espoir</value>
+    </data>
+    <data name="lit_lwp_body" xml:space="preserve">
+        <value>Ce livre constitue notre source d’information principale</value>
+    </data>
+    <data name="lit_detox" xml:space="preserve">
+        <value>La détoxification de la marijuana</value>
+    </data>
+    <data name="lit_detox_body" xml:space="preserve">
+        <value>Sur la détoxification du pote</value>
+    </data>
+    <data name="lit_newcomer" xml:space="preserve">
+        <value>Pour le Nouveau</value>
+    </data>
+    <data name="lit_newcomer_body" xml:space="preserve">
+        <value>Information pour les nouveaux arrivés</value>
+    </data>
+    <data name="seek_help_title" xml:space="preserve">
+        <value>Rechercher de l’aide</value>
+    </data>
+    <data name="seek_help_body" xml:space="preserve">
+        <value>Notre programme nous enseigne que la seule façon de garder notre abstinence est d’aider le dépendant qui souffre encore à le devenir. En nous contactant vous nous permettez de ne pas consommer, juste pour aujourd’hui. Même s’il peut être difficile d’admettre une dépendance à la marijuana, il s’agit peut-être du premier pas pour remettre votre vie sur le bon chemin. L’union fait la force</value>
+    </data>
+    <data name="email_us" xml:space="preserve">
+        <value>Par courriel </value>
+    </data>
+    <data name="call_us" xml:space="preserve">
+        <value>Au téléphone</value>
+    </data>
+    <data name="hiw_step_1" xml:space="preserve">
+        <value>Nous avons admis que nous étions impuissants devant la marijuana, que nous avions perdu la maîtrise de nos vies.</value>
+    </data>
+    <data name="hiw_step_2" xml:space="preserve">
+        <value>Nous en sommes venus à croire qu’une puissance supérieure à nous-mêmes pouvait nous rendre la raison.</value>
+    </data>
+    <data name="hiw_preamble" xml:space="preserve">
+        <value>The practice of rigorous honesty, of opening our hearts and minds, and the willingness to go to any lengths to have a spiritual awakening are essential to our recovery. Our old ideas and ways of life no longer work for us. Our suffering shows us that we need to let go absolutely. We surrender ourselves to a Power greater than ourselves. Here are the steps we take which are suggested for recovery:</value>
+    </data>
+    <data name="hiw_postamble" xml:space="preserve">
+        <value>Do not be discouraged; none of us are saints. Our program is not easy, but it is simple. We strive for progress, not perfection. Our experiences, before and after we entered recovery, teach us three important ideas:</value>
+    </data>
+    <data name="hiw_idea_1" xml:space="preserve">
+        <value>That we are marijuana addicts and cannot manage our own lives;</value>
+    </data>
+    <data name="hiw_idea_2" xml:space="preserve">
+        <value>That probably no human power can relieve our addiction; and</value>
+    </data>
+    <data name="hiw_idea_3" xml:space="preserve">
+        <value> That our Higher Power can and will if sought</value>
+    </data>
+    <data name="hiw_step_3" xml:space="preserve">
+        <value>Nous avons décidé de confier note volonté et notre vie aux soins de Dieu tel que nous Le concevions.</value>
+    </data>
+    <data name="hiw_step_4" xml:space="preserve">
+        <value>Nous avons procédé sans crainte à un inventaire approfondi de nous-mêmes.</value>
+    </data>
+    <data name="hiw_step_6" xml:space="preserve">
+        <value>Nous étions tout à fait prêts à ce que Dieu élimine tous ces défauts.</value>
+    </data>
+    <data name="hiw_step_7" xml:space="preserve">
+        <value>Nous Lui avons humblement demandé de faire disparaître nos défauts.</value>
+    </data>
+    <data name="hiw_step_8" xml:space="preserve">
+        <value>Nous avons dressé une liste de toutes les personnes que nous avions lésées et nous avons consenti à réparer nos torts envers chacune d’elles.</value>
+    </data>
+    <data name="hiw_step_9" xml:space="preserve">
+        <value>Nous avons réparé nos torts directement envers ces personnes dans la mesure du possible, sauf lorsqu’en ce faisant, nous risquions de leur nuire ou de nuire à d’autres.</value>
+    </data>
+    <data name="hiw_step_10" xml:space="preserve">
+        <value>Nous avons poursuivi notre inventaire personnel et promptement admis nos torts dès que nous nous en sommes aperçus.</value>
+    </data>
+    <data name="hiw_step_11" xml:space="preserve">
+        <value>Nous avons cherché par la prière et la méditation à améliorer notre contact conscient avec Dieu, tel que nous le concevions, Lui demandant seulement de connaître sa volonté à notre égard et de nous donner la force de l’exécuter.</value>
+    </data>
+    <data name="hiw_step_12" xml:space="preserve">
+        <value> Ayant connu un éveil spirituel comme résultat de ces étapes, nous avons alors essayé de transmettre ce message à d’autres alcooliques et de mettre en pratique ces principes dans tous les domaines de notre vie.</value>
+    </data>
+    <data name="hiw_step_5" xml:space="preserve">
+        <value>Nous avons avoué à Dieu, à nous-mêmes et à un autre être humain la nature exacte de nos torts.</value>
+    </data>
+    <data name="12_promises_title" xml:space="preserve">
+        <value>Les Promesses</value>
+    </data>
+    <data name="12_promises_preamble" xml:space="preserve">
+        <value>If we are painstaking about this phase of our development, we will be amazed before we are half way through.</value>
+    </data>
+    <data name="12_promises_promise_1" xml:space="preserve">
+        <value>Nous serons étonnés des résultats, même après n'avoir parcouru que la moitié du chemin.</value>
+    </data>
+    <data name="12_promises_promise_2" xml:space="preserve">
+        <value>Nous connaîtrons une nouvelle liberté et un nouveau bonheur.</value>
+    </data>
+    <data name="12_promises_promise_3" xml:space="preserve">
+        <value>Nous ne regretterons pas plus le passé que nous ne voudrons l'oublier.</value>
+    </data>
+    <data name="12_promises_promise_4" xml:space="preserve">
+        <value>Nous comprendrons le sens du mot sérénité et nous connaîtrons la paix.</value>
+    </data>
+    <data name="12_promises_promise_5" xml:space="preserve">
+        <value>Si profonde qu'ait été notre déchéance, nous verrons comment notre expérience peut profiter aux autres.</value>
+    </data>
+    <data name="12_promises_promise_6" xml:space="preserve">
+        <value>Nous perdrons le sentiment d'être inutiles et cesserons de nous apitoyer sur notre sort.</value>
+    </data>
+    <data name="12_promises_promise_7" xml:space="preserve">
+        <value>Mettant nos propres intérêts de côté, nous nous intéresserons davantage à nos semblables.</value>
+    </data>
+    <data name="12_promises_promise_8" xml:space="preserve">
+        <value>Nous ne serons plus tournés exclusivement vers nous-mêmes.</value>
+    </data>
+    <data name="12_promises_promise_9" xml:space="preserve">
+        <value>Désormais nous envisagerons la vie d'une façon différente.</value>
+    </data>
+    <data name="12_promises_promise_10" xml:space="preserve">
+        <value>La crainte des gens et de l'insécurité financière disparaîtra.</value>
+    </data>
+    <data name="12_promises_promise_11" xml:space="preserve">
+        <value>Notre intuition nous dictera notre conduite dans des situations qui, auparavant, nous déroutaient.</value>
+    </data>
+    <data name="12_promises_promise_12" xml:space="preserve">
+        <value>Soudainement nous constaterons que Dieu fait pour nous ce que nous ne pouvions pas faire pour nous-mêmes.</value>
+    </data>
+    <data name="12_promises_postamble" xml:space="preserve">
+        <value>Est-ce que ce sont là des promesses extravagantes? Nous ne le croyons pas. Ces promesses se réalisent parmi nous parfois rapidement, parfois lentement. Mais elles se matérialisent toujours si nous travaillons dans ce sens.</value>
+    </data>
+    <data name="12_questions_title" xml:space="preserve">
+        <value>Les douze questions de Marijuana Anonyme</value>
+    </data>
+    <data name="12_questions_preamble" xml:space="preserve">
+        <value>Les questions suivantes pourraient t’aider à déterminer la marijuana est un problème dans votre vie.</value>
+    </data>
+    <data name="12_questions_question_1" xml:space="preserve">
+        <value>Est-ce que consommer de la marijuana a cessé d’être amusant?</value>
+    </data>
+    <data name="12_questions_question_2" xml:space="preserve">
+        <value>Est-ce que tu te gèles parfois seul(e)?</value>
+    </data>
+    <data name="12_questions_question_3" xml:space="preserve">
+        <value> Est-ce que c’est difficile pour toi d’imaginer une vie sans marijuana?</value>
+    </data>
+    <data name="12_questions_question_4" xml:space="preserve">
+        <value>Est-ce que tu trouves que tes amitiés sont définies par ta consommation de marijuana?</value>
+    </data>
+    <data name="12_questions_question_5" xml:space="preserve">
+        <value>Est-ce que tu consommes de la marijuana pour éviter de faire face à tes problèmes ou pour gérer tes émotions?</value>
+    </data>
+    <data name="12_questions_question_6" xml:space="preserve">
+        <value>Est-ce que ta consommation de marijuana a mené à des difficultés financières ou a entraîné des conséquences légales?</value>
+    </data>
+    <data name="12_questions_question_7" xml:space="preserve">
+        <value>Est-ce que ta consommation de marijuana te permet de vivre dans ton petit monde privé?</value>
+    </data>
+    <data name="12_questions_question_8" xml:space="preserve">
+        <value>Est-ce que tu as déjà brisé tes promesses de réduire ta consommation de marijuana ou d’en contrôler l’usage?</value>
+    </data>
+    <data name="12_questions_question_9" xml:space="preserve">
+        <value>Est-ce que ta consommation de marijuana a déjà causée des problèmes à ta santé, ta mémoire, ta concentration ou ta motivation?</value>
+    </data>
+    <data name="12_questions_question_10" xml:space="preserve">
+        <value>Quand ta réserve est presque vide, est[1]ce que tu ressens de l’anxiété ou de l’inquiétude sur les moyens de t’en procurer davantage?</value>
+    </data>
+    <data name="12_questions_question_11" xml:space="preserve">
+        <value>Est-ce que tu planifies ta vie autour de ta consommation de marijuana?</value>
+    </data>
+    <data name="12_questions_question_12" xml:space="preserve">
+        <value>Est-ce que ta famille ou tes amis se sont déjà plaint de ta consommation de marijuana et du fait qu’elle abime ta relation avec eux?</value>
+    </data>
+    <data name="12_questions_postamble" xml:space="preserve">
+        <value>Si tu as répondu oui à une de ces questions, tu as peut-être un problème avec la marijuana</value>
+    </data>
+    <data name="12_traditions_title" xml:space="preserve">
+        <value>Les douze traditions de Marijuana Anonyme</value>
+    </data>
+    <data name="12_traditions_tradition_1" xml:space="preserve">
+        <value>Notre bien-être commun devrait venir en premier lieu; le rétablissement personnel dépend de l’unité des MA.</value>
+    </data>
+    <data name="12_traditions_tradition_2" xml:space="preserve">
+        <value>Dans la poursuite de notre objectif commun, il n’existe qu’une seule autorité ultime : un Dieu d’amour tel qu’il peut se manifester dans notre conscience de groupe. Nos chefs ne sont que des serviteurs de confiance, ils ne gouvernent pas.</value>
+    </data>
+    <data name="12_traditions_tradition_3" xml:space="preserve">
+        <value>Le désir d’arrêter de boire est la seule condition pour être membre de MA.</value>
+    </data>
+    <data name="12_traditions_tradition_4" xml:space="preserve">
+        <value>Chaque groupe devrait être autonome, sauf sur les points qui touchent d’autres groupes ou l’ensemble du Mouvement.</value>
+    </data>
+    <data name="12_traditions_tradition_5" xml:space="preserve">
+        <value>Chaque groupe n’a qu’un objectif primordial; transmettre son message au dépendant qui souffre encore.</value>
+    </data>
+    <data name="12_traditions_tradition_6" xml:space="preserve">
+        <value>Un groupe ne devrait jamais endosser ou financer d’autres organismes, qu’ils soient apparentés ou étrangers à MA, ni leur prêter le nom de Marijuana Anonyme, de peur que les soucis d’argent, de propriété ou de prestige ne nous distraient de notre objectif premier.</value>
+    </data>
+    <data name="12_traditions_tradition_7" xml:space="preserve">
+        <value>Tous les groupes devraient subvenir entièrement à leurs besoins et refuser les contributions de l’extérieur.</value>
+    </data>
+    <data name="12_traditions_tradition_8" xml:space="preserve">
+        <value>Le Mouvement Marijuana Anonyme devrait toujours demeurer non professionnel, mais nos centres de service peuvent engager des employés qualifiés.</value>
+    </data>
+    <data name="12_traditions_tradition_9" xml:space="preserve">
+        <value>Comme Mouvement, Marijuana anonyme ne devrait jamais avoir de structure formelle, mais nous pouvons constituer des conseils ou des comités de service directement responsables envers ceux qu’ils servent.</value>
+    </data>
+    <data name="12_traditions_tradition_10" xml:space="preserve">
+        <value>Le Mouvement Marijuana Anonyme n’exprime aucune opinion sur des sujets étrangers; le nom MA ne devrait donc jamais être mêlé à des controverses publiques.</value>
+    </data>
+    <data name="12_traditions_tradition_11" xml:space="preserve">
+        <value>La politique de nos relations publiques est basée sur l’attrait plutôt que sur la réclame; nous devons toujours garder l’anonymat personnel dans la presse écrite et parlée de même qu’au cinéma.</value>
+    </data>
+    <data name="12_traditions_tradition_12" xml:space="preserve">
+        <value>L’anonymat est la base spirituelle de toutes nos traditions et nous rappelle sans cesse de placer les principes au-dessus des personnalités.</value>
+    </data>
+    <data name="lit_doctors_opinion_link" xml:space="preserve">
+        <value>https://mamontrealblob.blob.core.windows.net/literature/Doctors_Opinion.pdf</value>
+    </data>
+    <data name="lit_lwp_link" xml:space="preserve">
+        <value>https://mamontrealblob.blob.core.windows.net/literature/Life_With_Hope.pdf</value>
+    </data>
+    <data name="lit_detox_link" xml:space="preserve">
+        <value>https://mamontrealblob.blob.core.windows.net/literature/Detox.pdf</value>
+    </data>
+    <data name="lit_about_sponsorship_link" xml:space="preserve">
+        <value>https://mamontrealblob.blob.core.windows.net/literature/Parrainage.pdf</value>
+    </data>
+    <data name="lit_newcomer_link" xml:space="preserve">
+        <value>https://mamontrealblob.blob.core.windows.net/literature/Pour%20le%20Nouveau.pdf</value>
     </data>
 </root>
