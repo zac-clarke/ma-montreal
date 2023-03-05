@@ -240,4 +240,184 @@
     <data name="call_us" xml:space="preserve">
         <value>Call us</value>
     </data>
+    <data name="hiw_step_1" xml:space="preserve">
+        <value>We admitted we were powerless over marijuana, that our lives had become unmanageable.</value>
+    </data>
+    <data name="hiw_step_2" xml:space="preserve">
+        <value>Came to believe that a Power greater than ourselves could restore us to sanity.</value>
+    </data>
+    <data name="hiw_preamble" xml:space="preserve">
+        <value>The practice of rigorous honesty, of opening our hearts and minds, and the willingness to go to any lengths to have a spiritual awakening are essential to our recovery. Our old ideas and ways of life no longer work for us. Our suffering shows us that we need to let go absolutely. We surrender ourselves to a Power greater than ourselves. Here are the steps we take which are suggested for recovery:</value>
+    </data>
+    <data name="hiw_postamble" xml:space="preserve">
+        <value>Do not be discouraged; none of us are saints. Our program is not easy, but it is simple. We strive for progress, not perfection. Our experiences, before and after we entered recovery, teach us three important ideas:</value>
+    </data>
+    <data name="hiw_idea_1" xml:space="preserve">
+        <value>That we are marijuana addicts and cannot manage our own lives;</value>
+    </data>
+    <data name="hiw_idea_2" xml:space="preserve">
+        <value>That probably no human power can relieve our addiction; and</value>
+    </data>
+    <data name="hiw_idea_3" xml:space="preserve">
+        <value> That our Higher Power can and will if sought</value>
+    </data>
+    <data name="hiw_step_3" xml:space="preserve">
+        <value>Made a decision to turn our will and our lives over to the care of God, as we understood God.</value>
+    </data>
+    <data name="hiw_step_4" xml:space="preserve">
+        <value>Made a searching and fearless moral inventory of ourselves.</value>
+    </data>
+    <data name="hiw_step_6" xml:space="preserve">
+        <value>Were entirely ready to have God remove all these defects of character.</value>
+    </data>
+    <data name="hiw_step_7" xml:space="preserve">
+        <value>Humbly asked God to remove our shortcomings.</value>
+    </data>
+    <data name="hiw_step_8" xml:space="preserve">
+        <value>Made a list of all persons we had harmed, and became willing to make amends to them all.</value>
+    </data>
+    <data name="hiw_step_9" xml:space="preserve">
+        <value>Made direct amends to such people wherever possible, except when to do so would injure them or others.</value>
+    </data>
+    <data name="hiw_step_10" xml:space="preserve">
+        <value>Continued to take personal inventory and when we were wrong, promptly admitted it.</value>
+    </data>
+    <data name="hiw_step_11" xml:space="preserve">
+        <value>Sought through prayer and meditation to improve our conscious contact with God, as we understood God, praying only for knowledge of God’s will for us and the power to carry that out.</value>
+    </data>
+    <data name="hiw_step_12" xml:space="preserve">
+        <value>Having had a spiritual awakening as the result of these steps, we tried to carry this message to marijuana addicts and to practice these principles in all our affairs.</value>
+    </data>
+    <data name="hiw_step_5" xml:space="preserve">
+        <value>Admitted to God, to ourselves, and to another human being the exact nature of our wrongs.</value>
+    </data>
+    <data name="12_promises_title" xml:space="preserve">
+        <value>The Promises</value>
+    </data>
+    <data name="12_promises_preamble" xml:space="preserve">
+        <value>If we are painstaking about this phase of our development, we will be amazed before we are half way through.</value>
+    </data>
+    <data name="12_promises_promise_1" xml:space="preserve">
+        <value>We are going to know a new freedom and a new happiness.</value>
+    </data>
+    <data name="12_promises_promise_2" xml:space="preserve">
+        <value>We will not regret the past nor wish to shut the door on it.</value>
+    </data>
+    <data name="12_promises_promise_3" xml:space="preserve">
+        <value>We will comprehend the word serenity.</value>
+    </data>
+    <data name="12_promises_promise_4" xml:space="preserve">
+        <value>We will know peace.</value>
+    </data>
+    <data name="12_promises_promise_5" xml:space="preserve">
+        <value>No matter how far down the scale we have gone, we will see how our experience can benefit others.</value>
+    </data>
+    <data name="12_promises_promise_6" xml:space="preserve">
+        <value>That feeling of uselessness and self-pity will disappear</value>
+    </data>
+    <data name="12_promises_promise_7" xml:space="preserve">
+        <value>We will lose interest in selfish things and gain interest in our fellows.</value>
+    </data>
+    <data name="12_promises_promise_8" xml:space="preserve">
+        <value>Self-seeking will slip away.</value>
+    </data>
+    <data name="12_promises_promise_9" xml:space="preserve">
+        <value>Our whole attitude and outlook on life will change.</value>
+    </data>
+    <data name="12_promises_promise_10" xml:space="preserve">
+        <value>Fear of people and economic insecurity will leave us.</value>
+    </data>
+    <data name="12_promises_promise_11" xml:space="preserve">
+        <value>We will intuitively know how to handle situations which used to baffle us.</value>
+    </data>
+    <data name="12_promises_promise_12" xml:space="preserve">
+        <value>We will suddenly realize that God is doing for us what we could not do for ourselves</value>
+    </data>
+    <data name="12_promises_postamble" xml:space="preserve">
+        <value>Are these extravagant promises? We think not. They are being fulfilled among us—sometimes quickly, sometimes slowly. They will always materialize if we work for them.</value>
+    </data>
+    <data name="12_questions_title" xml:space="preserve">
+        <value>The questions</value>
+    </data>
+    <data name="12_questions_preamble" xml:space="preserve">
+        <value>The following questions may help you determine whether marijuana is a problem in your life.</value>
+    </data>
+    <data name="12_questions_question_1" xml:space="preserve">
+        <value>Has smoking pot stopped being fun?</value>
+    </data>
+    <data name="12_questions_question_2" xml:space="preserve">
+        <value>Do you ever get high alone?</value>
+    </data>
+    <data name="12_questions_question_3" xml:space="preserve">
+        <value>Is it hard for you to imagine a life without marijuana?</value>
+    </data>
+    <data name="12_questions_question_4" xml:space="preserve">
+        <value>Do you find that your friends are determined by your marijuana use?</value>
+    </data>
+    <data name="12_questions_question_5" xml:space="preserve">
+        <value>Do you smoke marijuana to avoid dealing with your problems? see how our experience can benefit others.</value>
+    </data>
+    <data name="12_questions_question_6" xml:space="preserve">
+        <value>Do you smoke pot to cope with your feelings?</value>
+    </data>
+    <data name="12_questions_question_7" xml:space="preserve">
+        <value>Does your marijuana use let you live in a privately defined world?</value>
+    </data>
+    <data name="12_questions_question_8" xml:space="preserve">
+        <value>Have you ever failed to keep promises you made about cutting down or controlling your dope smoking?</value>
+    </data>
+    <data name="12_questions_question_9" xml:space="preserve">
+        <value>Has your use of marijuana caused problems with memory, concentration, or motivation?</value>
+    </data>
+    <data name="12_questions_question_10" xml:space="preserve">
+        <value>When your stash is nearly empty, do you feel anxious or worried about how to get more?</value>
+    </data>
+    <data name="12_questions_question_11" xml:space="preserve">
+        <value>Do you plan your life around your marijuana use?</value>
+    </data>
+    <data name="12_questions_question_12" xml:space="preserve">
+        <value>Have friends or relatives ever complained that your pot smoking is damaging your relationship with them?</value>
+    </data>
+    <data name="12_questions_postamble" xml:space="preserve">
+        <value>If you answered yes to any of the above questions, you may have a problem with marijuana.</value>
+    </data>
+    <data name="12_traditions_title" xml:space="preserve">
+        <value>The Traditions</value>
+    </data>
+    <data name="12_traditions_tradition_1" xml:space="preserve">
+        <value>Our common welfare should come first; personal recovery depends upon MA unity.</value>
+    </data>
+    <data name="12_traditions_tradition_2" xml:space="preserve">
+        <value>For our group purpose there is but one ultimate authority, a loving God whose expression may come through in our group conscience. Our leaders are but trusted servants; they do not govern.</value>
+    </data>
+    <data name="12_traditions_tradition_3" xml:space="preserve">
+        <value>The only requirement for membership is a desire to stop using marijuana.</value>
+    </data>
+    <data name="12_traditions_tradition_4" xml:space="preserve">
+        <value>Each group should be autonomous except in matters affecting other groups or MA as a whole.</value>
+    </data>
+    <data name="12_traditions_tradition_5" xml:space="preserve">
+        <value>Each group has but one primary purpose, to carry its message to the marijuana addict who still suffers.</value>
+    </data>
+    <data name="12_traditions_tradition_6" xml:space="preserve">
+        <value>MA groups ought never endorse, finance, or lend the MA name to any related facility or outside enterprise, lest problems of money, property, and prestige divert us from our primary purpose.</value>
+    </data>
+    <data name="12_traditions_tradition_7" xml:space="preserve">
+        <value>Every MA group ought to be fully self-supporting, declining outside contributions.</value>
+    </data>
+    <data name="12_traditions_tradition_8" xml:space="preserve">
+        <value>Marijuana Anonymous should remain forever nonprofessional, but our service centers may employ special workers.</value>
+    </data>
+    <data name="12_traditions_tradition_9" xml:space="preserve">
+        <value>MA, as such, ought never be organized, but we may create service boards or committees directly responsible to those they serve.</value>
+    </data>
+    <data name="12_traditions_tradition_10" xml:space="preserve">
+        <value>Marijuana Anonymous has no opinion on outside issues; hence the MA name ought never be drawn into public controversy.</value>
+    </data>
+    <data name="12_traditions_tradition_11" xml:space="preserve">
+        <value>Our public relations policy is based upon attraction rather than promotion; we need always maintain personal anonymity at the level of press, radio, TV, film, and other public media. We need guard with special care the anonymity of all fellow MA members.</value>
+    </data>
+    <data name="12_traditions_tradition_12" xml:space="preserve">
+        <value>Anonymity is the spiritual foundation of all our traditions, ever reminding us to place principles before personalities.If we are painstaking about this phase of our development, we will be amazed before we are half way through.</value>
+    </data>
 </root>
