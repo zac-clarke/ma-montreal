@@ -47,7 +47,7 @@ namespace MaMontreal.Models.NotMapped
             string outStr = "\n\t{"
             ;
             outStr += $"id: {meeting.Id}, " +
-                      $"title: '{meeting.EventName}', "
+                      $"title: '{meeting.EventName.Replace("'", "+")}', "
                       ;
 
             if (meeting.DayOfWeek == null && meeting.Date != null) // non-recurring events

@@ -7,7 +7,6 @@ document.addEventListener("error", function (e) {
   });
 });
 
-
 const loadCalender = (data) => {
   const calendarEl = document.getElementById("calendar");
   const events = data;

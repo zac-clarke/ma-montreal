@@ -38,6 +38,7 @@ namespace MaMontreal.Services
                                 .Include(m => m.MeetingType)
                                 .OrderBy(m => m.Status)
                                 .ToListAsync<Meeting>();
+
         }
 
         public IEnumerable<Meeting> GetAllMeetings(Func<Meeting, object> orderBy)
@@ -110,6 +111,9 @@ namespace MaMontreal.Services
             meeting.MeetingType = meetingType;
             meeting.UpdatedAt = DateTime.Now;
             meeting.UpdatedBy = curUser;
+            // meeting.EventName = meeting.EventName
+            //     .Replace("'", "+");
+
 
             _context.Meetings.Add(meeting);
             await _context.SaveChangesAsync();
@@ -179,6 +183,8 @@ namespace MaMontreal.Services
             meeting.Language = language;
             meeting.UpdatedAt = DateTime.Now;
             meeting.UpdatedBy = curUser;
+            // meeting.EventName = meeting.EventName
+            //     .Replace("'", "+");
 
             _context.Meetings.Update(meeting);
             await _context.SaveChangesAsync();
