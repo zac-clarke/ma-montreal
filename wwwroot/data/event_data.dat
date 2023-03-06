@@ -1,4 +1,4 @@
 [
 	{id: 1, title: 'Life With Hope', daysOfWeek: '[1]', startTime: '20:00:00', endTime: '21:00:00', startRecur: '2023-03-05', },
-	{id: 2, title: 'La porte de l+espoir', daysOfWeek: '[0]', startTime: '19:30:00', endTime: '21:00:00', startRecur: '2023-03-05', },
+	{id: 2, title: 'La porte de l`espoir', daysOfWeek: '[4]', startTime: '19:30:00', endTime: '21:00:00', startRecur: '2023-03-05', },
 ]
