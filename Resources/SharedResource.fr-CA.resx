@@ -142,7 +142,7 @@
         <value>Trouver une réunion près de chez vous</value>
     </data>
     <data name="home_seekhelp_body" xml:space="preserve">
-        <value>Our program teaches us that the only way we can stay sober is to help the still-suffering marijuana addict. By contacting us, you allow us to stay clean. Even if it might be difficult to admit to marijuana addiction, it may be the most important first step to getting your life back on track. Be strong, but do not do it alone.</value>
+        <value>Notre programme nous enseigne que la seule façon de garder notre abstinence est d’aider le dépendant qui souffre encore à le devenir. En nous contactant vous nous permettez de ne pas consommer, juste pour aujourd’hui. Même s’il peut être difficile d’admettre une dépendance à la marijuana, il s’agit peut-être du premier pas pour remettre votre vie sur le bon chemin. L’union fait la force</value>
     </data>
     <data name="home_seekhelp_button" xml:space="preserve">
         <value>Rechercher de l’aide</value>
@@ -244,19 +244,19 @@
         <value>Nous en sommes venus à croire qu’une puissance supérieure à nous-mêmes pouvait nous rendre la raison.</value>
     </data>
     <data name="hiw_preamble" xml:space="preserve">
-        <value>The practice of rigorous honesty, of opening our hearts and minds, and the willingness to go to any lengths to have a spiritual awakening are essential to our recovery. Our old ideas and ways of life no longer work for us. Our suffering shows us that we need to let go absolutely. We surrender ourselves to a Power greater than ourselves. Here are the steps we take which are suggested for recovery:</value>
+        <value>Nos anciennes idées et façons de vivre ne fonctionnent plus. Notre souffrance nous démontre que nous avons le besoin absolu de lâcher prise. Nous nous abandonnons à une Puissance Supérieure à nous-mêmes. Voici les étapes qui rendent notre rétablissement possible :</value>
     </data>
     <data name="hiw_postamble" xml:space="preserve">
-        <value>Do not be discouraged; none of us are saints. Our program is not easy, but it is simple. We strive for progress, not perfection. Our experiences, before and after we entered recovery, teach us three important ideas:</value>
+        <value>Ne vous découragez pas, nous ne sommes des saints. Ce programme n’est pas toujours facile, mais il est simple. Nous recherchons le progrès et non la perfection. Nos expériences avant et pendant notre rétablissement, nous enseignent trois idées importantes :</value>
     </data>
     <data name="hiw_idea_1" xml:space="preserve">
-        <value>That we are marijuana addicts and cannot manage our own lives;</value>
+        <value> Que nous sommes des dépendants et que nous avons perdu la maîtrise de nos vies</value>
     </data>
     <data name="hiw_idea_2" xml:space="preserve">
-        <value>That probably no human power can relieve our addiction; and</value>
+        <value>Qu’aucun humain ne pourrait nous guérir de notre dépendance et</value>
     </data>
     <data name="hiw_idea_3" xml:space="preserve">
-        <value> That our Higher Power can and will if sought</value>
+        <value>Que notre Puissance Supérieure le peut si nous La recherchons</value>
     </data>
     <data name="hiw_step_3" xml:space="preserve">
         <value>Nous avons décidé de confier note volonté et notre vie aux soins de Dieu tel que nous Le concevions.</value>
@@ -292,19 +292,19 @@
         <value>Les Promesses</value>
     </data>
     <data name="12_promises_preamble" xml:space="preserve">
-        <value>If we are painstaking about this phase of our development, we will be amazed before we are half way through.</value>
+        <value>Si nous sommes sérieux et appliqués dans les efforts que demande cette phase de notre évolution, nous serons étonnés des résultats, même après n'avoir parcouru que la moitié du chemin.</value>
     </data>
     <data name="12_promises_promise_1" xml:space="preserve">
-        <value>Nous serons étonnés des résultats, même après n'avoir parcouru que la moitié du chemin.</value>
-    </data>
-    <data name="12_promises_promise_2" xml:space="preserve">
         <value>Nous connaîtrons une nouvelle liberté et un nouveau bonheur.</value>
     </data>
-    <data name="12_promises_promise_3" xml:space="preserve">
+    <data name="12_promises_promise_2" xml:space="preserve">
         <value>Nous ne regretterons pas plus le passé que nous ne voudrons l'oublier.</value>
     </data>
+    <data name="12_promises_promise_3" xml:space="preserve">
+        <value>Nous comprendrons le sens du mot sérénité</value>
+    </data>
     <data name="12_promises_promise_4" xml:space="preserve">
-        <value>Nous comprendrons le sens du mot sérénité et nous connaîtrons la paix.</value>
+        <value>Nous connaîtrons la paix.</value>
     </data>
     <data name="12_promises_promise_5" xml:space="preserve">
         <value>Si profonde qu'ait été notre déchéance, nous verrons comment notre expérience peut profiter aux autres.</value>
