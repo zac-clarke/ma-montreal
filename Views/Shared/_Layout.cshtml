@@ -8,12 +8,22 @@
 <html lang="en">
 
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D8YDX18HX0"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-D8YDX18HX0');
+  </script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>@ViewData["Title"] - MaMontreal</title>
   <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
   <link rel="stylesheet" href="~/MaMontreal.styles.css" asp-append-version="true" />
+
+
 </head>
 
 <body>
@@ -21,50 +31,65 @@
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
       <div class="container-fluid">
         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MaMontreal</a>
-        <button class="navbar-toggler-lg d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler-lg d-lg-none" type="button" data-bs-toggle="collapse"
+          data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false"
+          aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
           <ul class="navbar-nav flex-grow-1 justify-content-center">
             <li class="nav-item">
-              <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@SharedHtmlLocalizer["nav_home"]</a>
+              <a class="nav-link text-dark" asp-area="" asp-controller="Home"
+                asp-action="Index">@SharedHtmlLocalizer["nav_home"]</a>
             </li>
             <li>
               <div class="dropdown">
-                <a class="nav-link text-dark" y asp-controller="Meetings" asp-action="Calendar">@SharedHtmlLocalizer["meetings"]</a>
+                <a class="nav-link text-dark" y asp-controller="Meetings"
+                  asp-action="Calendar">@SharedHtmlLocalizer["meetings"]</a>
               </div>
             </li>
             <li>
               <div class="dropdown">
-                <a class="nav-link text-dark dropdown-toggle" asp-controller="#" id="solutionDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@SharedHtmlLocalizer["nav_a_solution"]</a>
+                <a class="nav-link text-dark dropdown-toggle" asp-controller="#" id="solutionDropdown"
+                  data-bs-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">@SharedHtmlLocalizer["nav_a_solution"]</a>
                 <div class="dropdown-menu" aria-labelledby="solutionDropdown">
-                  <a class="dropdown-item" asp-controller="Solution" asp-action="HowItWorks">@SharedHtmlLocalizer["nav_how_it_works"]</a>
-                  <a class="dropdown-item" asp-controller="Solution" asp-action="TwelvePromises">@SharedHtmlLocalizer["nav_twelve_promises"]</a>
-                  <a class="dropdown-item" asp-controller="Solution" asp-action="TwelveQuestions">@SharedHtmlLocalizer["nav_twelve_questions"]</a>
-                  <a class="dropdown-item" asp-controller="Solution" asp-action="TwelveTraditions">@SharedHtmlLocalizer["nav_twelve_traditions"]</a>
+                  <a class="dropdown-item" asp-controller="Solution"
+                    asp-action="HowItWorks">@SharedHtmlLocalizer["nav_how_it_works"]</a>
+                  <a class="dropdown-item" asp-controller="Solution"
+                    asp-action="TwelvePromises">@SharedHtmlLocalizer["nav_twelve_promises"]</a>
+                  <a class="dropdown-item" asp-controller="Solution"
+                    asp-action="TwelveQuestions">@SharedHtmlLocalizer["nav_twelve_questions"]</a>
+                  <a class="dropdown-item" asp-controller="Solution"
+                    asp-action="TwelveTraditions">@SharedHtmlLocalizer["nav_twelve_traditions"]</a>
                 </div>
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Literature">@SharedHtmlLocalizer["nav_literature"]</a>
+              <a class="nav-link text-dark" asp-area="" asp-controller="Home"
+                asp-action="Literature">@SharedHtmlLocalizer["nav_literature"]</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="SeekHelp">@SharedHtmlLocalizer["nav_seek_help"]</a>
+              <a class="nav-link text-dark" asp-area="" asp-controller="Home"
+                asp-action="SeekHelp">@SharedHtmlLocalizer["nav_seek_help"]</a>
             </li>
           </ul>
           @if (User.Identity != null && User.Identity.IsAuthenticated)
           {
-             @await Html.PartialAsync("_SelectLanguagePartial")
+            @await Html.PartialAsync("_SelectLanguagePartial")
             <partial name="_LoginPartial" />
           }
           else
           {
-             @await Html.PartialAsync("_SelectLanguagePartial")
+            @await Html.PartialAsync("_SelectLanguagePartial")
             <div class="dropdown">
-              <button class="btn btn-success dropdown-toggle" id="appDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@SharedHtmlLocalizer["nav_download_ma_app"]</button>
+              <button class="btn btn-success dropdown-toggle" id="appDropdown" data-bs-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">@SharedHtmlLocalizer["nav_download_ma_app"]</button>
               <div class="dropdown-menu" aria-labelledby="appDropdown">
-                <a class="dropdown-item" target="_blank" href="https://apps.apple.com/us/app/marijuana-anonymous-mobile/id874705440">Apple</a>
-                <a class="dropdown-item" target="_blank" href="https://play.google.com/store/apps/details?id=org.marijuana_anonymous.MA_Mobile&hl=en_US">Android</a>
+                <a class="dropdown-item" target="_blank"
+                  href="https://apps.apple.com/us/app/marijuana-anonymous-mobile/id874705440">Apple</a>
+                <a class="dropdown-item" target="_blank"
+                  href="https://play.google.com/store/apps/details?id=org.marijuana_anonymous.MA_Mobile&hl=en_US">Android</a>
               </div>
             </div>
           }
@@ -81,19 +106,22 @@
 
   <footer class="border-top footer">
     <div class="navbar navbar-fixed-bottom navbar-expand navbar-light bg-light">
-        <div class="container">
+      <div class="container">
 
-              <div class="mb-0 text-dark fst-italic">@SharedHtmlLocalizer["developed_by"]: Julieta G. | Aftab S. | Zac C. </div>
-              <p class="mb-0 text-dark"> &copy; 2023 - MaMontreal </p>
-            <div class="d-flex justify-content-center align-items-center"> 
-              <a class=" nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">@SharedHtmlLocalizer["register"]</a>
+        <div class="mb-0 text-dark fst-italic">@SharedHtmlLocalizer["developed_by"]: Julieta G. | Aftab S. | Zac C.
+        </div>
+        <p class="mb-0 text-dark"> &copy; 2023 - MaMontreal </p>
+        <div class="d-flex justify-content-center align-items-center">
+          <a class=" nav-link text-dark" id="register" asp-area="Identity"
+            asp-page="/Account/Register">@SharedHtmlLocalizer["register"]</a>
 
-              <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">@SharedHtmlLocalizer["login"]</a>
-              
-             
-            </div>
+          <a class="nav-link text-dark" id="login" asp-area="Identity"
+            asp-page="/Account/Login">@SharedHtmlLocalizer["login"]</a>
+
 
         </div>
+
+      </div>
 
     </div>
   </footer>
@@ -102,7 +130,9 @@
   <script src="~/lib/jquery/dist/jquery.min.js"></script>
   <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="~/js/site.js" asp-append-version="true"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   @await RenderSectionAsync("Scripts", required: false)
 </body>
 <script>
