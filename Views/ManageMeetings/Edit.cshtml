@@ -140,7 +140,7 @@
                 </div>
             }
 
-            @if (User.IsInRole("admin"))
+            @if (User.IsInRole("admin") || Model.Status == Statuses.Approved)
             {
                 <div class="form-group">
                     <label asp-for="Status" class="control-label"></label>
