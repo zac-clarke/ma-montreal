@@ -6,7 +6,7 @@ document.addEventListener("error", function (e) {
     url: "/Meetings/Calandar",
   });
 });
-
+const currentCulture = navigator.language;
 const loadCalender = (data) => {
   const calendarEl = document.getElementById("calendar");
   const events = data;
@@ -22,6 +22,11 @@ const loadCalender = (data) => {
     },
     themeSystem: "bootstrap5",
     initialView: "listWeek",
+    views: {
+      timeGridWeek: {
+        slotMinTime: "12:00:00",
+      },
+    },
     events: events,
     eventClick: function (info) {
       const id = info.event._def.publicId;
@@ -29,5 +34,5 @@ const loadCalender = (data) => {
     },
   });
   calendar.render();
-  calendar.setOption("locale", "en-CA");
+  calendar.setOption("locale", currentCulture);
 };

@@ -146,6 +146,7 @@
                     <label asp-for="Status" class="control-label"></label>
                     <select asp-for="Status" asp-items="@Html.GetEnumSelectList<Statuses>()" class="form-control"></select>
                     <span asp-validation-for="Status" class="text-danger"></span>
+                    
                 </div>
             }
 
