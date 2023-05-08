@@ -7,6 +7,7 @@ namespace MaMontreal.Models.Enums
         Tuesday,
         Wednesday,
         Thursday,
+        Friday,
         Saturday
     }
 }
