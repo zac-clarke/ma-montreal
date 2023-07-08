@@ -79,8 +79,8 @@
           }
           else
           {
-            @* @await Html.PartialAsync("_SelectLanguagePartial")
-            <div class="dropdown">
+            @await Html.PartialAsync("_SelectLanguagePartial") 
+            @*<div class="dropdown">
               <button class="btn btn-success dropdown-toggle" id="appDropdown" data-bs-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">@SharedHtmlLocalizer["nav_download_ma_app"]</button>
               <div class="dropdown-menu" aria-labelledby="appDropdown">

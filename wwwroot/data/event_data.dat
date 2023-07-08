@@ -1,5 +1,5 @@
 [
-	{id: 1, title: 'Life With Hope', daysOfWeek: '[1]', startTime: '20:00:00', endTime: '21:00:00', startRecur: '2023-05-08', },
+	{id: 1, title: 'Life With Hope', daysOfWeek: '[1]', startTime: '20:00:00', endTime: '21:00:00', startRecur: '2023-07-08', },
 	{id: 2, title: 'La porte de l`espoir (Présentiel ET en ligne)', daysOfWeek: '[4]', startTime: '20:00:00', endTime: '21:00:00', startRecur: '2023-05-04', },
 	{id: 8, title: 'Clear Eyes, Full Hearts', daysOfWeek: '[5]', startTime: '20:00:00', endTime: '21:00:00', startRecur: '2023-05-12', },
 ]
