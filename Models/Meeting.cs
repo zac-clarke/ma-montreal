@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using MaMontreal.Models.Enums;
+using Microsoft.AspNetCore.Html;
 
 namespace MaMontreal.Models
 {
@@ -19,6 +20,9 @@ namespace MaMontreal.Models
         [Required]
         [MaxLength(3000, ErrorMessage = "Description cannot be longer than 3000 characters")]
         public string Description { get; set; } = null!;
+
+        [NotMapped]
+        public HtmlString DescriptionHtml { get { return new HtmlString(Description); } }
 
         [Required]
         [MaxLength(255, ErrorMessage = "Address cannot be longer than 255 characters")]
